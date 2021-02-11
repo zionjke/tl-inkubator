@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {TaskType} from "../App";
+import {Task} from "./Task";
 
 type Props = {
     title: string
@@ -15,12 +16,9 @@ export const TodoList = ({title, tasks}: Props) => {
             </div>
             <ul>
                 {
-                    tasks.map((task,key) => (
-                    <li key={task.id}>
-                        <input type="checkbox" checked={task.isDone}/>
-                        <span>{task.title}</span>
-                    </li>
-                ))
+                    tasks.map(task => (
+                        <Task key={task.id} title={task.title} isDone={task.isDone}/>
+                    ))
                 }
             </ul>
             <div>

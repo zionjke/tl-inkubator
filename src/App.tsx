@@ -21,6 +21,7 @@ function App() {
         {id: 3, title: 'Bread', isDone: false},
     ]
 
+    console.log(tasksTwo[0].isDone)
     return (
         <div className="App">
             <TodoList tasks={tasksOne} title={'What to Learn'}/>
