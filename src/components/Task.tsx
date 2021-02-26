@@ -1,27 +1,31 @@
-// @flow
 import * as React from 'react';
 import {ChangeEvent} from "react";
-import {FilterValuesType} from "../App";
+
 
 
 type Props = {
-    id: number
+    id: string
     title: string
     isDone: boolean
-    removeTask: (taskID: number) => void
-    changeTaskStatus: (taskId: number, status: boolean) => void
+    removeTask: (taskID: string) => void
+    changeTaskStatus: (taskId: string, status: boolean) => void
 };
-export const Task = ({title, isDone, removeTask, id, changeTaskStatus}: Props) => {
 
-    const taskStatus = (e: ChangeEvent<HTMLInputElement>): void => {
+export const Task: React.FC<Props> = ({title, isDone, removeTask, id, changeTaskStatus}) => {
+
+    const onDeleteTask = () => {
+        removeTask(id)
+    }
+
+    const onTaskStatus = (e: ChangeEvent<HTMLInputElement>): void => {
         changeTaskStatus(id, e.currentTarget.checked)
     }
 
     return (
         <li>
-            <input onChange={taskStatus} type="checkbox" checked={isDone}/>
+            <input onChange={onTaskStatus} type="checkbox" checked={isDone}/>
             <span>{title}</span>
-            <button onClick={() => removeTask(id)}>X</button>
+            <button onClick={onDeleteTask}>X</button>
         </li>
     );
 };
