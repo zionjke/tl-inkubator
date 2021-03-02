@@ -49,12 +49,11 @@ function App() {
     }
 
     const changeTaskStatus = (taskId: string, status: boolean) => {
-        let filteredTasks = tasks.filter(task => {
-            if (task.id === taskId) {
-                task.isDone = status
+        let filteredTasks = tasks.map(task => {
+            if (taskId !== task.id) {
                 return task
             } else {
-                return task
+                return {...task, isDone: status}
             }
         })
         setTasks(filteredTasks)
