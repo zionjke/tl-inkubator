@@ -1,12 +1,24 @@
-.App {
+
+
+.todolists {
   display: flex;
   padding: 30px;
 }
 
-.App > div {
+.todolists > div {
   margin-right: 50px;
 }
 
+.todolistTitle {
+  display: flex;
+  align-items: center;
+}
+
+
 .error {
   border:1px solid red;
+}
+
+.activeButton {
+  background: aqua;
 }
