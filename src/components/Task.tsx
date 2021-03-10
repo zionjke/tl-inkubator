@@ -17,13 +17,13 @@ export const Task: React.FC<Props> = ({title, isDone, removeTask, id, changeTask
         removeTask(id)
     }
 
-    const onTaskStatus = (e: ChangeEvent<HTMLInputElement>): void => {
+    const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>): void => {
         changeTaskStatus(id, e.currentTarget.checked)
     }
 
     return (
-        <li>
-            <input onChange={onTaskStatus} type="checkbox" checked={isDone}/>
+        <li className={isDone ? 'is-done' : ''}>
+            <input onChange={onChangeTaskStatus} type="checkbox" checked={isDone}/>
             <span>{title}</span>
             <button onClick={onDeleteTask}>X</button>
         </li>

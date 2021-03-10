@@ -1,10 +1,10 @@
-import React, {ChangeEvent, KeyboardEvent} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {Task} from "./Task";
 import {FilterValuesType, TaskType} from "../types/types";
 
 
 type Props = {
-    id: string
+    todolistID: string
     title: string
     filter: FilterValuesType
     tasks: Array<TaskType>
@@ -12,14 +12,14 @@ type Props = {
     removeTask: (taskId: string, todolistID: string) => void
     changeTaskStatus: (taskId: string, todolistID: string, status: boolean) => void
     changeTodolistFilter: (newFilter: FilterValuesType, todolistID: string) => void
-    removeTodoList: (todoListID:string) => void
+    removeTodoList: (todoListID: string) => void
 };
 
 export const TodoList: React.FC<Props> = ({
                                               title,
                                               tasks,
                                               addNewTask,
-                                              id,
+                                              todolistID,
                                               filter,
                                               removeTask,
                                               changeTaskStatus,
@@ -28,17 +28,30 @@ export const TodoList: React.FC<Props> = ({
                                           }) => {
 
     const [taskTitle, setTaskTitle] = React.useState<string>('');
+    const [error, setError] = useState<string | null>('')
 
     const onChangeHandlerTaskTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTaskTitle(e.currentTarget.value)
     }
 
+    const onChangeTaskStatusHandler = (taskID: string, status: boolean) => {
+        changeTaskStatus(taskID, todolistID, status)
+    }
+
+    const removeTaskHandler = (taskID: string) => {
+        removeTask(taskID, todolistID)
+    }
+
 
     const onAddNewTask = () => {
-        if (taskTitle !== '') {
-            addNewTask(taskTitle, id)
+        if (taskTitle.trim() !== '') {
+            addNewTask(taskTitle, todolistID)
+            setTaskTitle('')
+            setError(null)
+        } else {
+            setError('Title is required')
         }
-        setTaskTitle('')
+
     }
 
 
@@ -50,12 +63,12 @@ export const TodoList: React.FC<Props> = ({
 
 
     const onClickRemoveTodoList = () => {
-        removeTodoList(id)
+        removeTodoList(todolistID)
     }
 
-    const setAllFilter = () => changeTodolistFilter('All', id)
-    const setActiveFilter = () => changeTodolistFilter('Active', id)
-    const setCompletedFilter = () => changeTodolistFilter('Completed', id)
+    const setAllFilter = () => changeTodolistFilter('All', todolistID)
+    const setActiveFilter = () => changeTodolistFilter('Active', todolistID)
+    const setCompletedFilter = () => changeTodolistFilter('Completed', todolistID)
 
 
     return (
@@ -69,10 +82,14 @@ export const TodoList: React.FC<Props> = ({
             </div>
             <div>
                 <input onChange={onChangeHandlerTaskTitle}
+                       className={error ? 'error' : ''}
                        onKeyPress={addTaskOnKeyPress}
                        value={taskTitle}
                        type="text"/>
                 <button onClick={onAddNewTask}>+</button>
+                {
+                    error && <p className={'errorMessage'}>{error}</p>
+                }
             </div>
             <ul>
                 {
@@ -80,17 +97,19 @@ export const TodoList: React.FC<Props> = ({
                         <Task
                             key={task.id}
                             id={task.id}
-                            removeTask={(taskID: string) => removeTask(taskID, id)}
-                            changeTaskStatus={(taskId: string, status) => changeTaskStatus(taskId, id, status)}
+                            removeTask={removeTaskHandler}
+                            changeTaskStatus={onChangeTaskStatusHandler}
                             title={task.title}
                             isDone={task.isDone}/>
                     ))
                 }
             </ul>
             <div>
-                <button className={`${filter === 'All' && 'activeButton'}`} onClick={setAllFilter}>All</button>
-                <button className={`${filter === 'Active' && 'activeButton'}`} onClick={setActiveFilter}>Active</button>
-                <button className={`${filter === 'Completed' && 'activeButton'}`} onClick={setCompletedFilter}>Completed</button>
+                <button className={filter === 'All' ? 'activeButton' : ''} onClick={setAllFilter}>All</button>
+                <button className={filter === 'Active' ? 'activeButton' : ''} onClick={setActiveFilter}>Active</button>
+                <button className={filter === 'Completed' ? 'activeButton' : ''}
+                        onClick={setCompletedFilter}>Completed
+                </button>
             </div>
         </div>
     );

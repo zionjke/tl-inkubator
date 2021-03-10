@@ -13,6 +13,7 @@ function App() {
         // {id: todolistID_1, title: 'What to learn', filter: 'All'},
         // {id: todolistID_2, title: 'What to learn part 2', filter: "All"}
     ])
+    const [error, setError] = useState<string | null>('')
 
     const [tasks, setTasks] = useState<TaskStateType>({
         // [todolistID_1]: [
@@ -28,15 +29,18 @@ function App() {
     })
 
     const addNewTodoList = () => {
-        if (todoTitle !== '') {
-            let newTodoList: TodoListType = {
-                id: v1(),
-                title: todoTitle,
-                filter: "All"
-            }
+        let newTodoList: TodoListType = {
+            id: v1(),
+            title: todoTitle,
+            filter: "All"
+        }
+        if (todoTitle.trim() !== '') {
             tasks[newTodoList.id] = []
             setTodoLists([...todoLists, newTodoList])
             setTodoTitle('')
+            setError(null)
+        } else {
+            setError('Title is required')
         }
     }
 
@@ -85,6 +89,9 @@ function App() {
                    value={todoTitle}
                    type="text"/>
             <button onClick={addNewTodoList}>+</button>
+            {
+                error && <p className={'errorMessage'}>{error}</p>
+            }
             <div className='todolists'>
                 {
                     todoLists.map(tl => {
@@ -102,7 +109,7 @@ function App() {
                         })
                         return (
                             <TodoList key={tl.id}
-                                      id={tl.id}
+                                      todolistID={tl.id}
                                       filter={tl.filter}
                                       tasks={filteredTasks}
                                       title={tl.title}
