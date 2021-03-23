@@ -1,6 +1,9 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {Task} from "./Task";
 import {FilterValuesType, TaskType} from "../types/types";
+import {TodolistTitle} from "./TodolistTitle";
+import {Button} from "./Button";
+import {AddItemForm} from "./AddItemForm";
 
 
 type Props = {
@@ -74,19 +77,20 @@ export const TodoList: React.FC<Props> = ({
     return (
         <div>
             <div className='todolistTitle'>
-                <h2>
-                    {title}
-                    <button onClick={onClickRemoveTodoList}>X</button>
-                </h2>
-
+                <TodolistTitle title={title}/>
+                <Button  onClick={onClickRemoveTodoList}>
+                    X
+                </Button>
             </div>
             <div>
-                <input onChange={onChangeHandlerTaskTitle}
-                       className={error ? 'error' : ''}
-                       onKeyPress={addTaskOnKeyPress}
-                       value={taskTitle}
-                       type="text"/>
-                <button onClick={onAddNewTask}>+</button>
+                <AddItemForm onChange={onChangeHandlerTaskTitle}
+                             className={error ? 'error' : ''}
+                             onKeyPress={addTaskOnKeyPress}
+                             value={taskTitle}
+                             type={'text'}/>
+                <Button  onClick={onAddNewTask}>
+                    +
+                </Button>
                 {
                     error && <p className={'errorMessage'}>{error}</p>
                 }
@@ -105,11 +109,9 @@ export const TodoList: React.FC<Props> = ({
                 }
             </ul>
             <div>
-                <button className={filter === 'All' ? 'activeButton' : ''} onClick={setAllFilter}>All</button>
-                <button className={filter === 'Active' ? 'activeButton' : ''} onClick={setActiveFilter}>Active</button>
-                <button className={filter === 'Completed' ? 'activeButton' : ''}
-                        onClick={setCompletedFilter}>Completed
-                </button>
+                <Button onClick={setAllFilter} className={filter === 'All' ? 'activeButton' : ''}>All</Button>
+                <Button onClick={setActiveFilter} className={filter === 'Active' ? 'activeButton' : ''}>Active</Button>
+                <Button onClick={setCompletedFilter} className={filter === 'Completed' ? 'activeButton' : ''}>Completed</Button>
             </div>
         </div>
     );

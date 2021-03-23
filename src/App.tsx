@@ -1,20 +1,19 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {v1} from 'uuid';
 import './App.css';
 import {TodoList} from "./components/TodoList";
 import {FilterValuesType, TaskStateType, TaskType, TodoListType} from './types/types';
+import {AddItemForm} from "./components/AddItemForm";
+import {Button} from "./components/Button";
 
 
 function App() {
-
-
     const [todoTitle, setTodoTitle] = useState<string>('')
     const [todoLists, setTodoLists] = useState<Array<TodoListType>>([
         // {id: todolistID_1, title: 'What to learn', filter: 'All'},
         // {id: todolistID_2, title: 'What to learn part 2', filter: "All"}
     ])
     const [error, setError] = useState<string | null>('')
-
     const [tasks, setTasks] = useState<TaskStateType>({
         // [todolistID_1]: [
         //     {id: v1(), title: 'Learn HTML', isDone: true},
@@ -27,6 +26,10 @@ function App() {
         //     {id: v1(), title: 'Learn NodeJS', isDone: false},
         // ],
     })
+
+    const onChangeTodolistTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTodoTitle(e.currentTarget.value)
+    }
 
     const addNewTodoList = () => {
         let newTodoList: TodoListType = {
@@ -82,13 +85,23 @@ function App() {
         }
     }
 
+    const addTodolistOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            addNewTodoList()
+        }
+    }
+
 
     return (
         <div className="App">
-            <input onChange={(e) => setTodoTitle(e.currentTarget.value)}
-                   value={todoTitle}
-                   type="text"/>
-            <button onClick={addNewTodoList}>+</button>
+            <AddItemForm className={error ? 'error' : ''}
+                         onChange={onChangeTodolistTitleHandler}
+                         onKeyPress={addTodolistOnKeyPress}
+                         value={todoTitle}
+                         type={'text'}/>
+            <Button onClick={addNewTodoList}>
+                +
+            </Button>
             {
                 error && <p className={'errorMessage'}>{error}</p>
             }
