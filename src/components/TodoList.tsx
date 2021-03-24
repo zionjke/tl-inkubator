@@ -82,19 +82,14 @@ export const TodoList: React.FC<Props> = ({
                     X
                 </Button>
             </div>
-            <div>
-                <AddItemForm onChange={onChangeHandlerTaskTitle}
+                <AddItemForm onChangeForInput={onChangeHandlerTaskTitle}
+                             onClickForButton={onAddNewTask}
                              className={error ? 'error' : ''}
-                             onKeyPress={addTaskOnKeyPress}
+                             onKeyPressForInput={addTaskOnKeyPress}
                              value={taskTitle}
+                             error={error}
                              type={'text'}/>
-                <Button  onClick={onAddNewTask}>
-                    +
-                </Button>
-                {
-                    error && <p className={'errorMessage'}>{error}</p>
-                }
-            </div>
+
             <ul>
                 {
                     tasks.map(task => (

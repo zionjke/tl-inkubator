@@ -95,16 +95,12 @@ function App() {
     return (
         <div className="App">
             <AddItemForm className={error ? 'error' : ''}
-                         onChange={onChangeTodolistTitleHandler}
-                         onKeyPress={addTodolistOnKeyPress}
+                         onChangeForInput={onChangeTodolistTitleHandler}
+                         onKeyPressForInput={addTodolistOnKeyPress}
                          value={todoTitle}
-                         type={'text'}/>
-            <Button onClick={addNewTodoList}>
-                +
-            </Button>
-            {
-                error && <p className={'errorMessage'}>{error}</p>
-            }
+                         type={'text'}
+                         error={error}
+                         onClickForButton={addNewTodoList}/>
             <div className='todolists'>
                 {
                     todoLists.map(tl => {

@@ -1,20 +1,37 @@
 import * as React from 'react';
 import {ChangeEvent, KeyboardEvent} from "react";
+import {Button} from "./Button";
 
 type Props = {
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+    onChangeForInput: (e: ChangeEvent<HTMLInputElement>) => void
+    onClickForButton: () => void
     className?: string
-    onKeyPress: (e: KeyboardEvent<HTMLInputElement>) => void
+    onKeyPressForInput: (e: KeyboardEvent<HTMLInputElement>) => void
     value: string
     type: string
+    error: string | null
 };
 
-export const AddItemForm: React.FC<Props> = ({onChange, className, onKeyPress, value, type}) => {
+export const AddItemForm: React.FC<Props> = ({onChangeForInput,
+                                                 className,
+                                                 onKeyPressForInput, value,
+                                                 type,
+                                                 onClickForButton,
+                                                 error}) => {
     return (
-        <input className={className}
-               onChange={onChange}
-               onKeyPress={onKeyPress}
-               value={value}
-               type={type}/>
+        <div>
+            <input className={className}
+                   onChange={onChangeForInput}
+                   onKeyPress={onKeyPressForInput}
+                   value={value}
+                   type={type}/>
+            <Button  onClick={onClickForButton}>
+                +
+            </Button>
+            {
+                error && <p className={'errorMessage'}>{error}</p>
+            }
+        </div>
+
     );
 };
