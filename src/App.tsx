@@ -8,12 +8,10 @@ import {Button} from "./components/Button";
 
 
 function App() {
-    const [todoTitle, setTodoTitle] = useState<string>('')
     const [todoLists, setTodoLists] = useState<Array<TodoListType>>([
         // {id: todolistID_1, title: 'What to learn', filter: 'All'},
         // {id: todolistID_2, title: 'What to learn part 2', filter: "All"}
     ])
-    const [error, setError] = useState<string | null>('')
     const [tasks, setTasks] = useState<TaskStateType>({
         // [todolistID_1]: [
         //     {id: v1(), title: 'Learn HTML', isDone: true},
@@ -27,24 +25,16 @@ function App() {
         // ],
     })
 
-    const onChangeTodolistTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTodoTitle(e.currentTarget.value)
-    }
 
-    const addNewTodoList = () => {
+
+    const addNewTodoList = (title:string) => {
         let newTodoList: TodoListType = {
             id: v1(),
-            title: todoTitle,
+            title: title,
             filter: "All"
         }
-        if (todoTitle.trim() !== '') {
-            tasks[newTodoList.id] = []
-            setTodoLists([...todoLists, newTodoList])
-            setTodoTitle('')
-            setError(null)
-        } else {
-            setError('Title is required')
-        }
+        tasks[newTodoList.id] = []
+        setTodoLists([...todoLists, newTodoList])
     }
 
     const removeTodoList = (todolistID: string) => {
@@ -85,22 +75,12 @@ function App() {
         }
     }
 
-    const addTodolistOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            addNewTodoList()
-        }
-    }
+
 
 
     return (
         <div className="App">
-            <AddItemForm className={error ? 'error' : ''}
-                         onChangeForInput={onChangeTodolistTitleHandler}
-                         onKeyPressForInput={addTodolistOnKeyPress}
-                         value={todoTitle}
-                         type={'text'}
-                         error={error}
-                         onClickForButton={addNewTodoList}/>
+            <AddItemForm addItem={addNewTodoList}/>
             <div className='todolists'>
                 {
                     todoLists.map(tl => {
