@@ -14,75 +14,75 @@ type Props = {
     addNewTask: (title: string, todolistID: string) => void
     removeTask: (taskId: string, todolistID: string) => void
     changeTaskStatus: (taskId: string, todolistID: string, status: boolean) => void
+    changeTaskTitle: (title: string, todolistID: string, taskID: string) => void
+    changeTodolistTitle: (title: string, todolistID: string) => void
     changeTodolistFilter: (newFilter: FilterValuesType, todolistID: string) => void
     removeTodoList: (todoListID: string) => void
 };
 
-export const TodoList: React.FC<Props> = ({
-                                              title,
-                                              tasks,
-                                              addNewTask,
-                                              todolistID,
-                                              filter,
-                                              removeTask,
-                                              changeTaskStatus,
-                                              changeTodolistFilter,
-                                              removeTodoList
-                                          }) => {
+export const TodoList: React.FC<Props> = (props) => {
 
+    const changeTaskStatusHandler = (taskID: string, status: boolean) => {
+        props.changeTaskStatus(taskID, props.todolistID, status)
+    }
 
-    const onChangeTaskStatusHandler = (taskID: string, status: boolean) => {
-        changeTaskStatus(taskID, todolistID, status)
+    const changeTaskTitleHandler = (taskID: string, title: string) => {
+        props.changeTaskTitle(title, props.todolistID, taskID)
+    }
+
+    const changeTodolistTitleHandler = (title: string) => {
+        props.changeTodolistTitle(title, props.todolistID)
     }
 
     const removeTaskHandler = (taskID: string) => {
-        removeTask(taskID, todolistID)
+        props.removeTask(taskID, props.todolistID)
     }
 
 
-    const onAddNewTask = (title:string) => {
-            addNewTask(title, todolistID)
+    const onAddNewTask = (title: string) => {
+        props.addNewTask(title, props.todolistID)
     }
-
-
 
 
     const onClickRemoveTodoList = () => {
-        removeTodoList(todolistID)
+        props.removeTodoList(props.todolistID)
     }
 
-    const setAllFilter = () => changeTodolistFilter('All', todolistID)
-    const setActiveFilter = () => changeTodolistFilter('Active', todolistID)
-    const setCompletedFilter = () => changeTodolistFilter('Completed', todolistID)
+    const setAllFilter = () => props.changeTodolistFilter('All', props.todolistID)
+    const setActiveFilter = () => props.changeTodolistFilter('Active', props.todolistID)
+    const setCompletedFilter = () => props.changeTodolistFilter('Completed', props.todolistID)
 
 
     return (
         <div>
             <div className='todolistTitle'>
-                <TodolistTitle title={title}/>
-                <Button  onClick={onClickRemoveTodoList}>
+                <TodolistTitle changeTodolistTitle={changeTodolistTitleHandler}
+                               title={props.title}/>
+                <Button onClick={onClickRemoveTodoList}>
                     X
                 </Button>
             </div>
-                <AddItemForm addItem={onAddNewTask}/>
-
+            <AddItemForm addItem={onAddNewTask}/>
             <ul>
                 {
-                    tasks.map(task => (
+                    props.tasks.map(task => (
                         <Task
                             key={task.id}
                             id={task.id}
                             removeTask={removeTaskHandler}
-                            changeTaskStatus={onChangeTaskStatusHandler}
+                            changeTaskTitle={changeTaskTitleHandler}
+                            changeTaskStatus={changeTaskStatusHandler}
                             title={task.title}
                             isDone={task.isDone}/>
                     ))
                 }
             </ul>
             <div>
-                <Button onClick={setAllFilter} className={filter === 'All' ? 'activeButton' : ''}>All</Button>
-                <Button onClick={setActiveFilter} className={filter === 'Active' ? 'activeButton' : ''}>Active</Button>
-                <Button onClick={setCompletedFilter} className={filter === 'Completed' ? 'activeButton' : ''}>Completed</Button>
+                <Button onClick={setAllFilter} className={props.filter === 'All' ? 'activeButton' : ''}>All</Button>
+                <Button onClick={setActiveFilter}
+                        className={props.filter === 'Active' ? 'activeButton' : ''}>Active</Button>
+                <Button onClick={setCompletedFilter}
+                        className={props.filter === 'Completed' ? 'activeButton' : ''}>Completed</Button>
             </div>
         </div>
     );

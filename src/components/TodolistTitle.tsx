@@ -1,14 +1,15 @@
-
 import React from 'react';
+import {EditableTitle} from "./EditableTitle";
 
 type Props = {
-    title:string
+    title: string
+    changeTodolistTitle: (title: string) => void
 };
 
-export const TodolistTitle:React.FC<Props> = ({title}) => {
+export const TodolistTitle: React.FC<Props> = (props) => {
     return (
-            <h2>
-                {title}
-            </h2>
-    );
-};
+        <h3>
+            <EditableTitle changeTitle={props.changeTodolistTitle} title={props.title}/>
+        </h3>
+    )
+}
