@@ -1,8 +1,10 @@
 import * as React from 'react';
-import {ChangeEvent, useState} from "react";
-import { AddItemForm } from './AddItemForm';
+import {ChangeEvent} from "react";
 import {EditableTitle} from "./EditableTitle";
-import {Button} from "./Button";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
+import {Checkbox} from "@material-ui/core";
+
 
 
 type Props = {
@@ -33,9 +35,12 @@ export const Task: React.FC<Props> = (props) => {
 
     return (
         <li className={props.isDone ? 'is-done' : ''}>
-            <input onChange={onChangeTaskStatus} type="checkbox" checked={props.isDone}/>
+            <Checkbox onChange={onChangeTaskStatus} checked={props.isDone}/>
+            {/*<input onChange={onChangeTaskStatus} type="checkbox" checked={props.isDone}/>*/}
             <EditableTitle title={props.title} changeTitle={onChangeTaskTitle}/>
-            <Button onClick={onDeleteTask}>X</Button>
+            <IconButton color='secondary' className={"IconButton"} onClick={onDeleteTask}>
+                <DeleteIcon />
+            </IconButton>
         </li>
     );
 };

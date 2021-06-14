@@ -1,4 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {TextField} from "@material-ui/core";
 
 
 type Props = {
@@ -38,7 +39,7 @@ export const EditableTitle = (props: Props) => {
         <>
             {
                 editMode
-                    ? <input className={error ? 'error' : ''}
+                    ? <TextField className={error ? 'error' : ''}
                              onKeyPress={onKeyPressEnter}
                              autoFocus
                              value={title}

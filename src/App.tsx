@@ -4,6 +4,7 @@ import './App.css';
 import {TodoList} from "./components/TodoList";
 import {FilterValuesType, TaskStateType, TaskType, TodoListType} from './types/types';
 import {AddItemForm} from "./components/AddItemForm";
+import {Paper} from "@material-ui/core";
 
 
 function App() {
@@ -31,10 +32,7 @@ function App() {
             title: title,
             filter: "All"
         }
-        setTodoLists([
-            ...todoLists,
-            newTodoList]
-        )
+        setTodoLists([...todoLists, newTodoList])
         setTasks({
             ...tasks,
             [newTodoList.id]: []
@@ -96,8 +94,6 @@ function App() {
     }
 
 
-
-
     return (
         <div className="App">
             <AddItemForm addItem={addNewTodoList}/>
@@ -117,25 +113,26 @@ function App() {
                             }
                         })
                         return (
-                            <TodoList key={tl.id}
-                                      todolistID={tl.id}
-                                      filter={tl.filter}
-                                      tasks={filteredTasks}
-                                      title={tl.title}
-                                      addNewTask={addNewTask}
-                                      removeTodoList={removeTodoList}
-                                      removeTask={removeTask}
-                                      changeTaskStatus={changeTaskStatus}
-                                      changeTaskTitle={changeTaskTitle}
-                                      changeTodolistTitle={changeTodolistTitle}
-                                      changeTodolistFilter={changeTodolistFilter}
-                            />
+                            <Paper key={tl.id} elevation={3}  style={{padding: "15px"}}>
+                                <TodoList todolistID={tl.id}
+                                          filter={tl.filter}
+                                          tasks={filteredTasks}
+                                          title={tl.title}
+                                          addNewTask={addNewTask}
+                                          removeTodoList={removeTodoList}
+                                          removeTask={removeTask}
+                                          changeTaskStatus={changeTaskStatus}
+                                          changeTaskTitle={changeTaskTitle}
+                                          changeTodolistTitle={changeTodolistTitle}
+                                          changeTodolistFilter={changeTodolistFilter}
+                                />
+                            </Paper>
                         )
                     })
                 }
             </div>
         </div>
-    );
+);
 }
 
 export default App;

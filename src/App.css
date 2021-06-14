@@ -1,4 +1,6 @@
-
+.App {
+  min-width: 750px;
+}
 
 .todolists {
   display: flex;
@@ -29,4 +31,8 @@
 
 .is-done {
   opacity: 0.5;
+}
+
+.iconButton {
+  margin-left: 35px;
 }

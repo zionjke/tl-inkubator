@@ -1,9 +1,12 @@
 import * as React from 'react';
 import {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button} from "./Button";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import IconButton from '@material-ui/core/IconButton';
+import Alert from '@material-ui/lab/Alert';
+import {TextField} from "@material-ui/core";
 
 type Props = {
-    addItem: (title:string) => void
+    addItem: (title: string) => void
 };
 
 export const AddItemForm: React.FC<Props> = ({addItem}) => {
@@ -16,8 +19,8 @@ export const AddItemForm: React.FC<Props> = ({addItem}) => {
     }
 
 
-    const onKeyPressAddItem = (e:KeyboardEvent<HTMLInputElement>) => {
-        if(e.key === 'Enter') {
+    const onKeyPressAddItem = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
             onAddNewItem()
         }
     }
@@ -36,17 +39,24 @@ export const AddItemForm: React.FC<Props> = ({addItem}) => {
 
     return (
         <div>
-            <input className={error ? 'error' : ''}
-                   onChange={changeTitleHandler}
-                   onKeyPress={onKeyPressAddItem}
-                   value={title}
-                   type='text'/>
-            <Button onClick={onAddNewItem}>
-                Add
-            </Button>
-            {
-                error && <p className={'errorMessage'}>{error}</p>
-            }
+            <TextField className={error ? 'error' : ''}
+                       onChange={changeTitleHandler}
+                       onKeyPress={onKeyPressAddItem}
+                       variant={"outlined"}
+                       label={'Введите название'}
+                       value={title}
+                       error={!!error}
+                       helperText={error && 'Title Required'!}
+                       type='text'/>
+            <IconButton className={"iconButton"}>
+                <AddCircleIcon color={"primary"} onClick={onAddNewItem}/>
+            </IconButton>
+            {/*<Button onClick={onAddNewItem}>*/}
+            {/*    Add*/}
+            {/*</Button>*/}
+            {/*{*/}
+            {/*    error && <Alert severity="error">Title Required!</Alert>*/}
+            {/*}*/}
         </div>
 
     );
