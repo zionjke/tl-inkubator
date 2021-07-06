@@ -42,6 +42,7 @@ function App() {
     const removeTodoList = (todolistID: string) => {
         setTodoLists(todoLists.filter(tl => tl.id !== todolistID))
         delete tasks[todolistID]
+        setTasks({...tasks})
     }
 
 
@@ -113,7 +114,7 @@ function App() {
                             }
                         })
                         return (
-                            <Paper key={tl.id} elevation={3}  style={{padding: "15px"}}>
+                            <Paper key={tl.id} elevation={3} style={{padding: "15px"}}>
                                 <TodoList todolistID={tl.id}
                                           filter={tl.filter}
                                           tasks={filteredTasks}
@@ -132,7 +133,7 @@ function App() {
                 }
             </div>
         </div>
-);
+    );
 }
 
 export default App;
