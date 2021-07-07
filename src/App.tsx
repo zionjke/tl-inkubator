@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {v1} from 'uuid';
 import './App.css';
 import {TodoList} from "./components/TodoList";
@@ -24,6 +24,23 @@ function App() {
         //     {id: v1(), title: 'Learn NodeJS', isDone: false},
         // ],
     })
+
+    useEffect(() => {
+        const tasks = localStorage.getItem('tasks')
+        const todolists = localStorage.getItem('todoLists')
+        if (tasks) {
+            setTasks(JSON.parse(tasks))
+        }
+        if (todolists) {
+            setTodoLists(JSON.parse(todolists))
+        }
+    }, [])
+
+
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks))
+        localStorage.setItem('todoLists', JSON.stringify(todoLists))
+    }, [todoLists, tasks])
 
 
     const addNewTodoList = (title: string) => {
