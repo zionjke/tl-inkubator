@@ -40,11 +40,13 @@ export const EditableTitle = (props: Props) => {
             {
                 editMode
                     ? <TextField className={error ? 'error' : ''}
-                             onKeyPress={onKeyPressEnter}
-                             autoFocus
-                             value={title}
-                             onChange={onChangeTitle}
-                             onBlur={deactivateEditMode}/>
+                                 onKeyPress={onKeyPressEnter}
+                                 autoFocus
+                                 value={title}
+                                 error={error}
+                                 helperText={error && 'Title Required'!}
+                                 onChange={onChangeTitle}
+                                 onBlur={deactivateEditMode}/>
                     : <span onDoubleClick={activateEditMode}>
                          {props.title}
                      </span>
