@@ -7,11 +7,15 @@ import {AddItemForm} from "./components/AddItemForm";
 import {Paper} from "@material-ui/core";
 
 
+
 function App() {
+
     const [todoLists, setTodoLists] = useState<Array<TodoListType>>([
         // {id: todolistID_1, title: 'What to learn', filter: 'All'},
         // {id: todolistID_2, title: 'What to learn part 2', filter: "All"}
     ])
+
+
     const [tasks, setTasks] = useState<TaskStateType>({
         // [todolistID_1]: [
         //     {id: v1(), title: 'Learn HTML', isDone: true},

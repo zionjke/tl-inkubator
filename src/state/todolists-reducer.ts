@@ -1,4 +1,5 @@
 import {FilterValuesType, TodoListType} from "../types/types";
+import {v1} from "uuid";
 
 
 export type TodolistsActionTypes = RemoveTodolistActionType
@@ -12,7 +13,7 @@ export type RemoveTodolistActionType = {
 }
 
 export type AddTodolistActionType = {
-    todoList: TodoListType
+    title: string
     type: 'TODOLIST/ADD_TODOLIST'
 }
 
@@ -34,7 +35,12 @@ export const todolistsReducer = (todoLists: TodoListType[], action: TodolistsAct
         case "TODOLIST/REMOVE_TODOLIST":
             return todoLists.filter(t => t.id !== action.todolistID)
         case "TODOLIST/ADD_TODOLIST":
-            return todoLists = [...todoLists, action.todoList]
+            const newTodoList = {
+                id: v1(),
+                title: action.title,
+                filter: "All"
+            }
+            return [...todoLists, newTodoList]
         case "TODOLIST/CHANGE_TODOLIST_FILTER":
             return todoLists.map(tl => {
                 if (tl.id === action.todolistID) {
@@ -47,6 +53,36 @@ export const todolistsReducer = (todoLists: TodoListType[], action: TodolistsAct
             return todoLists.map(tl => tl.id === action.todolistID ? {...tl, title: action.title} : tl)
         default:
             return todoLists
+    }
+}
 
+export const removeTodoListActionCreator = (todolistID: string): RemoveTodolistActionType => {
+    return {
+        todolistID,
+        type: "TODOLIST/REMOVE_TODOLIST"
+    }
+}
+
+export const addTodoListActionCreator = (title: string): AddTodolistActionType => {
+    return {
+        title,
+        type: "TODOLIST/ADD_TODOLIST"
+    }
+}
+
+export const changeTodoListFilterActionCreator = (todolistID: string, filter: FilterValuesType): ChangeTodoListFilterActionType => {
+    return {
+        todolistID,
+        filter,
+        type: "TODOLIST/CHANGE_TODOLIST_FILTER"
+    }
+}
+
+
+export const changeTodoListTitleActionCreator = (todolistID: string, title: string): ChangeTodoListTitleActionType => {
+    return {
+        todolistID,
+        title,
+        type: "TODOLIST/CHANGE_TODOLIST_TITLE"
     }
 }
