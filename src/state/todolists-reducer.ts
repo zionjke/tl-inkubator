@@ -1,13 +1,10 @@
 import {FilterValuesType, TodoListType} from "../types/types";
 
-export type ActionTypes = 'TODOLIST/ADD_TODOLIST'
-    | 'TODOLIST/CHANGE_TODOLIST_FILTER'
-    | 'TODOLIST/REMOVE_TODOLIST'
-    | 'TODOLIST/CHANGE_TODOLIST_TITLE'
 
-export type TodolistActionTypes = RemoveTodolistActionType
+export type TodolistsActionTypes = RemoveTodolistActionType
     | AddTodolistActionType
     | ChangeTodoListFilterActionType
+    | ChangeTodoListTitleActionType
 
 export type RemoveTodolistActionType = {
     todolistID: string
@@ -25,8 +22,14 @@ export type ChangeTodoListFilterActionType = {
     filter: FilterValuesType
 }
 
+export type ChangeTodoListTitleActionType = {
+    todolistID: string
+    type: 'TODOLIST/CHANGE_TODOLIST_TITLE'
+    title: string
+}
 
-export const todolistsReducer = (todoLists: TodoListType[], action: TodolistActionTypes) => {
+
+export const todolistsReducer = (todoLists: TodoListType[], action: TodolistsActionTypes) => {
     switch (action.type) {
         case "TODOLIST/REMOVE_TODOLIST":
             return todoLists.filter(t => t.id !== action.todolistID)
@@ -35,9 +38,13 @@ export const todolistsReducer = (todoLists: TodoListType[], action: TodolistActi
         case "TODOLIST/CHANGE_TODOLIST_FILTER":
             return todoLists.map(tl => {
                 if (tl.id === action.todolistID) {
-                    tl.filter = action.filter
-                } else return {...tl}
+                    return {...tl, filter: action.filter}
+                } else {
+                    return tl
+                }
             })
+        case "TODOLIST/CHANGE_TODOLIST_TITLE":
+            return todoLists.map(tl => tl.id === action.todolistID ? {...tl, title: action.title} : tl)
         default:
             return todoLists
 
