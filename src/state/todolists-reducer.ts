@@ -41,14 +41,20 @@ export const todolistsReducer = (todoLists: TodoListType[], action: TodolistsAct
                 filter: "All"
             }
             return [...todoLists, newTodoList]
-        case "TODOLIST/CHANGE_TODOLIST_FILTER":
-            return todoLists.map(tl => {
-                if (tl.id === action.todolistID) {
-                    return {...tl, filter: action.filter}
-                } else {
-                    return tl
-                }
-            })
+        case "TODOLIST/CHANGE_TODOLIST_FILTER": {
+            const todoList = todoLists.find(tl => tl.id === action.todolistID)
+            if (todoList) {
+                todoList.filter = action.filter
+            }
+            return [...todoLists]
+        }
+        // return todoLists.map(tl => {
+        //     if (tl.id === action.todolistID) {
+        //         return {...tl, filter: action.filter}
+        //     } else {
+        //         return tl
+        //     }
+        // })
         case "TODOLIST/CHANGE_TODOLIST_TITLE":
             return todoLists.map(tl => tl.id === action.todolistID ? {...tl, title: action.title} : tl)
         default:
