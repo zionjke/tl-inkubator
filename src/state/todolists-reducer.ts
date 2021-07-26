@@ -31,17 +31,20 @@ export type ChangeTodoListTitleActionType = {
 }
 
 
-export const todolistsReducer = (todoLists: TodoListType[], action: TodolistsActionTypes) => {
+export const todolistsReducer = (todoLists: TodoListType[], action: TodolistsActionTypes): TodoListType[] => {
     switch (action.type) {
         case "TODOLIST/REMOVE_TODOLIST":
             return todoLists.filter(t => t.id !== action.todolistID)
         case "TODOLIST/ADD_TODOLIST":
-            const newTodoList = {
+            const newTodoList: TodoListType = {
                 id: action.todoListId,
                 title: action.title,
                 filter: "All"
             }
-            return [...todoLists, newTodoList]
+            return [
+                ...todoLists,
+                newTodoList
+            ]
         case "TODOLIST/CHANGE_TODOLIST_FILTER": {
             const todoList = todoLists.find(tl => tl.id === action.todolistID)
             if (todoList) {
@@ -49,13 +52,6 @@ export const todolistsReducer = (todoLists: TodoListType[], action: TodolistsAct
             }
             return [...todoLists]
         }
-        // return todoLists.map(tl => {
-        //     if (tl.id === action.todolistID) {
-        //         return {...tl, filter: action.filter}
-        //     } else {
-        //         return tl
-        //     }
-        // })
         case "TODOLIST/CHANGE_TODOLIST_TITLE":
             return todoLists.map(tl => tl.id === action.todolistID ? {...tl, title: action.title} : tl)
         default:

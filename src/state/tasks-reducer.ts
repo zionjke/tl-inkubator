@@ -37,7 +37,7 @@ export type TasksActionsType =
     | RemoveTodolistActionType
 
 
-export const tasksReducer = (tasks: TaskStateType, action: TasksActionsType) => {
+export const tasksReducer = (tasks: TaskStateType, action: TasksActionsType): TaskStateType => {
     switch (action.type) {
         case "TODOLIST/TASKS/ADD_NEW_TASK": {
             let newTask: TaskType = {
@@ -45,12 +45,12 @@ export const tasksReducer = (tasks: TaskStateType, action: TasksActionsType) => 
                 title: action.title,
                 isDone: false
             }
-            // tasks[action.todoListID] = [...tasks[action.todoListID], newTask]
-            // return {...tasks}
             return {
                 ...tasks,
                 [action.todoListID]: [...tasks[action.todoListID], newTask]
             }
+            // tasks[action.todoListID] = [...tasks[action.todoListID], newTask]
+            // return {...tasks}
         }
         case "TODOLIST/TASKS/CHANGE_TASK_STATUS": {
             // const task = tasks[action.todoListID].find(task => task.id === action.taskID)
@@ -67,18 +67,29 @@ export const tasksReducer = (tasks: TaskStateType, action: TasksActionsType) => 
             }
         }
         case "TODOLIST/TASKS/REMOVE_TASK":
-            // tasks[action.todoListID] = tasks[action.todoListID].filter(t => t.id !== action.taskID)
-            // return {...tasks}
-            let copyTasks = {...tasks}
-            copyTasks[action.todoListID] = copyTasks[action.todoListID].filter(task => task.id !== action.taskID)
-            return copyTasks
-        case "TODOLIST/TASKS/CHANGE_TASK_TITLE": {
-            const task = tasks[action.todoListID].find(task => task.id === action.taskID)
-            if (task) {
-                task.title = action.title
+            // let copyTasks = {...tasks}
+            // copyTasks[action.todoListID] = copyTasks[action.todoListID].filter(task => task.id !== action.taskID)
+            // return copyTasks
+            return {
+                ...tasks,
+                [action.todoListID]: tasks[action.todoListID].filter((task => task.id !== action.taskID))
             }
-            return {...tasks}
-        }
+        // tasks[action.todoListID] = tasks[action.todoListID].filter(t => t.id !== action.taskID)
+        // return {...tasks}
+        case "TODOLIST/TASKS/CHANGE_TASK_TITLE":
+            // const task = tasks[action.todoListID].find(task => task.id === action.taskID)
+            // if (task) {
+            //     task.title = action.title
+            // }
+            // return {...tasks}
+            return {
+                ...tasks,
+                [action.todoListID]: tasks[action.todoListID].map(t => t.id === action.taskID ? {
+                    ...t,
+                    title: action.title
+                } : t)
+            }
+
         case "TODOLIST/ADD_TODOLIST":
             return {
                 ...tasks,
@@ -92,7 +103,7 @@ export const tasksReducer = (tasks: TaskStateType, action: TasksActionsType) => 
 }
 
 
-export const AddNewTaskActionCreator = (todoListID: string, title: string,): AddNewTaskActionType => {
+export const addNewTaskActionCreator = (todoListID: string, title: string,): AddNewTaskActionType => {
     return {
         type: "TODOLIST/TASKS/ADD_NEW_TASK",
         title,
@@ -100,7 +111,7 @@ export const AddNewTaskActionCreator = (todoListID: string, title: string,): Add
     }
 }
 
-export const ChangeTaskStatusActionCreator = (todoListID: string, taskID: string, status: boolean): ChangeTaskStatusActionType => {
+export const changeTaskStatusActionCreator = (todoListID: string, taskID: string, status: boolean): ChangeTaskStatusActionType => {
     return {
         type: "TODOLIST/TASKS/CHANGE_TASK_STATUS",
         todoListID,
@@ -109,7 +120,7 @@ export const ChangeTaskStatusActionCreator = (todoListID: string, taskID: string
     }
 }
 
-export const RemoveTaskActionCreator = (todoListID: string, taskID: string): RemoveTaskActionType => {
+export const removeTaskActionCreator = (todoListID: string, taskID: string): RemoveTaskActionType => {
     return {
         type: "TODOLIST/TASKS/REMOVE_TASK",
         todoListID,
@@ -117,7 +128,7 @@ export const RemoveTaskActionCreator = (todoListID: string, taskID: string): Rem
     }
 }
 
-export const ChangeTaskTitleActionCreator = (todoListID: string, taskID: string, title: string): ChangeTaskTitleActionType => {
+export const changeTaskTitleActionCreator = (todoListID: string, taskID: string, title: string): ChangeTaskTitleActionType => {
     return {
         type: "TODOLIST/TASKS/CHANGE_TASK_TITLE",
         todoListID,

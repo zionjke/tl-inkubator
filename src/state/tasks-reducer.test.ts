@@ -1,9 +1,9 @@
 import {v1} from "uuid"
 import {TaskStateType} from "../types/types";
 import {
-    AddNewTaskActionCreator,
-    ChangeTaskStatusActionCreator, ChangeTaskTitleActionCreator,
-    RemoveTaskActionCreator,
+    addNewTaskActionCreator,
+    changeTaskStatusActionCreator, changeTaskTitleActionCreator,
+    removeTaskActionCreator,
     tasksReducer
 } from "./tasks-reducer";
 import {addTodoListActionCreator, removeTodoListActionCreator} from "./todolists-reducer";
@@ -19,7 +19,7 @@ test('correct task should be added', () => {
         ]
     }
 
-    const endState = tasksReducer(startState, AddNewTaskActionCreator(todoListID, newTaskTitle))
+    const endState = tasksReducer(startState, addNewTaskActionCreator(todoListID, newTaskTitle))
 
     expect(endState[todoListID][2].title).toBe(newTaskTitle)
     expect(endState[todoListID][2].isDone).toBe(false)
@@ -39,7 +39,7 @@ test('task status should be updated', () => {
 
     }
 
-    const endState = tasksReducer(startState, ChangeTaskStatusActionCreator(todoListID, taskID, true))
+    const endState = tasksReducer(startState, changeTaskStatusActionCreator(todoListID, taskID, true))
 
     expect(endState[todoListID][2].isDone).toBe(true)
 
@@ -58,7 +58,7 @@ test('task title should be updated', () => {
 
     }
 
-    const endState = tasksReducer(startState, ChangeTaskTitleActionCreator(todoListID, taskID, 'Updated Title'))
+    const endState = tasksReducer(startState, changeTaskTitleActionCreator(todoListID, taskID, 'Updated Title'))
 
     expect(endState[todoListID][2].title).toBe('Updated Title')
 
@@ -77,10 +77,11 @@ test('correct task should be removed', () => {
         ]
     }
 
-    const endState = tasksReducer(startState, RemoveTaskActionCreator(todoListID, taskID))
+    const endState = tasksReducer(startState, removeTaskActionCreator(todoListID, taskID))
 
     expect(endState[todoListID].length).toBe(2)
     expect(endState[todoListID][0].title).toBe('Second Task')
+    expect(endState[todoListID].every(t => t.id !== taskID)).toBeTruthy() // пробегаемся по массиву и проверяем что ниодна таска не имеет такого айди
 
 })
 
@@ -139,6 +140,5 @@ test('array should be deleted when  todolist is removed', () => {
 
     expect(keys.length).toBe(1)
     expect(keys[0]).toBe(todoListID2)
-
 
 })
