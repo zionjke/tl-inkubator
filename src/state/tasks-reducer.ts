@@ -1,5 +1,6 @@
 import {TaskStateType, TaskType} from "../types/types";
 import {v1} from "uuid";
+import {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
 
 export type AddNewTaskActionType = {
     title: string
@@ -32,6 +33,8 @@ export type TasksActionsType =
     | ChangeTaskStatusActionType
     | RemoveTaskActionType
     | ChangeTaskTitleActionType
+    | AddTodolistActionType
+    | RemoveTodolistActionType
 
 
 export const tasksReducer = (tasks: TaskStateType, action: TasksActionsType) => {
@@ -42,19 +45,33 @@ export const tasksReducer = (tasks: TaskStateType, action: TasksActionsType) => 
                 title: action.title,
                 isDone: false
             }
-            tasks[action.todoListID] = [...tasks[action.todoListID], newTask]
-            return {...tasks}
+            // tasks[action.todoListID] = [...tasks[action.todoListID], newTask]
+            // return {...tasks}
+            return {
+                ...tasks,
+                [action.todoListID]: [...tasks[action.todoListID], newTask]
+            }
         }
         case "TODOLIST/TASKS/CHANGE_TASK_STATUS": {
-            const task = tasks[action.todoListID].find(task => task.id === action.taskID)
-            if (task) {
-                task.isDone = action.status
+            // const task = tasks[action.todoListID].find(task => task.id === action.taskID)
+            // if (task) {
+            //     task.isDone = action.status
+            // }
+            // return {...tasks}
+            return {
+                ...tasks,
+                [action.todoListID]: tasks[action.todoListID].map((t) => t.id === action.taskID ? {
+                    ...t,
+                    isDone: action.status
+                } : t)
             }
-            return {...tasks}
         }
         case "TODOLIST/TASKS/REMOVE_TASK":
-            tasks[action.todoListID] = tasks[action.todoListID].filter(task => task.id !== action.taskID)
-            return {...tasks}
+            // tasks[action.todoListID] = tasks[action.todoListID].filter(t => t.id !== action.taskID)
+            // return {...tasks}
+            let copyTasks = {...tasks}
+            copyTasks[action.todoListID] = copyTasks[action.todoListID].filter(task => task.id !== action.taskID)
+            return copyTasks
         case "TODOLIST/TASKS/CHANGE_TASK_TITLE": {
             const task = tasks[action.todoListID].find(task => task.id === action.taskID)
             if (task) {
@@ -62,6 +79,14 @@ export const tasksReducer = (tasks: TaskStateType, action: TasksActionsType) => 
             }
             return {...tasks}
         }
+        case "TODOLIST/ADD_TODOLIST":
+            return {
+                ...tasks,
+                [action.todoListId]: []
+            }
+        case "TODOLIST/REMOVE_TODOLIST":
+            delete tasks[action.todolistID]
+            return {...tasks}
     }
     return tasks
 }
