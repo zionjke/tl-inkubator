@@ -27,7 +27,7 @@ export const getSum = (num: number): number => {
 }
 
 export const isEvenIndexSumGreater = (arr: number[]) => {
-    let sumEvenIndex = arr.filter((item, i) => i % 2).reduce((acc, el) => acc + el)
-    let sumOddIndex = arr.filter((item, i) => i % 2 == 1).reduce((acc, el) => acc + el)
+    let sumEvenIndex = arr.filter((item, i) => i % 2 === 0).reduce((acc, el) => acc + el)
+    let sumOddIndex = arr.filter((item, i) => i % 2).reduce((acc, el) => acc + el)
     return sumEvenIndex > sumOddIndex
 }
