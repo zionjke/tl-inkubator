@@ -33,8 +33,7 @@ export type TasksActionsType =
     | ChangeTaskStatusActionType
     | RemoveTaskActionType
     | ChangeTaskTitleActionType
-    | AddTodolistActionType
-    | RemoveTodolistActionType
+    | RemoveTodolistActionType | AddTodolistActionType
 
 
 export const tasksReducer = (tasks: TaskStateType, action: TasksActionsType): TaskStateType => {
@@ -66,22 +65,19 @@ export const tasksReducer = (tasks: TaskStateType, action: TasksActionsType): Ta
                 } : t)
             }
         }
-        case "TODOLIST/TASKS/REMOVE_TASK":
-            // let copyTasks = {...tasks}
-            // copyTasks[action.todoListID] = copyTasks[action.todoListID].filter(task => task.id !== action.taskID)
-            // return copyTasks
+        case "TODOLIST/TASKS/REMOVE_TASK": {
             return {
                 ...tasks,
                 [action.todoListID]: tasks[action.todoListID].filter((task => task.id !== action.taskID))
             }
+        }
+        // let copyTasks = {...tasks}
+        // copyTasks[action.todoListID] = copyTasks[action.todoListID].filter(task => task.id !== action.taskID)
+        // return copyTasks
+
         // tasks[action.todoListID] = tasks[action.todoListID].filter(t => t.id !== action.taskID)
         // return {...tasks}
-        case "TODOLIST/TASKS/CHANGE_TASK_TITLE":
-            // const task = tasks[action.todoListID].find(task => task.id === action.taskID)
-            // if (task) {
-            //     task.title = action.title
-            // }
-            // return {...tasks}
+        case "TODOLIST/TASKS/CHANGE_TASK_TITLE": {
             return {
                 ...tasks,
                 [action.todoListID]: tasks[action.todoListID].map(t => t.id === action.taskID ? {
@@ -89,20 +85,30 @@ export const tasksReducer = (tasks: TaskStateType, action: TasksActionsType): Ta
                     title: action.title
                 } : t)
             }
+        }
+        // const task = tasks[action.todoListID].find(task => task.id === action.taskID)
+        // if (task) {
+        //     task.title = action.title
+        // }
+        // return {...tasks}
 
-        case "TODOLIST/ADD_TODOLIST":
+        case "TODOLIST/ADD_TODOLIST": {
             return {
                 ...tasks,
                 [action.todoListId]: []
             }
-        case "TODOLIST/REMOVE_TODOLIST":
+        }
+        case "TODOLIST/REMOVE_TODOLIST": {
+            debugger
             let copyTasks = {...tasks}
             delete copyTasks[action.todolistID]
             return copyTasks
+        }
         // delete tasks[action.todolistID]
         // return {...tasks}
+        default:
+            return tasks
     }
-    return tasks
 }
 
 
