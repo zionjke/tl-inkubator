@@ -76,7 +76,7 @@ test('new array should be added when new todolist is added', () => {
 
 })
 
-test('array should be deleted when  todolist is removed', () => {
+test('array with tasks should be deleted when  todolist is removed', () => {
     const endState = tasksReducer(startState,removeTodoListActionCreator(todoListID1))
     const keys = Object.keys(endState)
 

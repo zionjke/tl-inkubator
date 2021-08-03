@@ -12,8 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 type Props = {
     todolistID: string
     title: string
+    tasks:TaskType[]
     filter: FilterValuesType
-    tasks: Array<TaskType>
     addNewTask: (title: string, todolistID: string) => void
     removeTask: (taskId: string, todolistID: string) => void
     changeTaskStatus: (taskId: string, todolistID: string, status: boolean) => void
@@ -93,11 +93,6 @@ export const TodoList: React.FC<Props> = (props) => {
                         color={props.filter === 'Completed' ? 'primary' : 'default'}>
                     Completed
                 </Button>
-                {/*<Button onClick={setAllFilter} className={props.filter === 'All' ? 'activeButton' : ''}>All</Button>*/}
-                {/*<Button onClick={setActiveFilter}*/}
-                {/*        className={props.filter === 'Active' ? 'activeButton' : ''}>Active</Button>*/}
-                {/*<Button onClick={setCompletedFilter}*/}
-                {/*        className={props.filter === 'Completed' ? 'activeButton' : ''}>Completed</Button>*/}
             </div>
         </div>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppWithReducers from './AppWithReducers';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
