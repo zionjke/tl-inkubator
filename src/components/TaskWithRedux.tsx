@@ -27,7 +27,6 @@ export const TaskWithRedux: React.FC<Props> = (props) => {
 
     const removeTask = () => dispatch(removeTaskActionCreator(props.todoListID, task.id))
     const changeTaskStatus = ((e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusActionCreator(props.todoListID, task.id, e.currentTarget.checked)))
-
     const changeTaskTitle = (title: string) => {
         dispatch(changeTaskTitleActionCreator(props.todoListID, task.id, title))
     }

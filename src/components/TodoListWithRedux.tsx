@@ -71,8 +71,8 @@ export const TodoListWithRedux: React.FC<Props> = (props) => {
                     {
                         filteredTasks.map(task => (
                             <TaskWithRedux
-                                todoListID={todo.id}
                                 key={task.id}
+                                todoListID={todo.id}
                                 id={task.id} />
                         ))
                     }
