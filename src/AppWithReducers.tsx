@@ -89,18 +89,18 @@ function AppWithReducers() {
                         })
                         return (
                             <Paper key={tl.id} elevation={3} style={{padding: "15px"}}>
-                                {/*<TodoList todolistID={tl.id}*/}
-                                {/*          filter={tl.filter}*/}
-                                {/*          tasks={filteredTasks}*/}
-                                {/*          title={tl.title}*/}
-                                {/*          addNewTask={addNewTask}*/}
-                                {/*          removeTodoList={removeTodoList}*/}
-                                {/*          removeTask={removeTask}*/}
-                                {/*          changeTaskStatus={changeTaskStatus}*/}
-                                {/*          changeTaskTitle={changeTaskTitle}*/}
-                                {/*          changeTodolistTitle={changeTodolistTitle}*/}
-                                {/*          changeTodolistFilter={changeTodolistFilter}*/}
-                                {/*/>*/}
+                                <TodoList todolistID={tl.id}
+                                          filter={tl.filter}
+                                          tasks={filteredTasks}
+                                          title={tl.title}
+                                          addNewTask={addNewTask}
+                                          removeTodoList={removeTodoList}
+                                          removeTask={removeTask}
+                                          changeTaskStatus={changeTaskStatus}
+                                          changeTaskTitle={changeTaskTitle}
+                                          changeTodolistTitle={changeTodolistTitle}
+                                          changeTodolistFilter={changeTodolistFilter}
+                                />
                             </Paper>
                         )
                     })
