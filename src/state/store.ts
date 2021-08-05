@@ -3,6 +3,7 @@ import {todolistsReducer} from "./todolists-reducer";
 import {tasksReducer} from "./tasks-reducer";
 import {TaskStateType, TodoListType} from "../types/types";
 
+
 const rootReducer = combineReducers({
     todoLists: todolistsReducer,
     tasks: tasksReducer
