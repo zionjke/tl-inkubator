@@ -5,8 +5,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import {Checkbox} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {GlobalStateType} from "../state/store";
-import {TaskType} from "../types/types";
 import {
     changeTaskStatusActionCreator,
     changeTaskTitleActionCreator,
@@ -15,30 +13,39 @@ import {
 
 
 type Props = {
-    id: string
-    todoListID:string
+    taskID: string
+    todoListID: string
+    title: string
+    isDone: boolean
 };
 
 export const TaskWithRedux: React.FC<Props> = (props) => {
-    const task = useSelector<GlobalStateType,TaskType>(state => {
-        return state.tasks[props.todoListID].filter((task:TaskType) => task.id === props.id)[0]
-    })
+
+    const {
+        taskID,
+        todoListID,
+        title,
+        isDone
+    } = props
+    // const task = useSelector<GlobalStateType,TaskType>(state => {
+    //     return state.tasks[props.todoListID].filter((task:TaskType) => task.id === props.id)[0]
+    // })
     const dispatch = useDispatch()
 
-    const removeTask = () => dispatch(removeTaskActionCreator(props.todoListID, task.id))
-    const changeTaskStatus = ((e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusActionCreator(props.todoListID, task.id, e.currentTarget.checked)))
+    const removeTask = () => dispatch(removeTaskActionCreator(todoListID, taskID))
+    const changeTaskStatus = ((e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusActionCreator(todoListID, taskID, e.currentTarget.checked)))
     const changeTaskTitle = (title: string) => {
-        dispatch(changeTaskTitleActionCreator(props.todoListID, task.id, title))
+        dispatch(changeTaskTitleActionCreator(todoListID, taskID, title))
     }
 
 
     return (
-        <li className={task.isDone ? 'is-done' : ''}>
-            <Checkbox onChange={changeTaskStatus} checked={task.isDone}/>
+        <li className={isDone ? 'is-done' : ''}>
+            <Checkbox onChange={changeTaskStatus} checked={isDone}/>
             {/*<input onChange={onChangeTaskStatus} type="checkbox" checked={props.isDone}/>*/}
-            <EditableTitle title={task.title} changeTitle={changeTaskTitle}/>
+            <EditableTitle title={title} changeTitle={changeTaskTitle}/>
             <IconButton color='secondary' className={"IconButton"} onClick={removeTask}>
-                <DeleteIcon />
+                <DeleteIcon/>
             </IconButton>
         </li>
     );

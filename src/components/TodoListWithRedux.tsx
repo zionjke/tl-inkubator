@@ -81,7 +81,9 @@ export const TodoListWithRedux: React.FC<Props> = (props) => {
                         <TaskWithRedux
                             key={task.id}
                             todoListID={todolistID}
-                            id={task.id}/>
+                            isDone={task.isDone}
+                            title={task.title}
+                            taskID={task.id}/>
                     ))
                 }
             </ul>
