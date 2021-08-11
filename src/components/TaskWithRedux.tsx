@@ -20,7 +20,7 @@ type Props = {
 };
 
 export const TaskWithRedux: React.FC<Props> = (props) => {
-
+    console.log('TaskWithReduxComponent called')
     const {
         taskID,
         todoListID,

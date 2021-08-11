@@ -10,6 +10,7 @@ type Props = {
 };
 
 export const AddItemForm: React.FC<Props> = ({addItem}) => {
+    console.log('AddItemFormComponent called')
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>('')
 

@@ -26,7 +26,7 @@ type Props = {
 };
 
 export const TodoListWithRedux: React.FC<Props> = (props) => {
-
+    console.log('TodoListWithReduxComponent called')
     const {
         todolistID,
         title,
