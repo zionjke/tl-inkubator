@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ChangeEvent} from "react";
+import {ChangeEvent, useCallback} from "react";
 import {EditableTitle} from "./EditableTitle";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
@@ -20,7 +20,7 @@ type Props = {
 };
 
 export const TaskWithRedux: React.FC<Props> = (props) => {
-    console.log('TaskWithReduxComponent called')
+    // console.log('Task called')
     const {
         taskID,
         todoListID,
@@ -32,11 +32,9 @@ export const TaskWithRedux: React.FC<Props> = (props) => {
     // })
     const dispatch = useDispatch()
 
-    const removeTask = () => dispatch(removeTaskActionCreator(todoListID, taskID))
-    const changeTaskStatus = ((e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusActionCreator(todoListID, taskID, e.currentTarget.checked)))
-    const changeTaskTitle = (title: string) => {
-        dispatch(changeTaskTitleActionCreator(todoListID, taskID, title))
-    }
+    const removeTask = useCallback(() => dispatch(removeTaskActionCreator(todoListID, taskID)), [dispatch, todoListID, taskID])
+    const changeTaskStatus = useCallback(((e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusActionCreator(todoListID, taskID, e.currentTarget.checked))), [dispatch, todoListID, taskID])
+    const changeTaskTitle = useCallback((title: string) => dispatch(changeTaskTitleActionCreator(todoListID, taskID, title)), [dispatch, todoListID, taskID])
 
 
     return (

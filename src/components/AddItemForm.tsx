@@ -2,15 +2,14 @@ import * as React from 'react';
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import IconButton from '@material-ui/core/IconButton';
-import Alert from '@material-ui/lab/Alert';
 import {TextField} from "@material-ui/core";
 
 type Props = {
     addItem: (title: string) => void
 };
 
-export const AddItemForm: React.FC<Props> = ({addItem}) => {
-    console.log('AddItemFormComponent called')
+export const AddItemForm: React.FC<Props> = React.memo(({addItem}) => {
+    console.log('AddItemForm called')
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>('')
 
@@ -61,4 +60,4 @@ export const AddItemForm: React.FC<Props> = ({addItem}) => {
         </div>
 
     );
-};
+});

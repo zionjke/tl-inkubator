@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {FilterValuesType, TaskType, TodoListType} from "../types/types";
 import {TodolistTitle} from "./TodolistTitle";
 import {AddItemForm} from "./AddItemForm";
@@ -25,13 +25,14 @@ type Props = {
     filter: FilterValuesType
 };
 
-export const TodoListWithRedux: React.FC<Props> = (props) => {
-    console.log('TodoListWithReduxComponent called')
+export const TodoListWithRedux: React.FC<Props> = React.memo((props) => {
     const {
         todolistID,
         title,
         filter
     } = props
+
+    console.log(`this ${todolistID} TodoList called`)
 
     // const todo = useSelector<GlobalStateType, TodoListType>(state => {
     //     return state.todoLists.filter((tl: TodoListType) => tl.id === todolistID)[0]
@@ -55,14 +56,14 @@ export const TodoListWithRedux: React.FC<Props> = (props) => {
     })
 
 
-    const addNewTask = (title: string) => dispatch(addNewTaskActionCreator(todolistID, title))
+    const addNewTask = useCallback((title: string) => dispatch(addNewTaskActionCreator(todolistID, title)), [dispatch,todolistID])
 
-    const changeTodolistTitle = (title: string) => dispatch(changeTodoListTitleActionCreator(todolistID, title))
-    const removeTodoList = () => dispatch(removeTodoListActionCreator(todolistID))
+    const changeTodolistTitle = useCallback((title: string) => dispatch(changeTodoListTitleActionCreator(todolistID, title)), [dispatch,todolistID])
+    const removeTodoList = useCallback(() => dispatch(removeTodoListActionCreator(todolistID)), [dispatch])
 
-    const setAllFilter = () => dispatch(changeTodoListFilterActionCreator(todolistID, 'All'))
-    const setActiveFilter = () => dispatch(changeTodoListFilterActionCreator(todolistID, 'Active'))
-    const setCompletedFilter = () => dispatch(changeTodoListFilterActionCreator(todolistID, 'Completed'))
+    const setAllFilter = useCallback(() => dispatch(changeTodoListFilterActionCreator(todolistID, 'All')), [dispatch,todolistID])
+    const setActiveFilter = useCallback(() => dispatch(changeTodoListFilterActionCreator(todolistID, 'Active')), [dispatch,todolistID])
+    const setCompletedFilter = useCallback(() => dispatch(changeTodoListFilterActionCreator(todolistID, 'Completed')), [dispatch,todolistID])
 
 
     return (
@@ -105,4 +106,4 @@ export const TodoListWithRedux: React.FC<Props> = (props) => {
     );
 
 
-};
+});

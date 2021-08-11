@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TodoListType} from './types/types';
 import {AddItemForm} from "./components/AddItemForm";
@@ -10,13 +10,13 @@ import {TodoListWithRedux} from "./components/TodoListWithRedux";
 
 
 function AppWithRedux() {
-    console.log('AppWithReduxComponent called')
+    // console.log('App called')
     const todoLists = useSelector<GlobalStateType, TodoListType[]>(state => state.todoLists)
     const dispatch = useDispatch()
 
-    const addNewTodoList = (title: string) => {
-        dispatch(addTodoListActionCreator(title))
-    }
+    const addNewTodoList = useCallback((title: string) => {
+            dispatch(addTodoListActionCreator(title))
+        }, [dispatch])
 
     return (
         <div className="App">
