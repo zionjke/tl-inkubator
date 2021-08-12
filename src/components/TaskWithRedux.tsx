@@ -4,47 +4,41 @@ import {EditableTitle} from "./EditableTitle";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import {Checkbox} from "@material-ui/core";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {
     changeTaskStatusActionCreator,
     changeTaskTitleActionCreator,
     removeTaskActionCreator
 } from "../state/tasks-reducer";
+import {TaskType} from "../types/types";
 
 
 type Props = {
-    taskID: string
+    task: TaskType
     todoListID: string
-    title: string
-    isDone: boolean
 };
 
-export const TaskWithRedux: React.FC<Props> = (props) => {
+export const TaskWithRedux: React.FC<Props> = React.memo((props) => {
     // console.log('Task called')
     const {
-        taskID,
+        task,
         todoListID,
-        title,
-        isDone
     } = props
-    // const task = useSelector<GlobalStateType,TaskType>(state => {
-    //     return state.tasks[props.todoListID].filter((task:TaskType) => task.id === props.id)[0]
-    // })
+
     const dispatch = useDispatch()
 
-    const removeTask = useCallback(() => dispatch(removeTaskActionCreator(todoListID, taskID)), [dispatch, todoListID, taskID])
-    const changeTaskStatus = useCallback(((e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusActionCreator(todoListID, taskID, e.currentTarget.checked))), [dispatch, todoListID, taskID])
-    const changeTaskTitle = useCallback((title: string) => dispatch(changeTaskTitleActionCreator(todoListID, taskID, title)), [dispatch, todoListID, taskID])
+    const removeTask = useCallback(() => dispatch(removeTaskActionCreator(todoListID, task.id)), [dispatch, todoListID, task.id])
+    const changeTaskStatus = useCallback(((e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusActionCreator(todoListID, task.id, e.currentTarget.checked))), [dispatch, todoListID, task.id])
+    const changeTaskTitle = useCallback((title: string) => dispatch(changeTaskTitleActionCreator(todoListID, task.id, title)), [dispatch, todoListID, task.id])
 
 
     return (
-        <li className={isDone ? 'is-done' : ''}>
-            <Checkbox onChange={changeTaskStatus} checked={isDone}/>
-            {/*<input onChange={onChangeTaskStatus} type="checkbox" checked={props.isDone}/>*/}
-            <EditableTitle title={title} changeTitle={changeTaskTitle}/>
-            <IconButton color='secondary' className={"IconButton"} onClick={removeTask}>
-                <DeleteIcon/>
+        <li className={task.isDone ? 'is-done' : ''}>
+            <Checkbox onChange={changeTaskStatus} checked={task.isDone}/>
+            <EditableTitle title={task.title} changeTitle={changeTaskTitle}/>
+            <IconButton color='secondary' className={"IconButton"}>
+                <DeleteIcon onClick={removeTask}/>
             </IconButton>
         </li>
     );
-};
+});

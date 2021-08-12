@@ -6,10 +6,14 @@ type Props = {
     changeTodolistTitle: (title: string) => void
 };
 
-export const TodolistTitle: React.FC<Props> = (props) => {
+export const TodolistTitle: React.FC<Props> = React.memo((props) => {
+    const {
+        title,
+        changeTodolistTitle
+    } = props
     return (
         <h3>
-            <EditableTitle changeTitle={props.changeTodolistTitle} title={props.title}/>
+            <EditableTitle changeTitle={changeTodolistTitle} title={title}/>
         </h3>
     )
-}
+})

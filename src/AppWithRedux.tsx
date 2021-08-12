@@ -25,9 +25,7 @@ function AppWithRedux() {
                 {
                     todoLists.map(tl =>
                         <Paper key={tl.id} elevation={3} style={{padding: "15px"}}>
-                            <TodoListWithRedux todolistID={tl.id}
-                                               filter={tl.filter}
-                                               title={tl.title}/>
+                            <TodoListWithRedux todoList={tl}/>
                         </Paper>
                     )
                 }

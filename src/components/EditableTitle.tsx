@@ -6,7 +6,8 @@ type Props = {
     title: string
     changeTitle: (title: string) => void
 };
-export const EditableTitle = (props: Props) => {
+export const EditableTitle: React.FC<Props> = React.memo((props: Props) => {
+    console.log('EditableTitle called')
     const [editMode, setEditMode] = useState<boolean>(false)
     const [title, setTitle] = useState<string>(props.title)
     const [error, setError] = useState<boolean>(false)
@@ -54,4 +55,4 @@ export const EditableTitle = (props: Props) => {
 
         </>
     );
-};
+});

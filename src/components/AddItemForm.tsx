@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const AddItemForm: React.FC<Props> = React.memo(({addItem}) => {
-    console.log('AddItemForm called')
+    // console.log('AddItemForm called')
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>('')
 
@@ -33,7 +33,6 @@ export const AddItemForm: React.FC<Props> = React.memo(({addItem}) => {
         } else {
             setError('Title is required')
         }
-
     }
 
 
@@ -51,12 +50,6 @@ export const AddItemForm: React.FC<Props> = React.memo(({addItem}) => {
             <IconButton className={"iconButton"}>
                 <AddCircleIcon color={"primary"} onClick={onAddNewItem}/>
             </IconButton>
-            {/*<Button onClick={onAddNewItem}>*/}
-            {/*    Add*/}
-            {/*</Button>*/}
-            {/*{*/}
-            {/*    error && <Alert severity="error">Title Required!</Alert>*/}
-            {/*}*/}
         </div>
 
     );
