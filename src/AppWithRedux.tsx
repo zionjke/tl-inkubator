@@ -10,7 +10,7 @@ import {TodoListWithRedux} from "./components/TodoListWithRedux";
 
 
 function AppWithRedux() {
-    // console.log('App called')
+    console.log('App called')
     const todoLists = useSelector<GlobalStateType, TodoListType[]>(state => state.todoLists)
     const dispatch = useDispatch()
 

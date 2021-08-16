@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const AddItemForm: React.FC<Props> = React.memo(({addItem}) => {
-    // console.log('AddItemForm called')
+    console.log('AddItemForm called')
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>('')
 
