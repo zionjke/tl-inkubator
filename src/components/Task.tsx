@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ChangeEvent} from "react";
-import {EditableTitle} from "./EditableTitle";
+import {EditableTitle} from "./EditableTitle/EditableTitle";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import {Checkbox} from "@material-ui/core";

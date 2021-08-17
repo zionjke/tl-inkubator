@@ -1,5 +1,5 @@
 import React from 'react';
-import {EditableTitle} from "./EditableTitle";
+import {EditableTitle} from "./EditableTitle/EditableTitle";
 
 type Props = {
     title: string

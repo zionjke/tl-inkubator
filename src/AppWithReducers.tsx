@@ -2,7 +2,7 @@ import React, {useEffect, useReducer} from 'react';
 import './App.css';
 import {TodoList} from "./components/TodoList";
 import {FilterValuesType} from './types/types';
-import {AddItemForm} from "./components/AddItemForm";
+import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {Paper} from "@material-ui/core";
 import {
     addTodoListActionCreator, changeTodoListFilterActionCreator,

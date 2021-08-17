@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ChangeEvent, useCallback} from "react";
-import {EditableTitle} from "./EditableTitle";
+import {EditableTitle} from "../EditableTitle/EditableTitle";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import {Checkbox} from "@material-ui/core";
@@ -9,16 +9,16 @@ import {
     changeTaskStatusActionCreator,
     changeTaskTitleActionCreator,
     removeTaskActionCreator
-} from "../state/tasks-reducer";
-import {TaskType} from "../types/types";
+} from "../../state/tasks-reducer";
+import {TaskType} from "../../types/types";
 
 
-type Props = {
+export type TaskPropsType = {
     task: TaskType
     todoListID: string
 };
 
-export const TaskWithRedux: React.FC<Props> = React.memo((props) => {
+export const TaskWithRedux: React.FC<TaskPropsType> = React.memo((props) => {
     // console.log('Task called')
     const {
         task,

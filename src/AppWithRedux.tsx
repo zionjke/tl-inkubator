@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import './App.css';
 import {TodoListType} from './types/types';
-import {AddItemForm} from "./components/AddItemForm";
+import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {Paper} from "@material-ui/core";
 import {addTodoListActionCreator} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";

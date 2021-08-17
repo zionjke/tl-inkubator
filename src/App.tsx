@@ -3,7 +3,7 @@ import {v1} from 'uuid';
 import './App.css';
 import {TodoList} from "./components/TodoList";
 import {FilterValuesType, TaskStateType, TaskType, TodoListType} from './types/types';
-import {AddItemForm} from "./components/AddItemForm";
+import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {Paper} from "@material-ui/core";
 import {useReducer} from 'react';
 import {

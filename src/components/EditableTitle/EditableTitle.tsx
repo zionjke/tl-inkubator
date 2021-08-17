@@ -2,11 +2,11 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {TextField} from "@material-ui/core";
 
 
-type Props = {
+export type EditableTitlePropsType = {
     title: string
     changeTitle: (title: string) => void
 };
-export const EditableTitle: React.FC<Props> = React.memo((props: Props) => {
+export const EditableTitle: React.FC<EditableTitlePropsType> = React.memo((props: EditableTitlePropsType) => {
     console.log('EditableTitle called')
     const [editMode, setEditMode] = useState<boolean>(false)
     const [title, setTitle] = useState<string>(props.title)
@@ -52,7 +52,6 @@ export const EditableTitle: React.FC<Props> = React.memo((props: Props) => {
                          {props.title}
                      </span>
             }
-
         </>
     );
 });

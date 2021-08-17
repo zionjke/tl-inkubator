@@ -2,7 +2,7 @@ import React from 'react';
 import {Task} from "./Task";
 import {FilterValuesType, TaskType} from "../types/types";
 import {TodolistTitle} from "./TodolistTitle";
-import {AddItemForm} from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm/AddItemForm";
 
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';

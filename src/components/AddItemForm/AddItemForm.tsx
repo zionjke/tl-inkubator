@@ -4,11 +4,11 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import IconButton from '@material-ui/core/IconButton';
 import {TextField} from "@material-ui/core";
 
-type Props = {
+export type AddItemFormPropsType = {
     addItem: (title: string) => void
 };
 
-export const AddItemForm: React.FC<Props> = React.memo(({addItem}) => {
+export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem}) => {
     console.log('AddItemForm called')
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>('')

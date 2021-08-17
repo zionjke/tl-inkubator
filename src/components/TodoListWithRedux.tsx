@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {FilterValuesType, TaskType, TodoListType} from "../types/types";
 import {TodolistTitle} from "./TodolistTitle";
-import {AddItemForm} from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm/AddItemForm";
 
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -16,7 +16,7 @@ import {
     changeTodoListTitleActionCreator,
     removeTodoListActionCreator
 } from "../state/todolists-reducer";
-import {TaskWithRedux} from "./TaskWithRedux";
+import {TaskWithRedux} from "./Task/TaskWithRedux";
 
 
 type Props = {
