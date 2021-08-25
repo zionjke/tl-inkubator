@@ -2,8 +2,6 @@ import {TaskPropsType, TaskWithRedux} from "./TaskWithRedux";
 
 import {Meta, Story} from "@storybook/react";
 import React from "react";
-import {Provider} from "react-redux";
-import {store} from "../../state/store";
 import {ReduxStoreProviderDecorator} from "../../ReduxStoreProviderDecorator";
 
 

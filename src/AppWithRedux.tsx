@@ -15,8 +15,8 @@ function AppWithRedux() {
     const dispatch = useDispatch()
 
     const addNewTodoList = useCallback((title: string) => {
-            dispatch(addTodoListActionCreator(title))
-        }, [dispatch])
+        dispatch(addTodoListActionCreator(title))
+    }, [dispatch])
 
     return (
         <div className="App">
