@@ -1,8 +1,8 @@
-import {TaskPropsType, TaskWithRedux} from "./TaskWithRedux";
+import {TaskPropsType, TaskWithRedux} from "../components/Task/TaskWithRedux";
 
 import {Meta, Story} from "@storybook/react";
 import React from "react";
-import {ReduxStoreProviderDecorator} from "../../ReduxStoreProviderDecorator";
+import {ReduxStoreProviderDecorator} from "../ReduxStoreProviderDecorator";
 
 
 export default {

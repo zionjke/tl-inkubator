@@ -1,7 +1,7 @@
 import {action} from "@storybook/addon-actions";
 import {Meta, Story} from "@storybook/react";
 import React from "react";
-import {EditableTitle, EditableTitlePropsType} from "./EditableTitle";
+import {EditableTitle, EditableTitlePropsType} from "../components/EditableTitle/EditableTitle";
 
 
 export default {

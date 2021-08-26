@@ -5,8 +5,8 @@ import {
     changeTaskStatusActionCreator, changeTaskTitleActionCreator,
     removeTaskActionCreator,
     tasksReducer
-} from "./tasks-reducer";
-import {addTodoListActionCreator, removeTodoListActionCreator} from "./todolists-reducer";
+} from "../state/tasks-reducer";
+import {addTodoListActionCreator, removeTodoListActionCreator} from "../state/todolists-reducer";
 
 let todoListID1:string;
 let todoListID2:string;
