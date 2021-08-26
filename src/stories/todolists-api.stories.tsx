@@ -93,7 +93,7 @@ export const ChangeTodolistTitle = () => {
 
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
-    const todolistId = 'fced9d6f-5fd9-45fd-973b-44c9571bb0be'
+    const todolistId = 'ffb9e93e-3a82-4014-a13e-bb005d0142f5'
 
     const getTasks = async () => {
         try {
@@ -118,7 +118,7 @@ export const GetTasks = () => {
 export const CreateTask = () => {
 
     const [state, setState] = useState<any>(null)
-    const todolistId = 'fced9d6f-5fd9-45fd-973b-44c9571bb0be'
+    const todolistId = 'ffb9e93e-3a82-4014-a13e-bb005d0142f5'
     const newTaskTitle = 'newTask'
 
     const createTask = async () => {
@@ -170,13 +170,14 @@ export const DeleteTask = () => {
 export const UpdateTask = () => {
     const [state, setState] = useState<any>(null)
 
-    const todolistId = "fced9d6f-5fd9-45fd-973b-44c9571bb0be";
-    const taskId = "b165b91e-3b25-44fd-9c03-fbdaef9ee5e1"
+    const todolistId = "ffb9e93e-3a82-4014-a13e-bb005d0142f5";
+    const taskId = "ff259e32-a4d2-463a-83aa-62fbb888e0a8"
     const title = 'Updated Task Title'
+    const status = 1
 
     const updateTask = async () => {
         try {
-            let {data} = await tasksApi.updateTask(todolistId, taskId, title)
+            let {data} = await tasksApi.updateTask(todolistId, taskId, title,status)
             setState(data.data.item)
         } catch (e) {
             console.log(e)

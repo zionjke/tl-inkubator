@@ -43,7 +43,10 @@ export const tasksApi = {
     deleteTask(todolistId: string, taskId: string) {
         return APIInstance.delete<ResponseType>(`${todolistId}/tasks/${taskId}`)
     },
-    updateTask(todolistId: string, taskId: string, title: string) {
-        return APIInstance.put<ResponseType<{ item: TaskType }>>(`${todolistId}/tasks/${taskId}`, {title: title})
+    updateTask(todolistId: string, taskId: string, title: string, status: number) {
+        return APIInstance.put<ResponseType<{ item: TaskType }>>(`${todolistId}/tasks/${taskId}`, {
+            title: title,
+            status: status
+        })
     }
 }
