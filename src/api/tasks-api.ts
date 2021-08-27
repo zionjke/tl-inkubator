@@ -1,4 +1,5 @@
 import axios from "axios";
+import {TaskType} from "../types/types";
 
 const settings = {
     withCredentials: true,
@@ -8,18 +9,6 @@ const settings = {
 
 const APIInstance = axios.create(settings);
 
-export type TaskType = {
-    description: string
-    title: string
-    status: number
-    priority: number
-    startDate: string
-    deadline: string
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
 
 type TasksResponseType = {
     items: TaskType[]

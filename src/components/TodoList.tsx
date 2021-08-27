@@ -1,3 +1,6 @@
+//@ts-nocheck
+
+
 import React from 'react';
 import {Task} from "./Task";
 import {FilterValuesType, TaskType} from "../types/types";

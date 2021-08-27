@@ -1,9 +1,8 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import {TodoListType} from './types/types';
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {Paper} from "@material-ui/core";
-import {addTodoListActionCreator} from "./state/todolists-reducer";
+import {addTodoListActionCreator, TodolistDomainType} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {GlobalStateType} from "./state/store";
 import {TodoListWithRedux} from "./components/TodoListWithRedux";
@@ -11,7 +10,7 @@ import {TodoListWithRedux} from "./components/TodoListWithRedux";
 
 function AppWithRedux() {
     console.log('App called')
-    const todoLists = useSelector<GlobalStateType, TodoListType[]>(state => state.todoLists)
+    const todoLists = useSelector<GlobalStateType, TodolistDomainType[]>(state => state.todoLists)
     const dispatch = useDispatch()
 
     const addNewTodoList = useCallback((title: string) => {

@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {FilterValuesType, TaskType, TodoListType} from "../types/types";
+import {TaskStatuses, TaskType} from "../types/types";
 import {TodolistTitle} from "./TodolistTitle";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
 
@@ -8,19 +8,17 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import {useDispatch, useSelector} from "react-redux";
 import {GlobalStateType} from "../state/store";
-import {
-    addNewTaskActionCreator,
-} from "../state/tasks-reducer";
+import {addNewTaskActionCreator,} from "../state/tasks-reducer";
 import {
     changeTodoListFilterActionCreator,
     changeTodoListTitleActionCreator,
-    removeTodoListActionCreator
+    removeTodoListActionCreator, TodolistDomainType
 } from "../state/todolists-reducer";
 import {TaskWithRedux} from "./Task/TaskWithRedux";
 
 
 type Props = {
-    todoList: TodoListType
+    todoList: TodolistDomainType
 };
 
 export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
@@ -40,9 +38,9 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
             case "All":
                 return task
             case "Active":
-                return !task.isDone
+                return task.status === TaskStatuses.New
             case "Completed":
-                return task.isDone
+                return task.status === TaskStatuses.Completed
             default:
                 return task
         }

@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import React, {useEffect, useReducer} from 'react';
 import './App.css';
 import {TodoList} from "./components/TodoList";
