@@ -1,5 +1,5 @@
 import {v1} from "uuid"
-import {TaskStateType} from "../types/types";
+import {TaskPriorities, TaskStateType, TaskStatuses} from "../types/types";
 import {
     addNewTaskActionCreator,
     changeTaskStatusActionCreator, changeTaskTitleActionCreator,
@@ -8,11 +8,11 @@ import {
 } from "../state/tasks-reducer";
 import {addTodoListActionCreator, removeTodoListActionCreator} from "../state/todolists-reducer";
 
-let todoListID1:string;
-let todoListID2:string;
-let taskID:string;
+let todoListID1: string;
+let todoListID2: string;
+let taskID: string;
 let startState: TaskStateType;
-let newTaskTitle:string;
+let newTaskTitle: string;
 
 beforeEach(() => {
     todoListID1 = v1()
@@ -20,14 +20,68 @@ beforeEach(() => {
     taskID = v1()
     startState = {
         [todoListID1]: [
-            {id: taskID, title: 'First Task', isDone: true},
-            {id: v1(), title: 'Second Task', isDone: false},
-            {id: v1(), title: 'Third Task', isDone: false},
+            {
+                id: taskID,
+                title: 'First Task',
+                status: TaskStatuses.Completed,
+                addedDate: '',
+                order: 0,
+                description: '',
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: todoListID1
+            },
+            {
+                id: v1(), title: 'Second Task', status: TaskStatuses.New, addedDate: '',
+                order: 0,
+                description: '',
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: todoListID1
+            },
+            {
+                id: v1(), title: 'Third Task', status: TaskStatuses.New, addedDate: '',
+                order: 0,
+                description: '',
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: todoListID1
+            },
         ],
-        [todoListID2] : [
-            {id: v1(), title: 'First Task', isDone: true},
-            {id: v1(), title: 'Second Task', isDone: false},
-            {id: v1(), title: 'Third Task', isDone: false},
+        [todoListID2]: [
+            {
+                id: taskID,
+                title: 'First Task',
+                status: TaskStatuses.Completed,
+                addedDate: '',
+                order: 0,
+                description: '',
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: todoListID2
+            },
+            {
+                id: v1(), title: 'Second Task', status: TaskStatuses.New, addedDate: '',
+                order: 0,
+                description: '',
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: todoListID2
+            },
+            {
+                id: v1(), title: 'Third Task', status: TaskStatuses.New, addedDate: '',
+                order: 0,
+                description: '',
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: todoListID2
+            },
         ]
     }
 })
@@ -36,14 +90,14 @@ test('correct task should be added', () => {
     const endState = tasksReducer(startState, addNewTaskActionCreator(todoListID1, newTaskTitle))
 
     expect(endState[todoListID1][3].title).toBe(newTaskTitle)
-    expect(endState[todoListID1][3].isDone).toBe(false)
+    expect(endState[todoListID1][3].status).toBe( TaskStatuses.New)
     expect(endState[todoListID1][3].id).toBeDefined()
 })
 
 test('task status should be updated', () => {
-    const endState = tasksReducer(startState, changeTaskStatusActionCreator(todoListID1, taskID, false))
+    const endState = tasksReducer(startState, changeTaskStatusActionCreator(todoListID1, taskID, TaskStatuses.New))
 
-    expect(endState[todoListID1][0].isDone).toBe(false)
+    expect(endState[todoListID1][0].status).toBe(TaskStatuses.New)
 })
 
 test('task title should be updated', () => {
@@ -63,11 +117,11 @@ test('correct task should be removed', () => {
 })
 
 test('new array should be added when new todolist is added', () => {
-    const endState = tasksReducer(startState,addTodoListActionCreator('new todo'))
+    const endState = tasksReducer(startState, addTodoListActionCreator('new todo'))
 
     const keys = Object.keys(endState)
     const newKey = keys.find(key => key !== todoListID1 && key !== todoListID2);
-    if(!newKey) {
+    if (!newKey) {
         throw Error('new key should be added')
     }
 
@@ -77,7 +131,7 @@ test('new array should be added when new todolist is added', () => {
 })
 
 test('array with tasks should be deleted when  todolist is removed', () => {
-    const endState = tasksReducer(startState,removeTodoListActionCreator(todoListID1))
+    const endState = tasksReducer(startState, removeTodoListActionCreator(todoListID1))
     const keys = Object.keys(endState)
 
     expect(keys.length).toBe(1)
