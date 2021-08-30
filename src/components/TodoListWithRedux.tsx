@@ -8,14 +8,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import {useDispatch, useSelector} from "react-redux";
 import {GlobalStateType} from "../state/store";
-import {addNewTaskActionCreator, setTasksActionCreator,} from "../state/tasks-reducer";
+import {createTask, fetchTasks} from "../state/tasks-reducer";
 import {
-    changeTodoListFilterActionCreator,
-    changeTodoListTitleActionCreator,
-    removeTodoListActionCreator, TodolistDomainType
+    changeTodoListFilterActionCreator, removeTodoListThunkCreator, TodolistDomainType, updateTodoListTitleThunkCreator
 } from "../state/todolists-reducer";
 import {TaskWithRedux} from "./Task/TaskWithRedux";
-import {tasksApi} from "../api/tasks-api";
+
 
 
 type Props = {
@@ -44,23 +42,16 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
                 return task
         }
     })
-    const setTasks = async () => {
-        try {
-            let {data} = await tasksApi.getTasks(todoList.id)
-            dispatch(setTasksActionCreator(todoList.id, data.items))
-        } catch (e) {
-            console.log(e)
-        }
-    }
+
 
     useEffect(() => {
-        setTasks()
+        dispatch(fetchTasks(todoList.id))
     }, [])
 
-    const addNewTask = useCallback((title: string) => dispatch(addNewTaskActionCreator(todoList.id, title)), [dispatch, todoList.id])
+    const createTaskHandler = useCallback((title: string) => dispatch(createTask(todoList.id, title)), [dispatch, todoList.id])
 
-    const changeTodolistTitle = useCallback((title: string) => dispatch(changeTodoListTitleActionCreator(todoList.id, title)), [dispatch, todoList.id])
-    const removeTodoList = useCallback(() => dispatch(removeTodoListActionCreator(todoList.id)), [dispatch, todoList.id])
+    const changeTodolistTitle = useCallback((title: string) => dispatch(updateTodoListTitleThunkCreator(todoList.id, title)), [dispatch, todoList.id])
+    const removeTodoList = useCallback(() => dispatch(removeTodoListThunkCreator(todoList.id)), [dispatch, todoList.id])
 
     const setAllFilter = useCallback(() => dispatch(changeTodoListFilterActionCreator(todoList.id, 'All')), [dispatch, todoList.id])
     const setActiveFilter = useCallback(() => dispatch(changeTodoListFilterActionCreator(todoList.id, 'Active')), [dispatch, todoList.id])
@@ -76,7 +67,7 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
                     <DeleteIcon onClick={removeTodoList}/>
                 </IconButton>
             </div>
-            <AddItemForm addItem={addNewTask}/>
+            <AddItemForm addItem={createTaskHandler}/>
             <ul style={{listStyle: 'none', paddingLeft: 0}}>
                 {
                     filteredTasks.map(task => (
