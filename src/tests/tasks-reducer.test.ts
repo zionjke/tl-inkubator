@@ -33,7 +33,9 @@ beforeEach(() => {
                 todoListId: todoListID1
             },
             {
-                id: v1(), title: 'Second Task', status: TaskStatuses.New, addedDate: '',
+                id: v1(),
+                title: 'Second Task',
+                status: TaskStatuses.New, addedDate: '',
                 order: 0,
                 description: '',
                 priority: TaskPriorities.Low,
@@ -42,7 +44,9 @@ beforeEach(() => {
                 todoListId: todoListID1
             },
             {
-                id: v1(), title: 'Third Task', status: TaskStatuses.New, addedDate: '',
+                id: v1(),
+                title: 'Third Task',
+                status: TaskStatuses.New, addedDate: '',
                 order: 0,
                 description: '',
                 priority: TaskPriorities.Low,

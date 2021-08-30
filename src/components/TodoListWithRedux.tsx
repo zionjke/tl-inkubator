@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {TaskStatuses, TaskType} from "../types/types";
 import {TodolistTitle} from "./TodolistTitle";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
@@ -8,13 +8,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import {useDispatch, useSelector} from "react-redux";
 import {GlobalStateType} from "../state/store";
-import {addNewTaskActionCreator,} from "../state/tasks-reducer";
+import {addNewTaskActionCreator, setTasksActionCreator,} from "../state/tasks-reducer";
 import {
     changeTodoListFilterActionCreator,
     changeTodoListTitleActionCreator,
     removeTodoListActionCreator, TodolistDomainType
 } from "../state/todolists-reducer";
 import {TaskWithRedux} from "./Task/TaskWithRedux";
+import {tasksApi} from "../api/tasks-api";
 
 
 type Props = {
@@ -25,8 +26,6 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
     const {
         todoList
     } = props
-
-    // console.log(`this ${todolistID} TodoList called`)
 
     const tasks = useSelector<GlobalStateType, TaskType[]>(state => {
         return state.tasks[todoList.id]
@@ -45,7 +44,18 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
                 return task
         }
     })
+    const setTasks = async () => {
+        try {
+            let {data} = await tasksApi.getTasks(todoList.id)
+            dispatch(setTasksActionCreator(todoList.id, data.items))
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
+    useEffect(() => {
+        setTasks()
+    }, [])
 
     const addNewTask = useCallback((title: string) => dispatch(addNewTaskActionCreator(todoList.id, title)), [dispatch, todoList.id])
 

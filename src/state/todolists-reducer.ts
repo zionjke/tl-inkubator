@@ -5,7 +5,7 @@ import {v1} from "uuid";
 export type TodolistsActionTypes = RemoveTodolistActionType
     | AddTodolistActionType
     | ChangeTodoListFilterActionType
-    | ChangeTodoListTitleActionType
+    | ChangeTodoListTitleActionType | SetTodolistActionType
 
 export type RemoveTodolistActionType = {
     todolistID: string
@@ -30,6 +30,10 @@ export type ChangeTodoListTitleActionType = {
     title: string
 }
 
+// export type SetTodolistActionType = {
+//     type: 'TODOLIST/SET_TODOLISTS',
+// }
+
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
 }
@@ -38,6 +42,8 @@ const initialState: TodolistDomainType[] = []
 
 export const todolistsReducer = (todoLists = initialState, action: TodolistsActionTypes): TodolistDomainType[] => {
     switch (action.type) {
+        case "TODOLIST/SET_TODOLISTS":
+            return action.todoLists.map(tl => ({...tl, filter: "All"})) // добавляем св-во filter в массив обьектов тудулистов
         case "TODOLIST/REMOVE_TODOLIST":
             return todoLists.filter(t => t.id !== action.todolistID);
         case "TODOLIST/ADD_TODOLIST":
@@ -96,3 +102,12 @@ export const changeTodoListTitleActionCreator = (todolistID: string, title: stri
         type: "TODOLIST/CHANGE_TODOLIST_TITLE"
     }
 }
+
+export const setTodolistActionCreator = (todoLists: TodolistType[]) => {
+    return {
+        type: "TODOLIST/SET_TODOLISTS",
+        todoLists
+    } as const
+}
+
+export type SetTodolistActionType = ReturnType<typeof setTodolistActionCreator>

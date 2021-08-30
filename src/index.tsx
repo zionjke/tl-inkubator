@@ -7,10 +7,11 @@ import {store} from "./state/store";
 import AppWithRedux from "./AppWithRedux";
 
 
+
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <AppWithRedux/>
+        <AppWithRedux/>
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

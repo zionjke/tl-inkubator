@@ -1,6 +1,6 @@
 import {TaskPriorities, TaskStateType, TaskStatuses, TaskType} from "../types/types";
 import {v1} from "uuid";
-import {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
+import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistActionType} from "./todolists-reducer";
 
 export type AddNewTaskActionType = {
     title: string
@@ -33,13 +33,24 @@ export type TasksActionsType =
     | ChangeTaskStatusActionType
     | RemoveTaskActionType
     | ChangeTaskTitleActionType
-    | RemoveTodolistActionType | AddTodolistActionType
+    | RemoveTodolistActionType | AddTodolistActionType | SetTasksActionType | SetTodolistActionType
 
 
 const initialState: TaskStateType = {}
 
 export const tasksReducer = (tasks = initialState, action: TasksActionsType): TaskStateType => {
     switch (action.type) {
+        case "TODOLIST/SET_TODOLISTS": // создаем для каждого массива тасок ключ в обьекте (ассоциативній массив)
+            const tasksCopy = {...tasks}
+            action.todoLists.forEach(tl => {
+                tasksCopy[tl.id] = []
+            })
+            return tasksCopy
+        case "TODOLIST/TASKS/SET_TASKS":
+            return {
+                ...tasks,
+                [action.todolistID]: [...action.tasks]
+            }
         case "TODOLIST/TASKS/ADD_NEW_TASK": {
             let newTask: TaskType = {
                 id: v1(),
@@ -153,3 +164,13 @@ export const changeTaskTitleActionCreator = (todoListID: string, taskID: string,
         title
     }
 }
+
+export const setTasksActionCreator = (todolistID: string, tasks: TaskType[]) => {
+    return {
+        type: "TODOLIST/TASKS/SET_TASKS",
+        todolistID,
+        tasks
+    } as const
+}
+
+export type SetTasksActionType = ReturnType<typeof setTasksActionCreator>
