@@ -50,7 +50,7 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
 
     const createTaskHandler = useCallback((title: string) => dispatch(createTask(todoList.id, title)), [dispatch, todoList.id])
 
-    const changeTodolistTitle = useCallback((title: string) => dispatch(updateTodoListTitleThunkCreator(todoList.id, title)), [dispatch, todoList.id])
+    const updateTodolistTitleHandler = useCallback((title: string) => dispatch(updateTodoListTitleThunkCreator(todoList.id, title)), [dispatch, todoList.id])
     const removeTodoList = useCallback(() => dispatch(removeTodoListThunkCreator(todoList.id)), [dispatch, todoList.id])
 
     const setAllFilter = useCallback(() => dispatch(changeTodoListFilterActionCreator(todoList.id, 'All')), [dispatch, todoList.id])
@@ -61,7 +61,7 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
     return (
         <div>
             <div className='todolistTitle'>
-                <TodolistTitle changeTodolistTitle={changeTodolistTitle}
+                <TodolistTitle changeTodolistTitle={updateTodolistTitleHandler}
                                title={todoList.title}/>
                 <IconButton color='secondary' className={"iconButton"}>
                     <DeleteIcon onClick={removeTodoList}/>
