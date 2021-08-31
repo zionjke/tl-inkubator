@@ -164,10 +164,8 @@ export const updateTaskStatus = (todoListID: string, taskID: string, status: Tas
 }
 
 export const updateTaskTitle = (todoListID: string, taskID: string, title: string): AppThunk => async (dispatch, getState: () => GlobalStateType) => {
-    const appState = getState()
-    const tasks = appState.tasks
-    const taskForTodo = tasks[todoListID]
-    const task = taskForTodo.find(t => t.id === taskID);
+    const tasks = getState().tasks[todoListID]
+    const task = tasks.find(t => t.id === taskID);
     if (task) {
         const model: UpdateTaskModelType = {
             deadline: task.deadline,
