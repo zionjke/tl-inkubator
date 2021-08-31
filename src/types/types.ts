@@ -1,5 +1,4 @@
-import {TodolistsActionTypes} from "../state/todolists-reducer";
-import {TasksActionsType} from "../state/tasks-reducer";
+
 
 export enum TaskStatuses {
     New = 0,

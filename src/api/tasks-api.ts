@@ -22,6 +22,15 @@ type ResponseType<D = {}> = {
     data: D
 }
 
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+}
+
 export const tasksApi = {
     getTasks(todolistId: string) {
         return APIInstance.get<TasksResponseType>(`${todolistId}/tasks`)
@@ -32,10 +41,7 @@ export const tasksApi = {
     deleteTask(todolistId: string, taskId: string) {
         return APIInstance.delete<ResponseType>(`${todolistId}/tasks/${taskId}`)
     },
-    updateTask(todolistId: string, taskId: string, title: string, status: number) {
-        return APIInstance.put<ResponseType<{ item: TaskType }>>(`${todolistId}/tasks/${taskId}`, {
-            title: title,
-            status: status
-        })
+    updateTask(todolistId: string, taskId: string, model:UpdateTaskModelType ) {
+        return APIInstance.put<ResponseType<{ item: TaskType }>>(`${todolistId}/tasks/${taskId}`, model)
     }
-}
+};

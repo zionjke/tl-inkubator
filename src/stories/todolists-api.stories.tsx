@@ -166,30 +166,30 @@ export const DeleteTask = () => {
     )
 }
 
-export const UpdateTask = () => {
-    const [state, setState] = useState<any>(null)
-
-    const todolistId = "ffb9e93e-3a82-4014-a13e-bb005d0142f5";
-    const taskId = "ff259e32-a4d2-463a-83aa-62fbb888e0a8"
-    const title = 'Updated Task Title'
-    const status = 1
-
-    const updateTask = async () => {
-        try {
-            let {data} = await tasksApi.updateTask(todolistId, taskId, title,status)
-            setState(data.data.item)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    useEffect(() => {
-        updateTask()
-    }, [])
-
-    return (
-        <div>
-            {JSON.stringify(state)}
-        </div>
-    )
-}
+// export const UpdateTask = () => {
+//     const [state, setState] = useState<any>(null)
+//
+//     const todolistId = "ffb9e93e-3a82-4014-a13e-bb005d0142f5";
+//     const taskId = "ff259e32-a4d2-463a-83aa-62fbb888e0a8"
+//     const title = 'Updated Task Title'
+//     const status = 1
+//
+//     const updateTask = async () => {
+//         try {
+//             let {data} = await tasksApi.updateTask(todolistId, taskId, title,status)
+//             setState(data.data.item)
+//         } catch (e) {
+//             console.log(e)
+//         }
+//     }
+//
+//     useEffect(() => {
+//         updateTask()
+//     }, [])
+//
+//     return (
+//         <div>
+//             {JSON.stringify(state)}
+//         </div>
+//     )
+// }

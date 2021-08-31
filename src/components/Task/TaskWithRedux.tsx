@@ -6,9 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import {Checkbox} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 import {
-    changeTaskStatusActionCreator,
-    changeTaskTitleActionCreator,
-    removeTask,
+    removeTask, updateTaskStatus, updateTaskTitle,
 } from "../../state/tasks-reducer";
 import {TaskStatuses, TaskType} from "../../types/types";
 
@@ -28,16 +26,16 @@ export const TaskWithRedux: React.FC<TaskPropsType> = React.memo((props) => {
     const dispatch = useDispatch()
 
     const removeTaskHandler = useCallback(() => dispatch(removeTask(todoListID, task.id)), [dispatch, todoListID, task.id])
-    const changeTaskStatus = useCallback((e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusActionCreator(todoListID, task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)), [dispatch, todoListID, task.id])
-    const changeTaskTitle = useCallback((title: string) => dispatch(changeTaskTitleActionCreator(todoListID, task.id, title)), [dispatch, todoListID, task.id])
+    const updateTaskStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => dispatch(updateTaskStatus(todoListID, task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)), [dispatch, todoListID, task.id])
+    const updateTaskTitleHandler = useCallback((title: string) => dispatch(updateTaskTitle(todoListID, task.id, title)), [dispatch, todoListID, task.id])
 
 
     console.log(task)
 
     return (
         <li className={task.status === TaskStatuses.Completed ? 'is-done' : ''}>
-            <Checkbox onChange={changeTaskStatus} checked={task.status === TaskStatuses.Completed}/>
-            <EditableTitle title={task.title} changeTitle={changeTaskTitle}/>
+            <Checkbox onChange={updateTaskStatusHandler} checked={task.status === TaskStatuses.Completed}/>
+            <EditableTitle title={task.title} changeTitle={updateTaskTitleHandler}/>
             <IconButton color='secondary' className={"IconButton"}>
                 <DeleteIcon onClick={removeTaskHandler}/>
             </IconButton>

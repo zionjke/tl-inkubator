@@ -41,7 +41,7 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
             default:
                 return task
         }
-    })
+    });
 
 
     useEffect(() => {

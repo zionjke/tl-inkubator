@@ -24,11 +24,6 @@ export const todolistsReducer = (todoLists = initialState, action: TodolistsActi
             return todoLists.filter(t => t.id !== action.todolistID);
         case "TODOLIST/CHANGE_TODOLIST_FILTER": {
             return todoLists.map(tl => tl.id === action.todolistID ? {...tl, filter: action.filter} : tl)
-            // const todoList = todoLists.find(tl => tl.id === action.todolistID)
-            // if (todoList) {
-            //     todoList.filter = action.filter
-            // }
-            // return [...todoLists]
         }
         case "TODOLIST/CHANGE_TODOLIST_TITLE":
             return todoLists.map(tl => tl.id === action.todolistID ? {...tl, title: action.title} : tl)
