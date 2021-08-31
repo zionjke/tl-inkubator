@@ -1,7 +1,7 @@
 import {TaskStateType, TaskType} from "../types/types";
 import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistActionType} from "./todolists-reducer";
-import {Dispatch} from "redux";
 import {tasksApi} from "../api/tasks-api";
+import { AppThunk} from "./store";
 
 
 export type ChangeTaskStatusActionType = {
@@ -152,7 +152,7 @@ export const removeTaskActionCreator = (todoListID: string, taskID: string) => {
 }
 
 
-export const fetchTasks = (todolistID: string) => async (dispatch: Dispatch) => {
+export const fetchTasks = (todolistID: string): AppThunk => async (dispatch) => {
     try {
         let {data} = await tasksApi.getTasks(todolistID)
         dispatch(setTasksActionCreator(todolistID, data.items))
@@ -161,7 +161,7 @@ export const fetchTasks = (todolistID: string) => async (dispatch: Dispatch) => 
     }
 };
 
-export const createTask = (todoListID: string, title: string) => async (dispatch: Dispatch) => {
+export const createTask = (todoListID: string, title: string): AppThunk => async (dispatch) => {
     try {
         let {data} = await tasksApi.createTask(todoListID, title);
         dispatch(createTaskActionCreator(todoListID, data.data.item))
@@ -170,7 +170,7 @@ export const createTask = (todoListID: string, title: string) => async (dispatch
     }
 }
 
-export const removeTask = (todoListID: string, taskID: string) => async (dispatch: Dispatch) => {
+export const removeTask = (todoListID: string, taskID: string): AppThunk => async (dispatch) => {
     try {
         await tasksApi.deleteTask(todoListID, taskID)
         dispatch(removeTaskActionCreator(todoListID, taskID))

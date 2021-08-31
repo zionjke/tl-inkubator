@@ -22,7 +22,7 @@ function AppWithRedux() {
 
 
     useEffect(() => {
-        dispatch(fetchTodoLists)
+        dispatch(fetchTodoLists())
     }, [])
 
     return (

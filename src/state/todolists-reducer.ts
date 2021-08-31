@@ -1,13 +1,8 @@
 import {FilterValuesType, TodolistType} from "../types/types";
 import {Dispatch} from "redux";
 import {TodoListsApi} from "../api/todolists-api";
-import {GlobalStateType} from "./store";
+import {AppActionsType, AppThunk, GlobalStateType} from "./store";
 
-// export type ChangeTodoListFilterActionType = {
-//     todolistID: string
-//     type: 'TODOLIST/CHANGE_TODOLIST_FILTER'
-//     filter: FilterValuesType
-// }
 
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
@@ -85,7 +80,7 @@ export const changeTodoListFilterActionCreator = (todolistID: string, filter: Fi
 }
 
 
-export const fetchTodoLists = async (dispatch: Dispatch, getState: () => GlobalStateType) => {
+export const fetchTodoLists = (): AppThunk => async dispatch => {
     try {
         let {data} = await TodoListsApi.getTodoLists();
         dispatch(setTodolistActionCreator(data))
@@ -94,7 +89,7 @@ export const fetchTodoLists = async (dispatch: Dispatch, getState: () => GlobalS
     }
 };
 
-export const createTodoListThunkCreator = (title: string) => async (dispatch: Dispatch) => {
+export const createTodoListThunkCreator = (title: string): AppThunk => async (dispatch) => {
     try {
         let {data} = await TodoListsApi.createTodoList(title)
         dispatch(addTodoListActionCreator(data.data.item))
@@ -104,7 +99,7 @@ export const createTodoListThunkCreator = (title: string) => async (dispatch: Di
 }
 
 
-export const removeTodoListThunkCreator = (todolistID: string) => async (dispatch: Dispatch) => {
+export const removeTodoListThunkCreator = (todolistID: string): AppThunk => async (dispatch) => {
     try {
         await TodoListsApi.deleteTodoList(todolistID)
         dispatch(removeTodoListActionCreator(todolistID))
@@ -113,7 +108,7 @@ export const removeTodoListThunkCreator = (todolistID: string) => async (dispatc
     }
 }
 
-export const updateTodoListTitleThunkCreator = (todolistID: string, title: string) => async (dispatch: Dispatch) => {
+export const updateTodoListTitleThunkCreator = (todolistID: string, title: string): AppThunk => async (dispatch) => {
     try {
         await TodoListsApi.updateTodolistTitle(todolistID, title);
         dispatch(updateTodoListTitleActionCreator(todolistID, title));

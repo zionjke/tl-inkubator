@@ -1,3 +1,6 @@
+import {TodolistsActionTypes} from "../state/todolists-reducer";
+import {TasksActionsType} from "../state/tasks-reducer";
+
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
@@ -38,3 +41,4 @@ export type TaskStateType = {
 }
 
 export type FilterValuesType = 'All' | 'Completed' | 'Active'
+
