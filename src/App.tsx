@@ -10,7 +10,7 @@ import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {Paper} from "@material-ui/core";
 import {useReducer} from 'react';
 import {
-    addTodoListActionCreator, changeTodoListFilterActionCreator,
+    createTodoListActionCreator, updateTodoListFilterActionCreator,
     changeTodoListTitleActionCreator,
     removeTodoListActionCreator, TodolistDomainType,
     todolistsReducer

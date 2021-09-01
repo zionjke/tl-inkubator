@@ -10,7 +10,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {GlobalStateType} from "../state/store";
 import {createTask, fetchTasks} from "../state/tasks-reducer";
 import {
-    changeTodoListFilterActionCreator, removeTodoListThunkCreator, TodolistDomainType, updateTodoListTitleThunkCreator
+    updateTodoListFilterActionCreator,
+    removeTodoList,
+    TodolistDomainType, updateTodoListTitle,
 } from "../state/todolists-reducer";
 import {TaskWithRedux} from "./Task/TaskWithRedux";
 
@@ -46,16 +48,16 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
 
     useEffect(() => {
         dispatch(fetchTasks(todoList.id))
-    }, [])
+    }, [dispatch,todoList.id])
 
     const createTaskHandler = useCallback((title: string) => dispatch(createTask(todoList.id, title)), [dispatch, todoList.id])
 
-    const updateTodolistTitleHandler = useCallback((title: string) => dispatch(updateTodoListTitleThunkCreator(todoList.id, title)), [dispatch, todoList.id])
-    const removeTodoList = useCallback(() => dispatch(removeTodoListThunkCreator(todoList.id)), [dispatch, todoList.id])
+    const updateTodolistTitleHandler = useCallback((title: string) => dispatch(updateTodoListTitle(todoList.id, title)), [dispatch, todoList.id])
+    const removeTodoListHandler = useCallback(() => dispatch(removeTodoList(todoList.id)), [dispatch, todoList.id])
 
-    const setAllFilter = useCallback(() => dispatch(changeTodoListFilterActionCreator(todoList.id, 'All')), [dispatch, todoList.id])
-    const setActiveFilter = useCallback(() => dispatch(changeTodoListFilterActionCreator(todoList.id, 'Active')), [dispatch, todoList.id])
-    const setCompletedFilter = useCallback(() => dispatch(changeTodoListFilterActionCreator(todoList.id, 'Completed')), [dispatch, todoList.id])
+    const setAllFilter = useCallback(() => dispatch(updateTodoListFilterActionCreator(todoList.id, 'All')), [dispatch, todoList.id])
+    const setActiveFilter = useCallback(() => dispatch(updateTodoListFilterActionCreator(todoList.id, 'Active')), [dispatch, todoList.id])
+    const setCompletedFilter = useCallback(() => dispatch(updateTodoListFilterActionCreator(todoList.id, 'Completed')), [dispatch, todoList.id])
 
 
     return (
@@ -64,7 +66,7 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
                 <TodolistTitle changeTodolistTitle={updateTodolistTitleHandler}
                                title={todoList.title}/>
                 <IconButton color='secondary' className={"iconButton"}>
-                    <DeleteIcon onClick={removeTodoList}/>
+                    <DeleteIcon onClick={removeTodoListHandler}/>
                 </IconButton>
             </div>
             <AddItemForm addItem={createTaskHandler}/>

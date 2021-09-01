@@ -7,7 +7,7 @@ import {FilterValuesType} from './types/types';
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {Paper} from "@material-ui/core";
 import {
-    addTodoListActionCreator, changeTodoListFilterActionCreator,
+    createTodoListActionCreator, updateTodoListFilterActionCreator,
     changeTodoListTitleActionCreator,
     removeTodoListActionCreator,
     todolistsReducer
@@ -42,7 +42,7 @@ function AppWithReducers() {
     });
 
     const addNewTodoList = (title: string) => {
-        let action = addTodoListActionCreator(title) // ложим AC в переменную чтобы не вызывать ее два раза т.к будет создаватся два ID
+        let action = createTodoListActionCreator(title) // ложим AC в переменную чтобы не вызывать ее два раза т.к будет создаватся два ID
         setTodoLists(action)
         setTasks(action)
     }
@@ -55,7 +55,7 @@ function AppWithReducers() {
         setTodoLists(changeTodoListTitleActionCreator(todolistID, title))
     }
     const changeTodolistFilter = (newFilter: FilterValuesType, todolistID: string) => {
-        setTodoLists(changeTodoListFilterActionCreator(todolistID, newFilter))
+        setTodoLists(updateTodoListFilterActionCreator(todolistID, newFilter))
     }
 
     const addNewTask = (title: string, todolistID: string): void => {

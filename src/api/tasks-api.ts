@@ -1,5 +1,5 @@
 import axios from "axios";
-import {TaskType} from "../types/types";
+import {TaskPriorities, TaskStatuses, TaskType} from "../types/types";
 
 const settings = {
     withCredentials: true,
@@ -25,8 +25,8 @@ type ResponseType<D = {}> = {
 export type UpdateTaskModelType = {
     title: string
     description: string
-    status: number
-    priority: number
+    status: TaskStatuses
+    priority: TaskPriorities
     startDate: string
     deadline: string
 }

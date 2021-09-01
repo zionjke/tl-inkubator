@@ -3,7 +3,8 @@ import './App.css';
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {Paper} from "@material-ui/core";
 import {
-    createTodoListThunkCreator, fetchTodoLists,
+    createTodoList,
+    fetchTodoLists,
     TodolistDomainType
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -16,18 +17,18 @@ function AppWithRedux() {
     const todoLists = useSelector<GlobalStateType, TodolistDomainType[]>(state => state.todoLists)
     const dispatch = useDispatch()
 
-    const addNewTodoList = useCallback((title: string) => {
-        dispatch(createTodoListThunkCreator(title))
+    const createNewTodoListHandler = useCallback((title: string) => {
+        dispatch(createTodoList(title))
     }, [dispatch])
 
 
     useEffect(() => {
         dispatch(fetchTodoLists())
-    }, [])
+    }, [dispatch])
 
     return (
         <div className="App">
-            <AddItemForm addItem={addNewTodoList}/>
+            <AddItemForm addItem={createNewTodoListHandler}/>
             <div className='todolists'>
                 {
                     todoLists &&
