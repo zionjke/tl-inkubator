@@ -1,8 +1,8 @@
 //@ts-nocheck
 
 import React, {useEffect, useReducer} from 'react';
-import './App.css';
-import {TodoList} from "./components/TodoList";
+import '../app/App.css';
+import {TodoList} from "./components/TodoListWithUseState";
 import {FilterValuesType} from './types/types';
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {Paper} from "@material-ui/core";

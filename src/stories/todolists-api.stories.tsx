@@ -150,7 +150,7 @@ export const DeleteTask = () => {
         let {data} = await tasksApi.deleteTask(todolistId, taskId)
         console.log(data)
         if (data.resultCode === 0) {
-            setState('Task Removed Successfully')
+            setState('TaskWithUseState Removed Successfully')
         }
     }
 
@@ -171,7 +171,7 @@ export const DeleteTask = () => {
 //
 //     const todolistId = "ffb9e93e-3a82-4014-a13e-bb005d0142f5";
 //     const taskId = "ff259e32-a4d2-463a-83aa-62fbb888e0a8"
-//     const title = 'Updated Task Title'
+//     const title = 'Updated TaskWithUseState Title'
 //     const status = 1
 //
 //     const updateTask = async () => {

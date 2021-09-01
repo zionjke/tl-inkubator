@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {TodolistsActionTypes, todolistsReducer} from "./todolists-reducer";
-import {TasksActionsType, tasksReducer} from "./tasks-reducer";
+import {TodolistsActionTypes, todolistsReducer} from "../features/todolists/todolists-reducer";
+import {TasksActionsType, tasksReducer} from "../features/todolists/tasks-reducer";
 import thunk, {ThunkAction} from "redux-thunk";
 
 
@@ -9,13 +9,13 @@ const rootReducer = combineReducers({
     tasks: tasksReducer
 })
 
-//типизация стейта всего App
+//типизация стейта всего AppWithUseState
 export type GlobalStateType = ReturnType<typeof rootReducer>
 
-//все типы экшенов для всего App
+//все типы экшенов для всего AppWithUseState
 export type AppActionsType = TodolistsActionTypes | TasksActionsType
 
-//типизация thunk для всего App
+//типизация thunk для всего AppWithUseState
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, GlobalStateType, unknown, AppActionsType>
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))

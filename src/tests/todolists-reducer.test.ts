@@ -5,7 +5,7 @@ import {
     removeTodoListActionCreator, setTodolistActionCreator, TodolistDomainType,
     todolistsReducer,
     updateTodoListTitleActionCreator
-} from "../state/todolists-reducer";
+} from "../features/todolists/todolists-reducer";
 
 
 let todoListId1: string;

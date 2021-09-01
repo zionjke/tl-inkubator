@@ -1,5 +1,5 @@
 import axios from "axios";
-import {TodolistType} from "../types/types";
+
 
 const settings = {
     withCredentials: true,
@@ -8,6 +8,16 @@ const settings = {
 };
 
 const APIInstance = axios.create(settings);
+
+
+
+
+export type TodolistType = {
+    id: string
+    addedDate: string
+    order: number
+    title: string
+}
 
 
 

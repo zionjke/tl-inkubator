@@ -11,7 +11,7 @@ describe('addItemForm', () => {
 })
 
 describe('App', () => {
-    it('App component,visually looks correct', async () => {
+    it('AppWithUseState component,visually looks correct', async () => {
         //API from jest-puppeteer
         await
             page.goto('http://localhost:9009/iframe.html?id=todolist-app--app-with-redux-new-stories&viewMode=story');

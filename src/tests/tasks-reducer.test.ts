@@ -3,13 +3,13 @@ import {TaskPriorities, TaskStateType, TaskStatuses} from "../types/types";
 import {
     createTaskActionCreator,
     removeTaskActionCreator, setTasksActionCreator,
-    tasksReducer, updateTaskStatusActionCreator, updateTaskTitleActionCreator
-} from "../state/tasks-reducer";
+    tasksReducer, updateTask, updateTaskActionCreator, updateTaskStatusActionCreator, updateTaskTitleActionCreator
+} from "../features/todolists/tasks-reducer";
 import {
     createTodoListActionCreator,
     removeTodoListActionCreator,
     setTodolistActionCreator
-} from "../state/todolists-reducer";
+} from "../features/todolists/todolists-reducer";
 
 let todoListID1: string;
 let todoListID2: string;
@@ -25,7 +25,7 @@ beforeEach(() => {
         [todoListID1]: [
             {
                 id: taskID,
-                title: 'First Task',
+                title: 'First TaskWithUseState',
                 status: TaskStatuses.Completed,
                 addedDate: '',
                 order: 0,
@@ -37,7 +37,7 @@ beforeEach(() => {
             },
             {
                 id: v1(),
-                title: 'Second Task',
+                title: 'Second TaskWithUseState',
                 status: TaskStatuses.New, addedDate: '',
                 order: 0,
                 description: '',
@@ -48,7 +48,7 @@ beforeEach(() => {
             },
             {
                 id: v1(),
-                title: 'Third Task',
+                title: 'Third TaskWithUseState',
                 status: TaskStatuses.New, addedDate: '',
                 order: 0,
                 description: '',
@@ -61,7 +61,7 @@ beforeEach(() => {
         [todoListID2]: [
             {
                 id: taskID,
-                title: 'First Task',
+                title: 'First TaskWithUseState',
                 status: TaskStatuses.Completed,
                 addedDate: '',
                 order: 0,
@@ -72,7 +72,7 @@ beforeEach(() => {
                 todoListId: todoListID2
             },
             {
-                id: v1(), title: 'Second Task', status: TaskStatuses.New, addedDate: '',
+                id: v1(), title: 'Second TaskWithUseState', status: TaskStatuses.New, addedDate: '',
                 order: 0,
                 description: '',
                 priority: TaskPriorities.Low,
@@ -81,7 +81,7 @@ beforeEach(() => {
                 todoListId: todoListID2
             },
             {
-                id: v1(), title: 'Third Task', status: TaskStatuses.New, addedDate: '',
+                id: v1(), title: 'Third TaskWithUseState', status: TaskStatuses.New, addedDate: '',
                 order: 0,
                 description: '',
                 priority: TaskPriorities.Low,
@@ -96,7 +96,7 @@ beforeEach(() => {
 test('correct task should be added', () => {
     const endState = tasksReducer(startState, createTaskActionCreator(todoListID1, {
         id: v1(),
-        title: 'Third Task',
+        title: 'Third TaskWithUseState',
         status: TaskStatuses.New,
         addedDate: '',
         order: 0,
@@ -107,19 +107,19 @@ test('correct task should be added', () => {
         todoListId: todoListID2
     },))
 
-    expect(endState[todoListID1][3].title).toBe('Third Task')
+    expect(endState[todoListID1][3].title).toBe('Third TaskWithUseState')
     expect(endState[todoListID1][3].status).toBe(TaskStatuses.New)
     expect(endState[todoListID1][3].id).toBeDefined()
 })
 
 test('task status should be updated', () => {
-    const endState = tasksReducer(startState, updateTaskStatusActionCreator(todoListID1, taskID, TaskStatuses.New))
+    const endState = tasksReducer(startState, updateTaskActionCreator(todoListID1, taskID, {status: TaskStatuses.New}))
 
     expect(endState[todoListID1][0].status).toBe(TaskStatuses.New)
 })
 
 test('task title should be updated', () => {
-    const endState = tasksReducer(startState, updateTaskTitleActionCreator(todoListID1, taskID, 'Updated Title'))
+    const endState = tasksReducer(startState, updateTaskActionCreator(todoListID1, taskID, {title: 'Updated Title'}))
 
     expect(endState[todoListID1][0].title).toBe('Updated Title')
 })
@@ -129,7 +129,7 @@ test('correct task should be removed', () => {
     const endState = tasksReducer(startState, removeTaskActionCreator(todoListID1, taskID))
 
     expect(endState[todoListID1].length).toBe(2)
-    expect(endState[todoListID1][0].title).toBe('Second Task')
+    expect(endState[todoListID1][0].title).toBe('Second TaskWithUseState')
     expect(endState[todoListID1].every(t => t.id !== taskID)).toBeTruthy() // пробегаемся по массиву и проверяем что ниодна таска не имеет такого айди
 
 })

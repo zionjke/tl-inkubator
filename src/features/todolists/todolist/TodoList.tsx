@@ -1,28 +1,27 @@
 import React, {useCallback, useEffect} from 'react';
-import {TaskStatuses, TaskType} from "../types/types";
-import {TodolistTitle} from "./TodolistTitle";
-import {AddItemForm} from "./AddItemForm/AddItemForm";
+import {AddItemForm} from "../../../components/AddItemForm";
 
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import {useDispatch, useSelector} from "react-redux";
-import {GlobalStateType} from "../state/store";
-import {createTask, fetchTasks} from "../state/tasks-reducer";
+import {GlobalStateType} from "../../../app/store";
+import {createTask, fetchTasks} from "../tasks-reducer";
 import {
     updateTodoListFilterActionCreator,
     removeTodoList,
     TodolistDomainType, updateTodoListTitle,
-} from "../state/todolists-reducer";
-import {TaskWithRedux} from "./Task/TaskWithRedux";
-
+} from "../todolists-reducer";
+import {Task} from "./task/Task";
+import {EditableTitle} from "../../../components/EditableTitle";
+import {TaskStatuses, TaskType} from "../../../api/tasks-api";
 
 
 type Props = {
     todoList: TodolistDomainType
 };
 
-export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
+export const TodoList: React.FC<Props> = React.memo((props: Props) => {
     const {
         todoList
     } = props
@@ -48,7 +47,7 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
 
     useEffect(() => {
         dispatch(fetchTasks(todoList.id))
-    }, [dispatch,todoList.id])
+    }, [dispatch, todoList.id])
 
     const createTaskHandler = useCallback((title: string) => dispatch(createTask(todoList.id, title)), [dispatch, todoList.id])
 
@@ -63,8 +62,9 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
     return (
         <div>
             <div className='todolistTitle'>
-                <TodolistTitle changeTodolistTitle={updateTodolistTitleHandler}
-                               title={todoList.title}/>
+                <h3>
+                    <EditableTitle changeTitle={updateTodolistTitleHandler} title={todoList.title}/>
+                </h3>
                 <IconButton color='secondary' className={"iconButton"}>
                     <DeleteIcon onClick={removeTodoListHandler}/>
                 </IconButton>
@@ -73,7 +73,7 @@ export const TodoListWithRedux: React.FC<Props> = React.memo((props: Props) => {
             <ul style={{listStyle: 'none', paddingLeft: 0}}>
                 {
                     filteredTasks.map(task => (
-                        <TaskWithRedux
+                        <Task
                             key={task.id}
                             todoListID={todoList.id}
                             task={task}/>

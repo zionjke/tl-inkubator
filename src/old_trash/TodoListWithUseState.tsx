@@ -2,10 +2,10 @@
 
 
 import React from 'react';
-import {Task} from "./Task";
+import {TaskWithUseState} from "./TaskWithUseState";
 import {FilterValuesType, TaskType} from "../types/types";
-import {TodolistTitle} from "./TodolistTitle";
-import {AddItemForm} from "./AddItemForm/AddItemForm";
+import {TodolistTitle} from "../components/TodolistTitle";
+import {AddItemForm} from "../components/AddItemForm";
 
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -26,7 +26,7 @@ type Props = {
     removeTodoList: (todoListID: string) => void
 };
 
-export const TodoList: React.FC<Props> = (props) => {
+export const TodoListWithUseState: React.FC<Props> = (props) => {
 
     const changeTaskStatusHandler = (taskID: string, status: boolean) => {
         props.changeTaskStatus(taskID, props.todolistID, status)
@@ -72,7 +72,7 @@ export const TodoList: React.FC<Props> = (props) => {
             <ul style={{listStyle: 'none', paddingLeft: 0}}>
                 {
                     props.tasks.map(task => (
-                        <Task
+                        <TaskWithUseState
                             key={task.id}
                             id={task.id}
                             removeTask={removeTaskHandler}

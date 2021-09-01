@@ -1,6 +1,6 @@
 export let a = 1;
 
-// import {TaskPropsType, TaskWithRedux} from "../components/Task/TaskWithRedux";
+// import {TaskPropsType, task} from "../components/TaskWithUseState/task";
 //
 // import {Meta, Story} from "@storybook/react";
 // import React from "react";
@@ -8,12 +8,12 @@ export let a = 1;
 //
 //
 // export default {
-//     title: 'Todolist/Task',
-//     component: TaskWithRedux,
+//     title: 'Todolist/TaskWithUseState',
+//     component: task,
 //     decorators: [ReduxStoreProviderDecorator]
 // } as Meta
 //
-// const Template: Story<TaskPropsType> = (args: TaskPropsType) => <TaskWithRedux {...args}/>;
+// const Template: Story<TaskPropsType> = (args: TaskPropsType) => <task {...args}/>;
 //
 // export const TaskIsDoneExample = Template.bind({});
 // TaskIsDoneExample.args = {

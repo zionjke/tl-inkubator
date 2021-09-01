@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ChangeEvent} from "react";
-import {EditableTitle} from "./EditableTitle/EditableTitle";
+import {EditableTitle} from "../components/EditableTitle";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import {Checkbox} from "@material-ui/core";
@@ -16,7 +16,7 @@ type Props = {
     changeTaskTitle: (taskID: string, title: string) => void
 };
 
-export const Task: React.FC<Props> = (props) => {
+export const TaskWithUseState: React.FC<Props> = (props) => {
 
     const onDeleteTask = () => {
         props.removeTask(props.id)

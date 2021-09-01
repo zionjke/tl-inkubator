@@ -3,8 +3,8 @@
 
 import React, {useEffect, useState} from 'react';
 import {v1} from 'uuid';
-import './App.css';
-import {TodoList} from "./components/TodoList";
+import '../app/App.css';
+import {TodoList} from "./components/TodoListWithUseState";
 import {FilterValuesType, TaskStateType, TaskType} from './types/types';
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {Paper} from "@material-ui/core";
@@ -23,7 +23,7 @@ import {
 } from "./state/tasks-reducer";
 
 
-function App() {
+function AppWithUseState() {
     const [todoLists, setTodoLists] = useState<Array<TodolistDomainType>>([
         // {id: todolistID_1, title: 'What to learn', filter: 'All'},
         // {id: todolistID_2, title: 'What to learn part 2', filter: "All"}
@@ -167,4 +167,4 @@ function App() {
     );
 }
 
-export default App;
+export default AppWithUseState;

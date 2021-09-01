@@ -1,6 +1,6 @@
 import {TaskStateType} from "../types/types";
-import {createTodoListActionCreator, TodolistDomainType, todolistsReducer} from "../state/todolists-reducer";
-import {tasksReducer} from "../state/tasks-reducer";
+import {createTodoListActionCreator, TodolistDomainType, todolistsReducer} from "../features/todolists/todolists-reducer";
+import {tasksReducer} from "../features/todolists/tasks-reducer";
 
 
 test('Ids should be equals', () => {
