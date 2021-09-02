@@ -1,8 +1,10 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
+import {makeStyles, Theme} from '@material-ui/core/styles';
+import {useDispatch, useSelector} from "react-redux";
+import {GlobalStateType} from "../app/store";
+import {setAppErrorActionCreator} from '../app/app-reducer';
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -19,25 +21,18 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default function ErrorSnackBar() {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const error = useSelector<GlobalStateType, string | null>(state => state.app.error)
+    const dispatch = useDispatch()
 
-    const handleClick = () => {
-        setOpen(true);
-    };
-
-    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setOpen(false);
+    const handleClose = () => {
+        dispatch(setAppErrorActionCreator(null))
     };
 
     return (
         <div className={classes.root}>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="success">
-                    This is a success message!
+            <Snackbar open={error !== null} autoHideDuration={3000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error">
+                    {error}
                 </Alert>
             </Snackbar>
         </div>

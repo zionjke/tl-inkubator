@@ -1,6 +1,7 @@
 import {CreateTodolistActionType, RemoveTodolistActionType, SetTodolistActionType} from "./todolists-reducer";
 import {TaskPriorities, tasksApi, TaskStatuses, TaskType, UpdateTaskModelType} from "../../api/tasks-api";
 import {AppThunk, GlobalStateType} from "../../app/store";
+import {setAppErrorActionCreator, setAppStatusActionCreator} from "../../app/app-reducer";
 
 
 const initialState: TaskStateType = {}
@@ -125,18 +126,30 @@ export const removeTaskActionCreator = (todoListID: string, taskID: string) => {
 
 
 export const fetchTasks = (todolistID: string): AppThunk => async (dispatch) => {
+    dispatch(setAppStatusActionCreator("loading"))
     try {
         let {data} = await tasksApi.getTasks(todolistID)
         dispatch(setTasksActionCreator(todolistID, data.items))
+        dispatch(setAppStatusActionCreator("succeeded"))
     } catch (e) {
+        dispatch(setAppStatusActionCreator("failed"))
         console.log(e)
     }
 };
 
 export const createTask = (todoListID: string, title: string): AppThunk => async (dispatch) => {
+    dispatch(setAppStatusActionCreator("loading"))
     try {
         let {data} = await tasksApi.createTask(todoListID, title);
-        dispatch(createTaskActionCreator(todoListID, data.data.item))
+        if (data.resultCode === 0) {
+            dispatch(createTaskActionCreator(todoListID, data.data.item))
+            dispatch(setAppStatusActionCreator("succeeded"))
+        } else {
+            if (data.messages.length) {
+                dispatch(setAppErrorActionCreator(data.messages[0]))
+                dispatch(setAppStatusActionCreator("failed"))
+            }
+        }
     } catch (e) {
         console.log(e)
     }
@@ -250,7 +263,6 @@ export type UpdateDomainTaskModelType = {
 export type TaskStateType = {
     [key: string]: Array<TaskType>
 }
-
 
 
 export type TasksActionsType = CreateTaskActionType
