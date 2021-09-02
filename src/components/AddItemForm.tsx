@@ -37,7 +37,7 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem}
 
 
     return (
-        <div>
+        <div style={{margin:'25px'}}>
             <TextField className={error ? 'error' : ''}
                        onChange={changeTitleHandler}
                        onKeyPress={onKeyPressAddItem}

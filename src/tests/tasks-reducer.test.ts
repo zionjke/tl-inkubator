@@ -1,15 +1,15 @@
 import {v1} from "uuid"
-import {TaskPriorities, TaskStateType, TaskStatuses} from "../types/types";
 import {
     createTaskActionCreator,
     removeTaskActionCreator, setTasksActionCreator,
-    tasksReducer, updateTask, updateTaskActionCreator, updateTaskStatusActionCreator, updateTaskTitleActionCreator
+    tasksReducer, TaskStateType, updateTask, updateTaskActionCreator
 } from "../features/todolists/tasks-reducer";
 import {
     createTodoListActionCreator,
     removeTodoListActionCreator,
     setTodolistActionCreator
 } from "../features/todolists/todolists-reducer";
+import {TaskPriorities, TaskStatuses} from "../api/tasks-api";
 
 let todoListID1: string;
 let todoListID2: string;

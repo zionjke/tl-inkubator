@@ -36,3 +36,8 @@
 .iconButton {
   margin-left: 35px;
 }
+
+.alert {
+  width: 200px;
+  margin: 0 auto;
+}
