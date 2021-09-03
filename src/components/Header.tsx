@@ -17,7 +17,7 @@ export const Header = (props: Props) => {
             </AppBar>
             {
                 status === "loading" &&
-                <LinearProgress/>
+                <LinearProgress color={"secondary"}/>
             }
         </div>
     );
