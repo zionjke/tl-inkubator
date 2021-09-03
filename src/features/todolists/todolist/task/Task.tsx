@@ -5,13 +5,13 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import {Checkbox} from "@material-ui/core";
 import {useDispatch} from "react-redux";
-import {removeTask, updateTask} from "../../tasks-reducer";
-import {TaskStatuses, TaskType} from "../../../../api/tasks-api";
+import {removeTask, TaskDomainType, updateTask} from "../../tasks-reducer";
+import {TaskStatuses} from "../../../../api/tasks-api";
 
 
 
 export type TaskPropsType = {
-    task: TaskType
+    task: TaskDomainType
     todoListID: string
 };
 
@@ -34,7 +34,7 @@ export const Task: React.FC<TaskPropsType> = React.memo((props) => {
         <li className={task.status === TaskStatuses.Completed ? 'is-done' : ''}>
             <Checkbox onChange={updateTaskStatusHandler} checked={task.status === TaskStatuses.Completed}/>
             <EditableTitle title={task.title} changeTitle={updateTaskTitleHandler}/>
-            <IconButton color='secondary' className={"IconButton"}>
+            <IconButton disabled={task.entityStatus === "loading"} color='secondary' className={"IconButton"}>
                 <DeleteIcon onClick={removeTaskHandler}/>
             </IconButton>
         </li>

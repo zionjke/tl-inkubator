@@ -6,9 +6,10 @@ import {TextField} from "@material-ui/core";
 
 export type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 };
 
-export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem}) => {
+export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,disabled}) => {
     console.log('AddItemForm called')
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>('')
@@ -44,13 +45,14 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem}
             <TextField className={error ? 'error' : ''}
                        onChange={changeTitleHandler}
                        onKeyPress={onKeyPressAddItem}
+                       disabled={disabled}
                        variant={"outlined"}
                        label={'Введите название'}
                        value={title}
                        error={!!error}
                        helperText={error && 'Title Required'!}
                        type='text'/>
-            <IconButton className={"iconButton"}>
+            <IconButton disabled={disabled}  className={"iconButton"}>
                 <AddCircleIcon color={"primary"} onClick={onAddNewItem}/>
             </IconButton>
         </div>

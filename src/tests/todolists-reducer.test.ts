@@ -2,7 +2,7 @@ import {v1} from "uuid"
 import {
     createTodoListActionCreator,
     updateTodoListFilterActionCreator,
-    removeTodoListActionCreator, setTodolistActionCreator, TodolistDomainType,
+    removeTodoListActionCreator, setTodolistsActionCreator, TodolistDomainType,
     todolistsReducer,
     updateTodoListTitleActionCreator
 } from "../features/todolists/todolists-reducer";
@@ -17,14 +17,14 @@ beforeEach(() => {
     todoListId2 = v1()
 
     startState = [
-        {id: todoListId1, filter: "All", title: 'first todolist', addedDate: '', order: 0},
-        {id: todoListId2, filter: "All", title: 'second todolist', addedDate: '', order: 0},
+        {id: todoListId1, filter: "All", title: 'first todolist', addedDate: '', order: 0,entityStatus:"idle"},
+        {id: todoListId2, filter: "All", title: 'second todolist', addedDate: '', order: 0,entityStatus:"idle"},
     ]
 })
 
 test(' todolist should be set to the state', () => {
 
-    const endState = todolistsReducer([], setTodolistActionCreator(startState))
+    const endState = todolistsReducer([], setTodolistsActionCreator(startState))
 
     expect(endState.length).toBe(2)
     expect(endState[1].id).toBe(todoListId2)

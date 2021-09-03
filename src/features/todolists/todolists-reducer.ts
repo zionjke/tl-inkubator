@@ -1,23 +1,28 @@
 import {TodoListsApi, TodolistType} from "../../api/todolists-api";
 import {AppThunk} from "../../app/store";
 import {setAppErrorActionCreator, setAppStatusActionCreator} from "../../app/app-reducer";
+import {AxiosError} from "axios";
 
 const initialState: TodolistDomainType[] = []
 
 export const todolistsReducer = (todoLists = initialState, action: TodolistsActionTypes): TodolistDomainType[] => {
     switch (action.type) {
         case "TODOLIST/SET_TODOLISTS":
-            return action.todoLists.map(tl => ({...tl, filter: "All"})) // добавляем св-во filter в массив обьектов тудулистов
+            return action.todoLists.map(tl => ({...tl, filter: "All", entityStatus: "idle"})) // добавляем св-во filter и status в массив обьектов тудулистов
         case "TODOLIST/CREATE_TODOLIST":
             let newTodoList: TodolistDomainType = {
                 ...action.todoList,
-                filter: "All"
+                filter: "All",
+                entityStatus: "idle"
             };
             return [...todoLists, newTodoList];
         case "TODOLIST/REMOVE_TODOLIST":
             return todoLists.filter(t => t.id !== action.todolistID);
         case "TODOLIST/UPDATE_TODOLIST_FILTER": {
             return todoLists.map(tl => tl.id === action.todolistID ? {...tl, filter: action.filter} : tl)
+        }
+        case "TODOLIST/UPDATE_TODOLIST_STATUS": {
+            return todoLists.map(tl => tl.id === action.todolistID ? {...tl, entityStatus: action.status} : tl)
         }
         case "TODOLIST/UPDATE_TODOLIST_TITLE":
             return todoLists.map(tl => tl.id === action.todolistID ? {...tl, title: action.title} : tl);
@@ -27,7 +32,7 @@ export const todolistsReducer = (todoLists = initialState, action: TodolistsActi
 }
 
 //actions
-export const setTodolistActionCreator = (todoLists: TodolistType[]) => ({
+export const setTodolistsActionCreator = (todoLists: TodolistType[]) => ({
     type: "TODOLIST/SET_TODOLISTS",
     todoLists
 }) as const
@@ -50,19 +55,27 @@ export const updateTodoListFilterActionCreator = (todolistID: string, filter: Fi
     type: "TODOLIST/UPDATE_TODOLIST_FILTER"
 }) as const
 
+export const updateTodoListEntityStatusActionCreator = (todolistID: string, status: RequestTodoListsStatusType) => ({
+    todolistID,
+    status,
+    type: "TODOLIST/UPDATE_TODOLIST_STATUS"
+}) as const
+
 
 //types
-export type SetTodolistActionType = ReturnType<typeof setTodolistActionCreator>
+export type SetTodolistActionType = ReturnType<typeof setTodolistsActionCreator>
 export type UpdateTodoListTitleActionType = ReturnType<typeof updateTodoListTitleActionCreator>
 export type CreateTodolistActionType = ReturnType<typeof createTodoListActionCreator>
 export type RemoveTodolistActionType = ReturnType<typeof removeTodoListActionCreator>
 export type UpdateTodoListFilterActionType = ReturnType<typeof updateTodoListFilterActionCreator>
+export type UpdateTodoListStatusActionType = ReturnType<typeof updateTodoListEntityStatusActionCreator>
 
 export type FilterValuesType = 'All' | 'Completed' | 'Active'
-export type TodoListsStatusType = "idle" | "loading" | "failed" | "succeeded"
+export type RequestTodoListsStatusType = "idle" | "loading" | "failed" | "succeeded"
 
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
+    entityStatus: RequestTodoListsStatusType
 }
 
 export type TodolistsActionTypes = RemoveTodolistActionType
@@ -70,17 +83,18 @@ export type TodolistsActionTypes = RemoveTodolistActionType
     | UpdateTodoListFilterActionType
     | UpdateTodoListTitleActionType
     | SetTodolistActionType
+    | UpdateTodoListStatusActionType
 
 //thunks
 export const fetchTodoLists = (): AppThunk => async dispatch => {
     dispatch(setAppStatusActionCreator("loading"))
     try {
         let {data} = await TodoListsApi.getTodoLists();
-        dispatch(setTodolistActionCreator(data))
+        dispatch(setTodolistsActionCreator(data))
         dispatch(setAppStatusActionCreator("succeeded"))
     } catch (e) {
         dispatch(setAppStatusActionCreator("failed"))
-        console.log(e)
+        dispatch(setAppErrorActionCreator(e.message))
     }
 };
 export const createTodoList = (title: string): AppThunk => async dispatch => {
@@ -97,15 +111,28 @@ export const createTodoList = (title: string): AppThunk => async dispatch => {
             }
         }
     } catch (e) {
-        console.log(e)
+        dispatch(setAppStatusActionCreator("failed"))
+        dispatch(setAppErrorActionCreator(e.message))
     }
 }
 export const removeTodoList = (todolistID: string): AppThunk => async dispatch => {
+    dispatch(setAppStatusActionCreator("loading"))
+    dispatch(updateTodoListEntityStatusActionCreator(todolistID, 'loading'))
     try {
-        await TodoListsApi.deleteTodoList(todolistID)
-        dispatch(removeTodoListActionCreator(todolistID))
+        let {data} = await TodoListsApi.deleteTodoList(todolistID)
+        debugger
+        if (data.resultCode === 0) {
+            dispatch(removeTodoListActionCreator(todolistID))
+            dispatch(setAppStatusActionCreator("succeeded"))
+        } else {
+            if (data.messages.length) {
+                dispatch(setAppErrorActionCreator(data.messages[0]))
+            }
+        }
+
     } catch (e) {
-        console.log(e)
+        dispatch(setAppStatusActionCreator("failed"))
+        dispatch(setAppErrorActionCreator(e.message))
     }
 }
 export const updateTodoListTitle = (todolistID: string, title: string): AppThunk => async dispatch => {

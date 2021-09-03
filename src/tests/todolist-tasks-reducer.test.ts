@@ -1,9 +1,9 @@
 import {createTodoListActionCreator, TodolistDomainType, todolistsReducer} from "../features/todolists/todolists-reducer";
-import {tasksReducer, TaskStateType} from "../features/todolists/tasks-reducer";
+import {tasksReducer, TasksStateType} from "../features/todolists/tasks-reducer";
 
 
 test('Ids should be equals', () => {
-    const startTasksState: TaskStateType = {}
+    const startTasksState: TasksStateType = {}
     const startTodolistsState: TodolistDomainType[] = []
 
     const action = createTodoListActionCreator({id: 'todoListId', title: 'second todolist', addedDate: '', order: 0},)

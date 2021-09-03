@@ -2,19 +2,19 @@ import {v1} from "uuid"
 import {
     createTaskActionCreator,
     removeTaskActionCreator, setTasksActionCreator,
-    tasksReducer, TaskStateType, updateTask, updateTaskActionCreator
+    tasksReducer, TasksStateType, updateTask, updateTaskActionCreator
 } from "../features/todolists/tasks-reducer";
 import {
     createTodoListActionCreator,
     removeTodoListActionCreator,
-    setTodolistActionCreator
+    setTodolistsActionCreator
 } from "../features/todolists/todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/tasks-api";
 
 let todoListID1: string;
 let todoListID2: string;
 let taskID: string;
-let startState: TaskStateType;
+let startState: TasksStateType;
 let newTaskTitle: string;
 
 beforeEach(() => {
@@ -163,7 +163,7 @@ test('array with tasks should be deleted when  todolist is removed', () => {
 })
 
 test('empty arrays should be added when we set todolists', () => {
-    const action = setTodolistActionCreator([
+    const action = setTodolistsActionCreator([
         {id: 'todoListId1', title: 'first todolist', addedDate: '', order: 0},
         {id: 'todoListId2', title: 'second todolist', addedDate: '', order: 0},
     ])
