@@ -3,19 +3,21 @@ import {TodolistsActionTypes, todolistsReducer} from "../features/todolists/todo
 import {TasksActionsType, tasksReducer} from "../features/todolists/tasks-reducer";
 import thunk, {ThunkAction} from "redux-thunk";
 import {appReducer, AppReducerActionsTypes} from "./app-reducer";
+import { AuthActionTypes, authReducer } from "../features/login/auth-reducer";
 
 
 const rootReducer = combineReducers({
     app: appReducer,
     todoLists: todolistsReducer,
-    tasks: tasksReducer
+    tasks: tasksReducer,
+    auth: authReducer
 })
 
 //типизация стейта всего App
 export type GlobalStateType = ReturnType<typeof rootReducer>
 
 //все типы экшенов для всего App
-export type AppActionsType = TodolistsActionTypes | TasksActionsType | AppReducerActionsTypes
+export type AppActionsType = TodolistsActionTypes | TasksActionsType | AppReducerActionsTypes | AuthActionTypes
 
 //типизация thunk для всего App
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, GlobalStateType, unknown, AppActionsType>

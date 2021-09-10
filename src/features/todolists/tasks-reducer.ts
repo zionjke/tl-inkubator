@@ -2,6 +2,7 @@ import {CreateTodolistActionType, RemoveTodolistActionType, SetTodolistActionTyp
 import {TaskPriorities, tasksApi, TaskStatuses, TaskType, UpdateTaskModelType} from "../../api/tasks-api";
 import {AppThunk, GlobalStateType} from "../../app/store";
 import {setAppErrorActionCreator, setAppStatusActionCreator} from "../../app/app-reducer";
+import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils";
 
 
 const initialState: TasksStateType = {}
@@ -152,8 +153,7 @@ export const fetchTasks = (todolistID: string): AppThunk => async (dispatch) => 
         dispatch(setTasksActionCreator(todolistID, data.items))
         dispatch(setAppStatusActionCreator("succeeded"))
     } catch (e) {
-        dispatch(setAppStatusActionCreator("failed"))
-        console.log(e)
+        handleNetworkAppError(e, dispatch)
     }
 };
 
@@ -165,14 +165,10 @@ export const createTask = (todoListID: string, title: string): AppThunk => async
             dispatch(createTaskActionCreator(todoListID, data.data.item))
             dispatch(setAppStatusActionCreator("succeeded"))
         } else {
-            if (data.messages.length) {
-                dispatch(setAppErrorActionCreator(data.messages[0]))
-                dispatch(setAppStatusActionCreator("failed"))
-            }
+            handleServerAppError(data, dispatch)
         }
     } catch (e) {
-        dispatch(setAppStatusActionCreator("failed"))
-        console.log(e)
+        handleNetworkAppError(e, dispatch)
     }
 }
 
@@ -180,46 +176,18 @@ export const removeTask = (todoListID: string, taskID: string): AppThunk => asyn
     dispatch(setAppStatusActionCreator("loading"))
     dispatch(updateTaskEntityStatusActionCreator(todoListID, taskID, 'loading'))
     try {
-        let {data} =  await tasksApi.deleteTask(todoListID, taskID)
-        if(data.resultCode === 0) {
+        let {data} = await tasksApi.deleteTask(todoListID, taskID)
+        if (data.resultCode === 0) {
             dispatch(removeTaskActionCreator(todoListID, taskID))
             dispatch(setAppStatusActionCreator("succeeded"))
         } else {
-            if(data.messages.length) {
-                dispatch(setAppErrorActionCreator(data.messages[0]))
-            }
+            handleServerAppError(data, dispatch)
         }
     } catch (e) {
-        console.log(e)
+        handleNetworkAppError(e, dispatch)
     }
 }
 
-// export const updateTaskStatus = (todoListID: string, taskID: string, status: TaskStatuses): AppThunk => async (dispatch, getState: () => GlobalStateType) => {
-//     const tasks = getState().tasks[todoListID]
-//     const task = tasks.find(t => t.id === taskID);
-//
-//     if (!task) {
-//         console.warn('task not found in state')
-//         return;
-//     }
-//
-//     const model: UpdateTaskModelType = {
-//         deadline: task.deadline,
-//         description: task.description,
-//         priority: task.priority,
-//         startDate: task.startDate,
-//         status: status,
-//         title: task.title
-//     }
-//
-//     try {
-//         await tasksApi.updateTask(todoListID, taskID, model);
-//         dispatch(updateTaskStatusActionCreator(todoListID, taskID, status))
-//     } catch (e) {
-//         console.log(e)
-//     }
-//
-// }
 
 // export const updateTaskTitle = (todoListID: string, taskID: string, title: string): AppThunk => async (dispatch, getState: () => GlobalStateType) => {
 //     const tasks = getState().tasks[todoListID]
@@ -267,10 +235,14 @@ export const updateTask = (todoListID: string, taskID: string, domainModel: Upda
     }
 
     try {
-        await tasksApi.updateTask(todoListID, taskID, apiModel);
-        dispatch(updateTaskActionCreator(todoListID, taskID, domainModel))
+        let {data} = await tasksApi.updateTask(todoListID, taskID, apiModel);
+        if (data.resultCode === 0) {
+            dispatch(updateTaskActionCreator(todoListID, taskID, domainModel))
+        } else {
+            handleServerAppError(data, dispatch)
+        }
     } catch (e) {
-        console.log(e)
+        handleNetworkAppError(e, dispatch)
     }
 }
 

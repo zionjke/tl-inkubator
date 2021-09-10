@@ -2,6 +2,7 @@ import {TodoListsApi, TodolistType} from "../../api/todolists-api";
 import {AppThunk} from "../../app/store";
 import {setAppErrorActionCreator, setAppStatusActionCreator} from "../../app/app-reducer";
 import {AxiosError} from "axios";
+import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils";
 
 const initialState: TodolistDomainType[] = []
 
@@ -93,8 +94,7 @@ export const fetchTodoLists = (): AppThunk => async dispatch => {
         dispatch(setTodolistsActionCreator(data))
         dispatch(setAppStatusActionCreator("succeeded"))
     } catch (e) {
-        dispatch(setAppStatusActionCreator("failed"))
-        dispatch(setAppErrorActionCreator(e.message))
+        handleNetworkAppError(e, dispatch)
     }
 };
 export const createTodoList = (title: string): AppThunk => async dispatch => {
@@ -105,14 +105,10 @@ export const createTodoList = (title: string): AppThunk => async dispatch => {
             dispatch(createTodoListActionCreator(data.data.item))
             dispatch(setAppStatusActionCreator("succeeded"))
         } else {
-            if (data.messages.length) {
-                dispatch(setAppErrorActionCreator(data.messages[0]))
-                dispatch(setAppStatusActionCreator("failed"))
-            }
+            handleServerAppError(data, dispatch)
         }
     } catch (e) {
-        dispatch(setAppStatusActionCreator("failed"))
-        dispatch(setAppErrorActionCreator(e.message))
+        handleNetworkAppError(e, dispatch)
     }
 }
 export const removeTodoList = (todolistID: string): AppThunk => async dispatch => {
@@ -120,27 +116,27 @@ export const removeTodoList = (todolistID: string): AppThunk => async dispatch =
     dispatch(updateTodoListEntityStatusActionCreator(todolistID, 'loading'))
     try {
         let {data} = await TodoListsApi.deleteTodoList(todolistID)
-        debugger
         if (data.resultCode === 0) {
             dispatch(removeTodoListActionCreator(todolistID))
             dispatch(setAppStatusActionCreator("succeeded"))
         } else {
-            if (data.messages.length) {
-                dispatch(setAppErrorActionCreator(data.messages[0]))
-            }
+            handleServerAppError(data, dispatch)
         }
 
     } catch (e) {
-        dispatch(setAppStatusActionCreator("failed"))
-        dispatch(setAppErrorActionCreator(e.message))
+        handleNetworkAppError(e, dispatch)
     }
 }
 export const updateTodoListTitle = (todolistID: string, title: string): AppThunk => async dispatch => {
     try {
-        await TodoListsApi.updateTodolistTitle(todolistID, title);
-        dispatch(updateTodoListTitleActionCreator(todolistID, title));
+        let {data} = await TodoListsApi.updateTodolistTitle(todolistID, title);
+        if (data.resultCode === 0) {
+            dispatch(updateTodoListTitleActionCreator(todolistID, title));
+        } else {
+            handleServerAppError(data, dispatch)
+        }
     } catch (e) {
-        console.log(e)
+        handleNetworkAppError(e, dispatch)
     }
 };
 

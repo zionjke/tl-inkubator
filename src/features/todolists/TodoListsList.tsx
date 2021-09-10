@@ -5,10 +5,12 @@ import {createTodoList, fetchTodoLists, TodolistDomainType} from "./todolists-re
 import {AddItemForm} from "../../components/AddItemForm";
 import {Paper} from "@material-ui/core";
 import {TodoList} from "./todolist/TodoList";
+import { Redirect } from 'react-router-dom';
 
 type TodoListsListProps = {}
 export const TodoListsList: React.FC = (props: TodoListsListProps): React.ReactElement => {
     const todoLists = useSelector<GlobalStateType, TodolistDomainType[]>(state => state.todoLists)
+    const isAuth = useSelector<GlobalStateType, boolean>(state => state.auth.isAuth)
     const dispatch = useDispatch()
 
     const createNewTodoListHandler = useCallback((title: string) => {
@@ -19,6 +21,11 @@ export const TodoListsList: React.FC = (props: TodoListsListProps): React.ReactE
     useEffect(() => {
         dispatch(fetchTodoLists())
     }, [dispatch])
+
+    if(!isAuth) {
+        return <Redirect to={'/login'}/>
+    }
+
     return (
         <>
             <AddItemForm addItem={createNewTodoListHandler}/>
