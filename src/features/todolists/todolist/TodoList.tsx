@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {GlobalStateType} from "../../../app/store";
 import {createTask, fetchTasks, TaskDomainType} from "../tasks-reducer";
 import {
-    updateTodoListFilterActionCreator,
+    changeTodolistFilter,
     removeTodoList,
     TodolistDomainType, updateTodoListTitle,
 } from "../todolists-reducer";
@@ -54,9 +54,18 @@ export const TodoList: React.FC<Props> = React.memo((props: Props) => {
     const updateTodolistTitleHandler = useCallback((title: string) => dispatch(updateTodoListTitle(todoList.id, title)), [dispatch, todoList.id])
     const removeTodoListHandler = useCallback(() => dispatch(removeTodoList(todoList.id)), [dispatch, todoList.id])
 
-    const setAllFilter = useCallback(() => dispatch(updateTodoListFilterActionCreator(todoList.id, 'All')), [dispatch, todoList.id])
-    const setActiveFilter = useCallback(() => dispatch(updateTodoListFilterActionCreator(todoList.id, 'Active')), [dispatch, todoList.id])
-    const setCompletedFilter = useCallback(() => dispatch(updateTodoListFilterActionCreator(todoList.id, 'Completed')), [dispatch, todoList.id])
+    const setAllFilter = useCallback(() => dispatch(changeTodolistFilter({
+        id: todoList.id,
+        filter: 'All'
+    })), [dispatch, todoList.id])
+    const setActiveFilter = useCallback(() => dispatch(changeTodolistFilter({
+        id: todoList.id,
+        filter: 'Active'
+    })), [dispatch, todoList.id])
+    const setCompletedFilter = useCallback(() => dispatch(changeTodolistFilter({
+        id: todoList.id,
+        filter: 'Completed'
+    })), [dispatch, todoList.id])
 
 
     return (

@@ -1,9 +1,15 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
-import {TodolistsActionTypes, todolistsReducer} from "../features/todolists/todolists-reducer";
-import {TasksActionsType, tasksReducer} from "../features/todolists/tasks-reducer";
+import { combineReducers} from "redux";
+import {TodolistsActionTypes} from "../features/todolists/todolists-reducer_old";
+import {TasksActionsType} from "../features/todolists/tasks-reducer_old";
 import thunk, {ThunkAction} from "redux-thunk";
-import {appReducer, AppReducerActionsTypes} from "./app-reducer";
-import { AuthActionTypes, authReducer } from "../features/login/auth-reducer";
+import {AppReducerActionsTypes} from "./app-reducer_old";
+import {AuthActionTypes} from "../features/login/auth-reducer_old";
+import {configureStore} from "@reduxjs/toolkit";
+import {authReducer} from "../features/login/auth-reducer";
+import appReducer  from "./app-reducer";
+import todolistsReducer from "../features/todolists/todolists-reducer";
+import { tasksReducer } from "../features/todolists/tasks-reducer";
+
 
 
 const rootReducer = combineReducers({
@@ -22,7 +28,10 @@ export type AppActionsType = TodolistsActionTypes | TasksActionsType | AppReduce
 //типизация thunk для всего App
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, GlobalStateType, unknown, AppActionsType>
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+// export const store = createStore(rootReducer, applyMiddleware(thunk))
 
-// @ts-ignore
-window.store = store
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk),
+})
+

@@ -1,36 +1,33 @@
-import {AppThunk} from "../../app/store"
-import {authApi, LoginParamsType, UserDataType} from "../../api/auth-api";
-import {setAppStatusActionCreator} from "../../app/app-reducer";
+import {authApi, LoginParamsType} from "../../api/auth-api";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils";
+import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
+import { setAppStatus } from "../../app/app-reducer";
 
-const initialState: AuthInitialStateType = {
+const initialState = {
     isAuth: false
 }
 
-export const authReducer = (state = initialState, action: AuthActionTypes): AuthInitialStateType => {
-    switch (action.type) {
-        case "AUTH/SET_IS_AUTH":
-            return {...state, isAuth: action.isAuth}
-        default:
-            return state
+const slice = createSlice({
+    name: "auth",
+    initialState: initialState,
+    reducers: {
+        setIsAuth(state,action:PayloadAction<boolean>) {
+            state.isAuth = action.payload
+        }
     }
-}
+})
+
+export const authReducer = slice.reducer
+export const {setIsAuth} = slice.actions
 
 
-//actions
-export const setUserIdAC = (userId: number) => ({type: 'AUTH/SET_USER', userId} as const)
-export const setUserDataAC = (user: UserDataType) => ({type: 'AUTH/SET_USER_DATA', user} as const)
-export const setIsAuthAC = (isAuth: boolean) => ({type: 'AUTH/SET_IS_AUTH', isAuth} as const)
-
-//thunks
-
-export const login = (loginData: LoginParamsType): AppThunk => async dispatch => {
-    dispatch(setAppStatusActionCreator("loading"))
+export const login = (loginData: LoginParamsType) => async (dispatch:Dispatch) => {
+    dispatch(setAppStatus("loading"))
     try {
         let {data} = await authApi.login(loginData)
         if (data.resultCode === 0) {
-            dispatch(setIsAuthAC(true))
-            dispatch(setAppStatusActionCreator("succeeded"))
+            dispatch(setIsAuth(true))
+            dispatch(setAppStatus("succeeded"))
         } else {
             handleServerAppError(data, dispatch)
         }
@@ -39,13 +36,14 @@ export const login = (loginData: LoginParamsType): AppThunk => async dispatch =>
     }
 }
 
-export const logOut = (): AppThunk => async dispatch => {
-    dispatch(setAppStatusActionCreator("loading"))
+
+export const logOut = () => async (dispatch:Dispatch) => {
+    dispatch(setAppStatus("loading"))
     try {
         let {data} = await authApi.logout()
         if (data.resultCode === 0) {
-            dispatch(setIsAuthAC(false))
-            dispatch(setAppStatusActionCreator("succeeded"))
+            dispatch(setIsAuth(false))
+            dispatch(setAppStatus("succeeded"))
         } else {
             handleServerAppError(data, dispatch)
         }
@@ -54,14 +52,8 @@ export const logOut = (): AppThunk => async dispatch => {
     }
 }
 
-//types
 
-type AuthInitialStateType = {
-    isAuth: boolean
-}
 
-type SetUserActionType = ReturnType<typeof setUserIdAC>
-type SetUserDataActionType = ReturnType<typeof setUserDataAC>
-type SetIsAuthActionType = ReturnType<typeof setIsAuthAC>
 
-export type AuthActionTypes = SetUserActionType | SetUserDataActionType | SetIsAuthActionType
+
+

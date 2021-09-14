@@ -3,9 +3,9 @@ import {
     createTodoListActionCreator,
     updateTodoListFilterActionCreator,
     removeTodoListActionCreator, setTodolistsActionCreator, TodolistDomainType,
-    todolistsReducer,
+    todolistsReducer_old,
     updateTodoListTitleActionCreator
-} from "../features/todolists/todolists-reducer";
+} from "../features/todolists/todolists-reducer_old";
 
 
 let todoListId1: string;
@@ -24,7 +24,7 @@ beforeEach(() => {
 
 test(' todolist should be set to the state', () => {
 
-    const endState = todolistsReducer([], setTodolistsActionCreator(startState))
+    const endState = todolistsReducer_old([], setTodolistsActionCreator(startState))
 
     expect(endState.length).toBe(2)
     expect(endState[1].id).toBe(todoListId2)
@@ -32,7 +32,7 @@ test(' todolist should be set to the state', () => {
 
 test('correct todolist should be removed', () => {
 
-    const endState = todolistsReducer(startState, removeTodoListActionCreator(todoListId1))
+    const endState = todolistsReducer_old(startState, removeTodoListActionCreator(todoListId1))
 
     expect(endState.length).toBe(1)
     expect(endState[0].id).toBe(todoListId2)
@@ -40,7 +40,7 @@ test('correct todolist should be removed', () => {
 
 test('correct todolist should be added', () => {
 
-    const endState = todolistsReducer(startState, createTodoListActionCreator({
+    const endState = todolistsReducer_old(startState, createTodoListActionCreator({
         id: 'todoListId3',
         title: 'third todolist',
         addedDate: '',
@@ -53,7 +53,7 @@ test('correct todolist should be added', () => {
 
 test('todolist filter should be updated', () => {
 
-    const endState = todolistsReducer(startState, updateTodoListFilterActionCreator(todoListId1, "Completed"))
+    const endState = todolistsReducer_old(startState, updateTodoListFilterActionCreator(todoListId1, "Completed"))
 
     expect(endState[0].filter).toBe('Completed')
 });
@@ -61,7 +61,7 @@ test('todolist filter should be updated', () => {
 
 test('todolist title should be updated', () => {
 
-    const endState = todolistsReducer(startState, updateTodoListTitleActionCreator(todoListId2, 'Updated Title'))
+    const endState = todolistsReducer_old(startState, updateTodoListTitleActionCreator(todoListId2, 'Updated Title'))
 
     expect(endState[1].title).toBe('Updated Title')
 });

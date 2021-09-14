@@ -2,13 +2,13 @@ import React from "react";
 import {Provider} from "react-redux";
 import {GlobalStateType} from "./app/store";
 import {combineReducers, createStore} from "redux";
-import {tasksReducer} from "./features/todolists/tasks-reducer";
-import {todolistsReducer} from "./features/todolists/todolists-reducer";
+import {tasksReducer_old} from "./features/todolists/tasks-reducer_old";
+import {todolistsReducer_old} from "./features/todolists/todolists-reducer_old";
 import {v1} from "uuid";
 
 const rootReducer = combineReducers({
-    tasks: tasksReducer,
-    todoLists: todolistsReducer
+    tasks: tasksReducer_old,
+    todoLists: todolistsReducer_old
 })
 
 const initialGlobalState = {

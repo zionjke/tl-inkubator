@@ -1,19 +1,19 @@
-import {AppReducerActionsTypes, setAppErrorActionCreator, setAppStatusActionCreator} from "../app/app-reducer";
 import {ResponseType} from "../api/todolists-api";
-import {Dispatch} from "redux";
 import {AxiosError} from "axios";
+import {Dispatch} from "redux";
+import { setAppError, setAppStatus } from "../app/app-reducer";
 
 
-export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch<AppReducerActionsTypes>) => {
+export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
     if (data.messages.length) {
-        dispatch(setAppErrorActionCreator(data.messages[0]))
+        dispatch(setAppError(data.messages[0]))
     } else {
-        dispatch(setAppErrorActionCreator('Some error occurred'))
+        dispatch(setAppError('Some error occurred'))
     }
-    dispatch(setAppStatusActionCreator('failed'))
+    dispatch(setAppStatus('failed'))
 }
 
-export const handleNetworkAppError = (error: AxiosError, dispatch: Dispatch<AppReducerActionsTypes>) => {
-    dispatch(setAppStatusActionCreator("failed"))
-    dispatch(setAppErrorActionCreator(error.message ? error.message : 'Some error occurred'))
+export const handleNetworkAppError = (error: AxiosError, dispatch: Dispatch) => {
+    dispatch(setAppStatus("failed"))
+    dispatch(setAppError(error.message ? error.message : 'Some error occurred'))
 }

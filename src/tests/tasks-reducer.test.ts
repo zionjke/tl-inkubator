@@ -2,13 +2,13 @@ import {v1} from "uuid"
 import {
     createTaskActionCreator,
     removeTaskActionCreator, setTasksActionCreator,
-    tasksReducer, TasksStateType, updateTask, updateTaskActionCreator
-} from "../features/todolists/tasks-reducer";
+    tasksReducer_old, TasksStateType, updateTask, updateTaskActionCreator
+} from "../features/todolists/tasks-reducer_old";
 import {
     createTodoListActionCreator,
     removeTodoListActionCreator,
     setTodolistsActionCreator
-} from "../features/todolists/todolists-reducer";
+} from "../features/todolists/todolists-reducer_old";
 import {TaskPriorities, TaskStatuses} from "../api/tasks-api";
 
 let todoListID1: string;
@@ -94,7 +94,7 @@ beforeEach(() => {
 })
 
 test('correct task should be added', () => {
-    const endState = tasksReducer(startState, createTaskActionCreator(todoListID1, {
+    const endState = tasksReducer_old(startState, createTaskActionCreator(todoListID1, {
         id: v1(),
         title: 'Third TaskWithUseState',
         status: TaskStatuses.New,
@@ -113,20 +113,20 @@ test('correct task should be added', () => {
 })
 
 test('task status should be updated', () => {
-    const endState = tasksReducer(startState, updateTaskActionCreator(todoListID1, taskID, {status: TaskStatuses.New}))
+    const endState = tasksReducer_old(startState, updateTaskActionCreator(todoListID1, taskID, {status: TaskStatuses.New}))
 
     expect(endState[todoListID1][0].status).toBe(TaskStatuses.New)
 })
 
 test('task title should be updated', () => {
-    const endState = tasksReducer(startState, updateTaskActionCreator(todoListID1, taskID, {title: 'Updated Title'}))
+    const endState = tasksReducer_old(startState, updateTaskActionCreator(todoListID1, taskID, {title: 'Updated Title'}))
 
     expect(endState[todoListID1][0].title).toBe('Updated Title')
 })
 
 
 test('correct task should be removed', () => {
-    const endState = tasksReducer(startState, removeTaskActionCreator(todoListID1, taskID))
+    const endState = tasksReducer_old(startState, removeTaskActionCreator(todoListID1, taskID))
 
     expect(endState[todoListID1].length).toBe(2)
     expect(endState[todoListID1][0].title).toBe('Second TaskWithUseState')
@@ -135,7 +135,7 @@ test('correct task should be removed', () => {
 })
 
 test('new array should be added when new todolist is added', () => {
-    const endState = tasksReducer(startState, createTodoListActionCreator({
+    const endState = tasksReducer_old(startState, createTodoListActionCreator({
         id: 'todoListId3',
         title: 'first todolist',
         addedDate: '',
@@ -154,7 +154,7 @@ test('new array should be added when new todolist is added', () => {
 })
 
 test('array with tasks should be deleted when  todolist is removed', () => {
-    const endState = tasksReducer(startState, removeTodoListActionCreator(todoListID1))
+    const endState = tasksReducer_old(startState, removeTodoListActionCreator(todoListID1))
     const keys = Object.keys(endState)
 
     expect(keys.length).toBe(1)
@@ -167,7 +167,7 @@ test('empty arrays should be added when we set todolists', () => {
         {id: 'todoListId1', title: 'first todolist', addedDate: '', order: 0},
         {id: 'todoListId2', title: 'second todolist', addedDate: '', order: 0},
     ])
-    const endState = tasksReducer({}, action)
+    const endState = tasksReducer_old({}, action)
     const keys = Object.keys(endState)
 
     expect(keys.length).toBe(2)
@@ -176,7 +176,7 @@ test('empty arrays should be added when we set todolists', () => {
 })
 
 test('tasks should be set to the state', () => {
-    const endState = tasksReducer({
+    const endState = tasksReducer_old({
         [todoListID1]: [],
         [todoListID2]: []
     }, setTasksActionCreator(todoListID1, startState[todoListID1]))

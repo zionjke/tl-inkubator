@@ -3,27 +3,26 @@ import {TaskPriorities, tasksApi, TaskStatuses, TaskType, UpdateTaskModelType} f
 import {AppThunk, GlobalStateType} from "../../app/store";
 import {setAppErrorActionCreator, setAppStatusActionCreator} from "../../app/app-reducer_old";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils";
-import {addTodolist, deleteTodolist, setTodolists } from "./todolists-reducer";
 
 
 const initialState: TasksStateType = {}
 
-export const tasksReducer = (tasks = initialState, action: any): TasksStateType => {
+export const tasksReducer_old = (tasks = initialState, action: TasksActionsType): TasksStateType => {
     switch (action.type) {
-        case setTodolists.type: // создаем для каждого массива тасок ключ в обьекте (ассоциативній массив)
+        case "TODOLIST/SET_TODOLISTS": // создаем для каждого массива тасок ключ в обьекте (ассоциативній массив)
             const tasksCopy = {...tasks}
-            action.payload.forEach((tl:any) => {
+            action.todoLists.forEach(tl => {
                 tasksCopy[tl.id] = []
             })
             return tasksCopy
-        case addTodolist.type:
+        case "TODOLIST/CREATE_TODOLIST":
             return {
                 ...tasks,
-                [action.payload.id]: []
+                [action.todoList.id]: []
             };
-        case deleteTodolist.type: {
+        case "TODOLIST/REMOVE_TODOLIST": {
             let copyTasks = {...tasks}
-            delete copyTasks[action.payload.id]
+            delete copyTasks[action.todolistID]
             return copyTasks
             // delete tasks[action.todolistID]
             // return {...tasks}
@@ -31,7 +30,7 @@ export const tasksReducer = (tasks = initialState, action: any): TasksStateType 
         case "TODOLIST/TASKS/SET_TASKS":
             return {
                 ...tasks,
-                [action.todolistID]: action.tasks.map((t:any) => {
+                [action.todolistID]: action.tasks.map(t => {
                     return {...t, entityStatus: 'idle'}
                 })
             }

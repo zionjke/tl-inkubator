@@ -4,7 +4,7 @@ import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import {useDispatch, useSelector} from "react-redux";
 import {GlobalStateType} from "../app/store";
-import {setAppErrorActionCreator} from '../app/app-reducer';
+import { setAppError } from '../app/app-reducer';
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -25,7 +25,7 @@ export default function ErrorSnackBar() {
     const dispatch = useDispatch()
 
     const handleClose = () => {
-        dispatch(setAppErrorActionCreator(null))
+        dispatch(setAppError(null))
     };
 
     return (

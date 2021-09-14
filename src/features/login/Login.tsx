@@ -6,7 +6,7 @@ import React, {FC} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "./auth-reducer";
 import {GlobalStateType} from "../../app/store";
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 
 export const Login: FC = () => {
@@ -40,6 +40,8 @@ export const Login: FC = () => {
     if (isAuth) {
         return <Redirect to={'/'}/>
     }
+
+    console.log(isAuth)
 
     return (
         <Grid container justify="center">
