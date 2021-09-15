@@ -19,7 +19,7 @@ const todolistsSlice = createSlice({
         },
         deleteTodolist(state, action: PayloadAction<{ id: string }>) {
             const index = state.findIndex(tl => tl.id === action.payload.id)
-            if (index < -1) {
+            if (index > -1) {
                 state.splice(index, 1)
             }
         },
