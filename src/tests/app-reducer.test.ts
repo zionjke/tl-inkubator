@@ -3,7 +3,7 @@ import {
     appReducer_old,
     setAppErrorActionCreator,
     setAppStatusActionCreator
-} from "../app/app-reducer_old";
+} from "../old_trash/app-reducer_old";
 
 let startState: AppInitialStateType
 

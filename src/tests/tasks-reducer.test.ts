@@ -3,12 +3,12 @@ import {
     createTaskActionCreator,
     removeTaskActionCreator, setTasksActionCreator,
     tasksReducer_old, TasksStateType, updateTask, updateTaskActionCreator
-} from "../features/todolists/tasks-reducer_old";
+} from "../old_trash/tasks-reducer_old";
 import {
     createTodoListActionCreator,
     removeTodoListActionCreator,
     setTodolistsActionCreator
-} from "../features/todolists/todolists-reducer_old";
+} from "../old_trash/todolists-reducer_old";
 import {TaskPriorities, TaskStatuses} from "../api/tasks-api";
 
 let todoListID1: string;

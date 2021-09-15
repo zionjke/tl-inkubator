@@ -1,11 +1,11 @@
 import {TaskPriorities, tasksApi, TaskStatuses, TaskType, UpdateTaskModelType} from "../../api/tasks-api";
-import {AppThunk, GlobalStateType} from "../../app/store";
+import {GlobalStateType} from "../../app/store";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils";
 import {addTodolist, deleteTodolist, setTodolists} from "./todolists-reducer";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {setAppStatus} from "../../app/app-reducer";
 import {Dispatch} from "redux";
-import {TodolistType} from "../../api/todolists-api";
+
 
 const initialState: TasksStateType = {}
 

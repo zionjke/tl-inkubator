@@ -1,7 +1,7 @@
-import {AppThunk} from "../../app/store"
-import {authApi, LoginParamsType, UserDataType} from "../../api/auth-api";
-import {setAppStatusActionCreator} from "../../app/app-reducer_old";
-import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils";
+import {AppThunk} from "../app/store"
+import {authApi, LoginParamsType, UserDataType} from "../api/auth-api";
+import {setAppStatusActionCreator} from "./app-reducer_old";
+import {handleNetworkAppError, handleServerAppError} from "../utils/error-utils";
 
 const initialState: AuthInitialStateType = {
     isAuth: false

@@ -1,8 +1,8 @@
 import {CreateTodolistActionType, RemoveTodolistActionType, SetTodolistActionType} from "./todolists-reducer_old";
-import {TaskPriorities, tasksApi, TaskStatuses, TaskType, UpdateTaskModelType} from "../../api/tasks-api";
-import {AppThunk, GlobalStateType} from "../../app/store";
-import {setAppErrorActionCreator, setAppStatusActionCreator} from "../../app/app-reducer_old";
-import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils";
+import {TaskPriorities, tasksApi, TaskStatuses, TaskType, UpdateTaskModelType} from "../api/tasks-api";
+import {AppThunk, GlobalStateType} from "../app/store";
+import {setAppErrorActionCreator, setAppStatusActionCreator} from "./app-reducer_old";
+import {handleNetworkAppError, handleServerAppError} from "../utils/error-utils";
 
 
 const initialState: TasksStateType = {}

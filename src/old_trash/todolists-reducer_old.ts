@@ -1,8 +1,8 @@
-import {TodoListsApi, TodolistType} from "../../api/todolists-api";
-import {AppThunk} from "../../app/store";
-import { setAppStatusActionCreator} from "../../app/app-reducer_old";
+import {TodoListsApi, TodolistType} from "../api/todolists-api";
+import {AppThunk} from "../app/store";
+import { setAppStatusActionCreator} from "./app-reducer_old";
 
-import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils";
+import {handleNetworkAppError, handleServerAppError} from "../utils/error-utils";
 
 const initialState: TodolistDomainType[] = []
 

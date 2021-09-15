@@ -1,6 +1,6 @@
-import {AppThunk} from "./store";
+import {AppThunk} from "../app/store";
 import {authApi} from "../api/auth-api";
-import {setIsAuthAC} from "../features/login/auth-reducer_old";
+import {setIsAuthAC} from "./auth-reducer_old";
 import {handleNetworkAppError, handleServerAppError} from "../utils/error-utils";
 
 const initialState: AppInitialStateType = {
