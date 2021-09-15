@@ -2,12 +2,23 @@ import {TaskPriorities, tasksApi, TaskStatuses, TaskType, UpdateTaskModelType} f
 import {GlobalStateType} from "../../app/store";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils";
 import {addTodolist, deleteTodolist, setTodolists} from "./todolists-reducer";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {setAppStatus} from "../../app/app-reducer";
 import {Dispatch} from "redux";
 
 
 const initialState: TasksStateType = {}
+
+export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (todolistId: string, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatus("loading"))
+    try {
+        let {data} = await tasksApi.getTasks(todolistId)
+        thunkAPI.dispatch(setTasks({todolistId, tasks: data.items}))
+        thunkAPI.dispatch(setAppStatus("succeeded"))
+    } catch (e) {
+        handleNetworkAppError(e, thunkAPI.dispatch)
+    }
+})
 
 const tasksSlice = createSlice({
     name: 'tasks',
@@ -51,23 +62,30 @@ const tasksSlice = createSlice({
             action.payload.forEach(tl => {
                 state[tl.id] = []
             })
-        })
+        });
+        // builder.addCase(fetchTasks.fulfilled, (state, action) => {
+        //     // @ts-ignore
+        //     state[action.payload.todolistId] = action.payload.tasks.map((t) => {
+        //         return {...t, entityStatus: 'idle'}
+        //     })
+        // })
     }
 })
 
-export const {setTasks, deleteTask, addTask, changeTask, changeTaskEntityStatus} = tasksSlice.actions
+export const {deleteTask, addTask, changeTask, changeTaskEntityStatus,setTasks} = tasksSlice.actions
 
 
-export const fetchTasks = (todolistId: string) => async (dispatch: Dispatch) => {
-    dispatch(setAppStatus("loading"))
-    try {
-        let {data} = await tasksApi.getTasks(todolistId)
-        dispatch(setTasks({todolistId, tasks: data.items}))
-        dispatch(setAppStatus("succeeded"))
-    } catch (e) {
-        handleNetworkAppError(e, dispatch)
-    }
-};
+// export const fetchTasks_ = (todolistId: string) => async (dispatch: Dispatch) => {
+//     dispatch(setAppStatus("loading"))
+//     try {
+//         let {data} = await tasksApi.getTasks(todolistId)
+//         dispatch(setTasks({todolistId, tasks: data.items}))
+//         dispatch(setAppStatus("succeeded"))
+//     } catch (e) {
+//         handleNetworkAppError(e, dispatch)
+//     }
+// };
+
 export const createTask = (todolistId: string, title: string) => async (dispatch: Dispatch) => {
     dispatch(setAppStatus("loading"))
     try {

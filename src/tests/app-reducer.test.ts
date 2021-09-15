@@ -1,26 +1,32 @@
-import {
-    AppInitialStateType,
-    appReducer_old,
-    setAppErrorActionCreator,
-    setAppStatusActionCreator
-} from "../old_trash/app-reducer_old";
+import appReducer, { AppInitialStateType, setAppError, setAppStatus, setIsInitialized } from "../app/app-reducer";
+
 
 let startState: AppInitialStateType
 
 beforeEach(() => {
     startState = {
         error: null,
-        status: "idle"
+        status: "idle",
+        isInitialized: false
     }
 });
 
 test('correct error message should be set', () => {
-    const endState = appReducer_old(startState,setAppErrorActionCreator('some error'))
-    expect(endState.error).toBe('some error')
+    const action = setAppError('some error message')
+    const endState = appReducer(startState,action)
+    expect(endState.error).toBe('some error message')
 });
 
 
 test('correct status  should be set', () => {
-    const endState = appReducer_old(startState,setAppStatusActionCreator("failed"))
+    const action = setAppStatus("failed")
+    const endState = appReducer(startState,action)
     expect(endState.status).toBe('failed')
+})
+
+
+test('correct App initialized status  should be set', () => {
+    const action = setIsInitialized(true)
+    const endState = appReducer(startState,action)
+    expect(endState.isInitialized).toBe(true)
 })

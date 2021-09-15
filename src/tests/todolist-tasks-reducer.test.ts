@@ -1,20 +1,20 @@
-import {createTodoListActionCreator, TodolistDomainType, todolistsReducer_old} from "../old_trash/todolists-reducer_old";
-import {tasksReducer_old, TasksStateType} from "../old_trash/tasks-reducer_old";
+import tasksReducer, {TasksStateType} from "../features/todolists/tasks-reducer";
+import todolistsReducer, {addTodolist, TodolistDomainType} from "../features/todolists/todolists-reducer";
 
 
 test('Ids should be equals', () => {
     const startTasksState: TasksStateType = {}
     const startTodolistsState: TodolistDomainType[] = []
 
-    const action = createTodoListActionCreator({id: 'todoListId', title: 'second todolist', addedDate: '', order: 0},)
+    const action = addTodolist({id: 'todoListId', title: 'second todolist', addedDate: '', order: 0},)
 
-    const endTasksState = tasksReducer_old(startTasksState, action)
-    const endTodolistsState = todolistsReducer_old(startTodolistsState, action)
+    const endTasksState = tasksReducer(startTasksState, action)
+    const endTodolistsState = todolistsReducer(startTodolistsState, action)
 
     const keys = Object.keys(endTasksState)
     const idFromTasks = keys[0]
     const idFromTodolists = endTodolistsState[0].id
 
-    expect(idFromTasks).toBe(action.todoList.id)
-    expect(idFromTodolists).toBe(action.todoList.id)
+    expect(idFromTasks).toBe(action.payload?.id)
+    expect(idFromTodolists).toBe(action.payload?.id)
 });

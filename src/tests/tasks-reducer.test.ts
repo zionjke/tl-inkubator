@@ -1,15 +1,13 @@
 import {v1} from "uuid"
-import {
-    createTaskActionCreator,
-    removeTaskActionCreator, setTasksActionCreator,
-    tasksReducer_old, TasksStateType, updateTask, updateTaskActionCreator
-} from "../old_trash/tasks-reducer_old";
-import {
-    createTodoListActionCreator,
-    removeTodoListActionCreator,
-    setTodolistsActionCreator
-} from "../old_trash/todolists-reducer_old";
 import {TaskPriorities, TaskStatuses} from "../api/tasks-api";
+import tasksReducer, {
+    addTask,
+    changeTask,
+    deleteTask, fetchTasks,
+    setTasks,
+    TasksStateType
+} from "../features/todolists/tasks-reducer";
+import {addTodolist, deleteTodolist, setTodolists} from "../features/todolists/todolists-reducer";
 
 let todoListID1: string;
 let todoListID2: string;
@@ -33,29 +31,34 @@ beforeEach(() => {
                 priority: TaskPriorities.Low,
                 startDate: '',
                 deadline: '',
-                todoListId: todoListID1
+                todoListId: todoListID1,
+                entityStatus: "idle"
             },
             {
                 id: v1(),
                 title: 'Second TaskWithUseState',
-                status: TaskStatuses.New, addedDate: '',
+                status: TaskStatuses.New,
+                addedDate: '',
                 order: 0,
                 description: '',
                 priority: TaskPriorities.Low,
                 startDate: '',
                 deadline: '',
-                todoListId: todoListID1
+                todoListId: todoListID1,
+                entityStatus: "idle"
             },
             {
                 id: v1(),
                 title: 'Third TaskWithUseState',
-                status: TaskStatuses.New, addedDate: '',
+                status: TaskStatuses.New,
+                addedDate: '',
                 order: 0,
                 description: '',
                 priority: TaskPriorities.Low,
                 startDate: '',
                 deadline: '',
-                todoListId: todoListID1
+                todoListId: todoListID1,
+                entityStatus: "idle"
             },
         ],
         [todoListID2]: [
@@ -69,64 +72,80 @@ beforeEach(() => {
                 priority: TaskPriorities.Low,
                 startDate: '',
                 deadline: '',
-                todoListId: todoListID2
+                todoListId: todoListID2,
+                entityStatus: "idle"
             },
             {
-                id: v1(), title: 'Second TaskWithUseState', status: TaskStatuses.New, addedDate: '',
+                id: v1(),
+                title: 'Second TaskWithUseState',
+                status: TaskStatuses.New,
+                addedDate: '',
                 order: 0,
                 description: '',
                 priority: TaskPriorities.Low,
                 startDate: '',
                 deadline: '',
-                todoListId: todoListID2
+                todoListId: todoListID2,
+                entityStatus: "idle"
             },
             {
-                id: v1(), title: 'Third TaskWithUseState', status: TaskStatuses.New, addedDate: '',
+                id: v1(),
+                title: 'Third TaskWithUseState',
+                status: TaskStatuses.New,
+                addedDate: '',
                 order: 0,
                 description: '',
                 priority: TaskPriorities.Low,
                 startDate: '',
                 deadline: '',
-                todoListId: todoListID2
+                todoListId: todoListID2,
+                entityStatus: "idle"
             },
         ]
     }
 })
 
 test('correct task should be added', () => {
-    const endState = tasksReducer_old(startState, createTaskActionCreator(todoListID1, {
-        id: v1(),
-        title: 'Third TaskWithUseState',
-        status: TaskStatuses.New,
-        addedDate: '',
-        order: 0,
-        description: '',
-        priority: TaskPriorities.Low,
-        startDate: '',
-        deadline: '',
-        todoListId: todoListID2
-    },))
+    const action = addTask({
+        todolistId: todoListID1,
+        task: {
+            id: v1(),
+            title: 'New Task',
+            status: TaskStatuses.New,
+            addedDate: '',
+            order: 0,
+            description: '',
+            priority: TaskPriorities.Low,
+            startDate: '',
+            deadline: '',
+            todoListId: todoListID2
+        }
+    })
+    const endState = tasksReducer(startState, action)
 
-    expect(endState[todoListID1][3].title).toBe('Third TaskWithUseState')
-    expect(endState[todoListID1][3].status).toBe(TaskStatuses.New)
-    expect(endState[todoListID1][3].id).toBeDefined()
+    expect(endState[todoListID1][0].title).toBe('New Task')
+    expect(endState[todoListID1][0].status).toBe(TaskStatuses.New)
+    expect(endState[todoListID1][0].id).toBeDefined()
 })
 
 test('task status should be updated', () => {
-    const endState = tasksReducer_old(startState, updateTaskActionCreator(todoListID1, taskID, {status: TaskStatuses.New}))
+    const action = changeTask({todolistId: todoListID1, taskId: taskID, model: {status: TaskStatuses.New}})
+    const endState = tasksReducer(startState, action)
 
     expect(endState[todoListID1][0].status).toBe(TaskStatuses.New)
 })
 
 test('task title should be updated', () => {
-    const endState = tasksReducer_old(startState, updateTaskActionCreator(todoListID1, taskID, {title: 'Updated Title'}))
+    const action = changeTask({todolistId: todoListID1, taskId: taskID, model: {title: 'Updated Title'}})
+    const endState = tasksReducer(startState, action)
 
     expect(endState[todoListID1][0].title).toBe('Updated Title')
 })
 
 
 test('correct task should be removed', () => {
-    const endState = tasksReducer_old(startState, removeTaskActionCreator(todoListID1, taskID))
+    const action = deleteTask({todolistId: todoListID1, taskId: taskID})
+    const endState = tasksReducer(startState, action)
 
     expect(endState[todoListID1].length).toBe(2)
     expect(endState[todoListID1][0].title).toBe('Second TaskWithUseState')
@@ -135,12 +154,13 @@ test('correct task should be removed', () => {
 })
 
 test('new array should be added when new todolist is added', () => {
-    const endState = tasksReducer_old(startState, createTodoListActionCreator({
+    const action = addTodolist({
         id: 'todoListId3',
         title: 'first todolist',
         addedDate: '',
         order: 0
-    },))
+    })
+    const endState = tasksReducer(startState, action)
 
     const keys = Object.keys(endState)
     const newKey = keys.find(key => key !== todoListID1 && key !== todoListID2);
@@ -154,7 +174,8 @@ test('new array should be added when new todolist is added', () => {
 })
 
 test('array with tasks should be deleted when  todolist is removed', () => {
-    const endState = tasksReducer_old(startState, removeTodoListActionCreator(todoListID1))
+    const action = deleteTodolist({id: todoListID1})
+    const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState)
 
     expect(keys.length).toBe(1)
@@ -163,11 +184,11 @@ test('array with tasks should be deleted when  todolist is removed', () => {
 })
 
 test('empty arrays should be added when we set todolists', () => {
-    const action = setTodolistsActionCreator([
+    const action = setTodolists([
         {id: 'todoListId1', title: 'first todolist', addedDate: '', order: 0},
         {id: 'todoListId2', title: 'second todolist', addedDate: '', order: 0},
     ])
-    const endState = tasksReducer_old({}, action)
+    const endState = tasksReducer({}, action)
     const keys = Object.keys(endState)
 
     expect(keys.length).toBe(2)
@@ -176,10 +197,12 @@ test('empty arrays should be added when we set todolists', () => {
 })
 
 test('tasks should be set to the state', () => {
-    const endState = tasksReducer_old({
+    const action = setTasks({todolistId: todoListID1, tasks: startState[todoListID1]})
+    // const action = fetchTasks.fulfilled({todolistId: todoListID1, tasks: startState[todoListID1]}, '', todoListID1)
+    const endState = tasksReducer({
         [todoListID1]: [],
         [todoListID2]: []
-    }, setTasksActionCreator(todoListID1, startState[todoListID1]))
+    }, action)
     expect(endState[todoListID1].length).toBe(3)
 });
 
