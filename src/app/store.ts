@@ -9,6 +9,7 @@ import {authReducer} from "../features/login/auth-reducer";
 import appReducer from "./app-reducer";
 import todolistsReducer from "../features/todolists/todolists-reducer";
 import tasksReducer from "../features/todolists/tasks-reducer";
+import {useDispatch} from "react-redux";
 
 
 const rootReducer = combineReducers({
@@ -39,4 +40,5 @@ export const store = configureStore({
 })
 
 export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>()
 

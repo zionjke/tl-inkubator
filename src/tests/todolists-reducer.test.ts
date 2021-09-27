@@ -1,11 +1,11 @@
 import {v1} from "uuid"
 import todolistsReducer, {
-    addTodolist,
     changeTodolistFilter,
-    changeTodolistTitle,
-    deleteTodolist,
-    setTodolists,
-    TodolistDomainType
+    createTodoList,
+    fetchTodoLists,
+    removeTodoList,
+    TodolistDomainType,
+    updateTodoListTitle
 } from "../features/todolists/todolists-reducer";
 
 
@@ -24,7 +24,7 @@ beforeEach(() => {
 })
 
 test(' todolist should be set to the state', () => {
-    const action = setTodolists(startState)
+    const action = fetchTodoLists.fulfilled(startState,'')
     const endState = todolistsReducer([], action)
 
     expect(endState.length).toBe(2)
@@ -32,7 +32,7 @@ test(' todolist should be set to the state', () => {
 })
 
 test('correct todolist should be removed', () => {
-    const action = deleteTodolist({id: todoListId1})
+    const action = removeTodoList.fulfilled({id: todoListId1}, '', todoListId1)
     const endState = todolistsReducer(startState, action)
 
     expect(endState.length).toBe(1)
@@ -46,7 +46,7 @@ test('correct todolist should be added', () => {
         addedDate: '',
         order: 0
     }
-    const action = addTodolist(todolist)
+    const action = createTodoList.fulfilled(todolist, '', todolist.title)
     const endState = todolistsReducer(startState, action)
 
     expect(endState.length).toBe(3)
@@ -62,7 +62,8 @@ test('todolist filter should be updated', () => {
 
 
 test('todolist title should be updated', () => {
-    const action = changeTodolistTitle({id: todoListId2, title: 'Updated Title'})
+    const param = {todolistID: todoListId2, title: 'Updated Title'}
+    const action = updateTodoListTitle.fulfilled(param, '', param)
     const endState = todolistsReducer(startState, action)
 
     expect(endState[1].title).toBe('Updated Title')

@@ -12,22 +12,22 @@ import {TaskStatuses} from "../../../../api/tasks-api";
 
 export type TaskPropsType = {
     task: TaskDomainType
-    todoListID: string
+    todolistId: string
 };
 
 export const Task: React.FC<TaskPropsType> = React.memo((props) => {
     const {
         task,
-        todoListID,
+        todolistId,
     } = props
 
     const dispatch = useDispatch()
 
-    const removeTaskHandler = useCallback(() => dispatch(removeTask(todoListID, task.id)), [dispatch, todoListID, task.id])
+    const removeTaskHandler = useCallback(() => dispatch(removeTask({todolistId, taskId:task.id})), [dispatch, todolistId, task.id])
     const updateTaskStatusHandler = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => dispatch(updateTask(todoListID, task.id, {status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New})),
-        [dispatch, todoListID, task.id])
-    const updateTaskTitleHandler = useCallback((title: string) => dispatch(updateTask(todoListID, task.id, {title: title})), [dispatch, todoListID, task.id])
+        (e: ChangeEvent<HTMLInputElement>) => dispatch(updateTask({todolistId, taskId:task.id, domainModel:{status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}})),
+        [dispatch, todolistId, task.id])
+    const updateTaskTitleHandler = useCallback((title: string) => dispatch(updateTask({todolistId, taskId:task.id, domainModel: {title}})), [dispatch, todolistId, task.id])
 
 
     return (

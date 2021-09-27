@@ -10,8 +10,6 @@ export const settings = {
 export const APIInstance = axios.create(settings);
 
 
-
-
 export type TodolistType = {
     id: string
     addedDate: string
@@ -19,11 +17,15 @@ export type TodolistType = {
     title: string
 }
 
-
+export type FieldsErrorsType = {
+    field: string,
+    error: string
+}
 
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: string[]
+    fieldsErrors?: FieldsErrorsType[]
     data: D
 }
 

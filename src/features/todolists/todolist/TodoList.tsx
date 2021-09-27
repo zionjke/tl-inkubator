@@ -49,9 +49,9 @@ export const TodoList: React.FC<Props> = React.memo((props: Props) => {
         dispatch(fetchTasks(todoList.id))
     }, [dispatch, todoList.id])
 
-    const createTaskHandler = useCallback((title: string) => dispatch(createTask(todoList.id, title)), [dispatch, todoList.id])
+    const createTaskHandler = useCallback((title: string) => dispatch(createTask({todolistId:todoList.id, title})), [dispatch, todoList.id])
 
-    const updateTodolistTitleHandler = useCallback((title: string) => dispatch(updateTodoListTitle(todoList.id, title)), [dispatch, todoList.id])
+    const updateTodolistTitleHandler = useCallback((title: string) => dispatch(updateTodoListTitle({todolistID:todoList.id, title})), [dispatch, todoList.id])
     const removeTodoListHandler = useCallback(() => dispatch(removeTodoList(todoList.id)), [dispatch, todoList.id])
 
     const setAllFilter = useCallback(() => dispatch(changeTodolistFilter({
@@ -85,7 +85,7 @@ export const TodoList: React.FC<Props> = React.memo((props: Props) => {
                     filteredTasks.map(task => (
                         <Task
                             key={task.id}
-                            todoListID={todoList.id}
+                            todolistId={todoList.id}
                             task={task}/>
                     ))
                 }

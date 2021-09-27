@@ -1,17 +1,17 @@
-import {Button, Checkbox} from '@material-ui/core';
-import {FormGroup, Grid, TextField, FormControlLabel} from '@material-ui/core';
-import {useFormik} from 'formik';
+import {Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField} from '@material-ui/core';
+import {FormikHelpers, useFormik} from 'formik';
 import * as Yup from 'yup';
 import React, {FC} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {login} from "./auth-reducer";
-import {GlobalStateType} from "../../app/store";
+import {GlobalStateType, useAppDispatch} from "../../app/store";
 import {Redirect} from 'react-router-dom';
+import {LoginParamsType} from "../../api/auth-api";
 
 
 export const Login: FC = () => {
     const isAuth = useSelector<GlobalStateType, boolean>(state => state.auth.isAuth)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const validationSchema = Yup.object({
         email: Yup
@@ -32,8 +32,17 @@ export const Login: FC = () => {
             rememberMe: false
         },
         validationSchema: validationSchema,
-        onSubmit: (data) => {
-            dispatch(login(data))
+        // onSubmit: (data) => {
+        //     dispatch(login(data))
+        // },
+        onSubmit: async (data, formikHelpers: FormikHelpers<LoginParamsType>) => {
+            const action = await dispatch(login(data))
+            if (login.rejected.match(action)) {
+                if (action.payload?.fieldsErrors) {
+                    const error = action.payload.fieldsErrors[0]
+                    formikHelpers.setFieldError(error.field, error.error)
+                }
+            }
         },
     });
 
