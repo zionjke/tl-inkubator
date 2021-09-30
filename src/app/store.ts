@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {TodolistsActionTypes} from "../old_trash/todolists-reducer_old";
 import {TasksActionsType} from "../old_trash/tasks-reducer_old";
-import thunk, {ThunkAction} from "redux-thunk";
+import  {ThunkAction} from "redux-thunk";
 import {AppReducerActionsTypes} from "../old_trash/app-reducer_old";
 import {AuthActionTypes} from "../old_trash/auth-reducer_old";
 import {configureStore} from "@reduxjs/toolkit";
@@ -36,7 +36,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, GlobalStateTyp
 // С тулкитом
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk),
+    // middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk),
 })
 
 export type AppDispatch = typeof store.dispatch

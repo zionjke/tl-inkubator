@@ -50,7 +50,6 @@ export const Login: FC = () => {
         return <Redirect to={'/'}/>
     }
 
-    console.log(isAuth)
 
     return (
         <Grid container justify="center">
