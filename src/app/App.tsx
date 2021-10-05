@@ -5,15 +5,15 @@ import ErrorSnackBar from "../components/ErrorSnackBar";
 import {Header} from "../components/Header";
 import {Route, Switch} from 'react-router-dom';
 import {Login} from "../features/login/Login";
-import {Container} from '@material-ui/core';
+import {CircularProgress, Container} from '@material-ui/core';
 import {useDispatch, useSelector} from "react-redux";
-import {GlobalStateType} from "./store";
-import {CircularProgress} from '@material-ui/core';
 import {initializeApp} from "./app-reducer";
+import { selectIsInitialized } from './selectors';
+
 
 
 function App() {
-    const isInitialized = useSelector<GlobalStateType, boolean>(state => state.app.isInitialized)
+    const isInitialized = useSelector(selectIsInitialized)
     const dispatch = useDispatch()
 
     useEffect(() => {

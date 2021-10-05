@@ -1,15 +1,16 @@
 import React, {useCallback} from 'react';
 import {AppBar, Button, LinearProgress, Toolbar} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {GlobalStateType} from "../app/store";
-import {AppStatusesType} from "../app/app-reducer";
 import {logOut} from "../features/login/auth-reducer";
+
+import {selectStatus} from "../app/selectors";
+import { selectIsAuth } from '../features/login/sectors';
 
 type Props = {};
 
 export const Header = React.memo((props: Props) => {
-    const isAuth = useSelector<GlobalStateType, boolean>(state => state.auth.isAuth)
-    const status = useSelector<GlobalStateType, AppStatusesType>(state => state.app.status)
+    const isAuth = useSelector(selectIsAuth)
+    const status = useSelector(selectStatus)
     const dispatch = useDispatch()
 
     const logOutHandler = useCallback(() => dispatch(logOut()), [dispatch])
