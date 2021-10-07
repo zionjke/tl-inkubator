@@ -1,6 +1,6 @@
 import {authApi, LoginParamsType} from "../../api/auth-api";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils";
-import {createAsyncThunk, createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {setAppStatus} from "../../app/app-reducer";
 import {FieldsErrorsType} from "../../api/todolists-api";
 
@@ -9,7 +9,7 @@ const initialState = {
     isAuth: false
 }
 
-export const login = createAsyncThunk<undefined, LoginParamsType, { rejectValue: { errors: string[], fieldsErrors?: FieldsErrorsType[] } }>('auth/login', async (loginData, {
+export const login = createAsyncThunk<undefined, LoginParamsType, { rejectValue: { errors: string[], fieldsErrors?: FieldsErrorsType[] } }>('auth/auth', async (loginData, {
     dispatch,
     rejectWithValue
 }) => {
@@ -66,10 +66,10 @@ export const authReducer = slice.reducer
 export const {setIsAuth} = slice.actions
 
 
-// export const login = (loginData: LoginParamsType) => async (dispatch:Dispatch) => {
+// export const auth = (loginData: LoginParamsType) => async (dispatch:Dispatch) => {
 //     dispatch(setAppStatus("loading"))
 //     try {
-//         let {data} = await authApi.login(loginData)
+//         let {data} = await authApi.auth(loginData)
 //         if (data.resultCode === 0) {
 //             dispatch(setIsAuth(true))
 //             dispatch(setAppStatus("succeeded"))

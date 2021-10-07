@@ -5,11 +5,11 @@ import  {ThunkAction} from "redux-thunk";
 import {AppReducerActionsTypes} from "../old_trash/app-reducer_old";
 import {AuthActionTypes} from "../old_trash/auth-reducer_old";
 import {configureStore} from "@reduxjs/toolkit";
-import {authReducer} from "../features/login/auth-reducer";
+import {authReducer} from "../features/auth/auth-reducer";
 import appReducer from "./app-reducer";
 import todolistsReducer from "../features/todolists/todolists-reducer";
-import tasksReducer from "../features/todolists/tasks-reducer";
 import {useDispatch} from "react-redux";
+import tasksReducer from "../features/tasks/tasks-reducer";
 
 
 const rootReducer = combineReducers({

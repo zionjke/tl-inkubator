@@ -4,20 +4,21 @@ import {TodoListsList} from "../features/todolists/TodoListsList";
 import ErrorSnackBar from "../components/ErrorSnackBar";
 import {Header} from "../components/Header";
 import {Route, Switch} from 'react-router-dom';
-import {Login} from "../features/login/Login";
+import {Login} from "../features/auth/Login";
 import {CircularProgress, Container} from '@material-ui/core';
-import {useDispatch, useSelector} from "react-redux";
-import {initializeApp} from "./app-reducer";
-import { selectIsInitialized } from './selectors';
-
+import {useSelector} from "react-redux";
+import {selectIsInitialized} from './selectors';
+import {useActions} from "../hooks/useActions";
+import {appActions} from "./index";
 
 
 function App() {
+
     const isInitialized = useSelector(selectIsInitialized)
-    const dispatch = useDispatch()
+    const {initializeApp} = useActions(appActions)
 
     useEffect(() => {
-        dispatch(initializeApp())
+        initializeApp()
     }, [])
 
     if (!isInitialized) {
@@ -34,7 +35,7 @@ function App() {
             <Container>
                 <Switch>
                     <Route exact path={'/'} component={TodoListsList}/>
-                    <Route exact path={'/login'} component={Login}/>
+                    <Route exact path={'/auth'} component={Login}/>
                 </Switch>
             </Container>
             <ErrorSnackBar/>

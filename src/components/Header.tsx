@@ -1,16 +1,16 @@
 import React, {useCallback} from 'react';
 import {AppBar, Button, LinearProgress, Toolbar} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {logOut} from "../features/login/auth-reducer";
-
-import {selectStatus} from "../app/selectors";
-import { selectIsAuth } from '../features/login/sectors';
+import {logOut} from "../features/auth/auth-reducer";
+import {authSelectors} from "../features/auth";
+import {appSelectors} from "../app";
 
 type Props = {};
 
 export const Header = React.memo((props: Props) => {
-    const isAuth = useSelector(selectIsAuth)
-    const status = useSelector(selectStatus)
+
+    const isAuth = useSelector(authSelectors.selectIsAuth)
+    const status = useSelector(appSelectors.selectStatus)
     const dispatch = useDispatch()
 
     const logOutHandler = useCallback(() => dispatch(logOut()), [dispatch])
@@ -19,7 +19,10 @@ export const Header = React.memo((props: Props) => {
         <div>
             <AppBar position="static">
                 <Toolbar>
-                    {isAuth && <Button onClick={logOutHandler} color="inherit">Выйти</Button>}
+                    {
+                        isAuth &&
+                        <Button onClick={logOutHandler} color="inherit">Выйти</Button>
+                    }
                 </Toolbar>
             </AppBar>
             {

@@ -4,13 +4,14 @@ import * as Yup from 'yup';
 import React, {FC} from 'react';
 import {useSelector} from "react-redux";
 import {login} from "./auth-reducer";
-import {GlobalStateType, useAppDispatch} from "../../app/store";
+import {useAppDispatch} from "../../app/store";
 import {Redirect} from 'react-router-dom';
 import {LoginParamsType} from "../../api/auth-api";
+import {authSelectors} from "./index";
 
 
 export const Login: FC = () => {
-    const isAuth = useSelector<GlobalStateType, boolean>(state => state.auth.isAuth)
+    const isAuth = useSelector(authSelectors.selectIsAuth)
     const dispatch = useAppDispatch()
 
     const validationSchema = Yup.object({
@@ -33,7 +34,7 @@ export const Login: FC = () => {
         },
         validationSchema: validationSchema,
         // onSubmit: (data) => {
-        //     dispatch(login(data))
+        //     dispatch(auth(data))
         // },
         onSubmit: async (data, formikHelpers: FormikHelpers<LoginParamsType>) => {
             const action = await dispatch(login(data))

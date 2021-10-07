@@ -6,7 +6,7 @@ import tasksReducer, {
     removeTask,
     TasksStateType,
     updateTask
-} from "../features/todolists/tasks-reducer";
+} from "../features/tasks/tasks-reducer";
 import {createTodoList, fetchTodoLists, removeTodoList} from "../features/todolists/todolists-reducer";
 
 let todoListID1: string;
