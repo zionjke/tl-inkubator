@@ -5,7 +5,7 @@ import todolistsReducer, {createTodoList, TodolistDomainType} from "../features/
 test('Ids should be equals', () => {
     const startTasksState: TasksStateType = {}
     const startTodolistsState: TodolistDomainType[] = []
-    const params = {id: 'todoListId', title: 'second todolist', addedDate: '', order: 0}
+    const params = {id: 'todoListId', title: 'second Todolist', addedDate: '', order: 0}
     const action = createTodoList.fulfilled(params,'',params.title)
 
     const endTasksState = tasksReducer(startTasksState, action)

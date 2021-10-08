@@ -1,9 +1,9 @@
-import {AddItemForm, AddItemFormPropsType} from "../components/AddItemForm";
+import { AddItemFormPropsType, AddItemForm} from "../components/AddItemForm";
 import {Meta, Story} from "@storybook/react";
 import {action} from "@storybook/addon-actions";
 
 export default {
-    title: 'Todolist/AddItemForm',
+    title: 'Todolist/Index',
     component: AddItemForm,
     // argTypes: {
     //     onClick: {

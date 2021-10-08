@@ -1,9 +1,9 @@
 import React, {useCallback} from 'react';
 import {AppBar, Button, LinearProgress, Toolbar} from "@material-ui/core";
-import {useDispatch, useSelector} from "react-redux";
-import {logOut} from "../features/auth/auth-reducer";
-import {authSelectors} from "../features/auth";
-import {appSelectors} from "../app";
+import {useSelector} from "react-redux";
+import {authActions, authSelectors} from "../../features/auth";
+import {appSelectors} from "../../app";
+import {useActions} from "../../hooks/useActions";
 
 type Props = {};
 
@@ -11,9 +11,9 @@ export const Header = React.memo((props: Props) => {
 
     const isAuth = useSelector(authSelectors.selectIsAuth)
     const status = useSelector(appSelectors.selectStatus)
-    const dispatch = useDispatch()
+    const {logOut} = useActions(authActions)
 
-    const logOutHandler = useCallback(() => dispatch(logOut()), [dispatch])
+    const logOutHandler = useCallback(() =>logOut(), [])
 
     return (
         <div>

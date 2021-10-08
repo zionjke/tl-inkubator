@@ -3,8 +3,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import {useDispatch, useSelector} from "react-redux";
-import {GlobalStateType} from "../app/store";
-import { setAppError } from '../app/app-reducer';
+import {GlobalStateType} from "../../store";
+import { setAppError } from '../../app/app-reducer';
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-export default function ErrorSnackBar() {
+export function ErrorSnackBar() {
     const classes = useStyles();
     const error = useSelector<GlobalStateType, string | null>(state => state.app.error)
     const dispatch = useDispatch()

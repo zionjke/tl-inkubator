@@ -7,7 +7,7 @@ export type EditableTitlePropsType = {
     changeTitle: (title: string) => void
 };
 export const EditableTitle: React.FC<EditableTitlePropsType> = React.memo((props: EditableTitlePropsType) => {
-    console.log('EditableTitle called')
+
     const [editMode, setEditMode] = useState<boolean>(false)
     const [title, setTitle] = useState<string>(props.title)
     const [error, setError] = useState<boolean>(false)

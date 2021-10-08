@@ -18,12 +18,12 @@ beforeEach(() => {
     todoListId2 = v1()
 
     startState = [
-        {id: todoListId1, filter: "All", title: 'first todolist', addedDate: '', order: 0, entityStatus: "idle"},
-        {id: todoListId2, filter: "All", title: 'second todolist', addedDate: '', order: 0, entityStatus: "idle"},
+        {id: todoListId1, filter: "All", title: 'first Todolist', addedDate: '', order: 0, entityStatus: "idle"},
+        {id: todoListId2, filter: "All", title: 'second Todolist', addedDate: '', order: 0, entityStatus: "idle"},
     ]
 })
 
-test(' todolist should be set to the state', () => {
+test(' Todolist should be set to the state', () => {
     const action = fetchTodoLists.fulfilled(startState,'')
     const endState = todolistsReducer([], action)
 
@@ -31,7 +31,7 @@ test(' todolist should be set to the state', () => {
     expect(endState[1].id).toBe(todoListId2)
 })
 
-test('correct todolist should be removed', () => {
+test('correct Todolist should be removed', () => {
     const action = removeTodoList.fulfilled({id: todoListId1}, '', todoListId1)
     const endState = todolistsReducer(startState, action)
 
@@ -39,10 +39,10 @@ test('correct todolist should be removed', () => {
     expect(endState[0].id).toBe(todoListId2)
 })
 
-test('correct todolist should be added', () => {
+test('correct Todolist should be added', () => {
     const todolist = {
         id: 'todoListId3',
-        title: 'third todolist',
+        title: 'third Todolist',
         addedDate: '',
         order: 0
     }
@@ -50,10 +50,10 @@ test('correct todolist should be added', () => {
     const endState = todolistsReducer(startState, action)
 
     expect(endState.length).toBe(3)
-    expect(endState[0].title).toBe('third todolist')
+    expect(endState[0].title).toBe('third Todolist')
 })
 
-test('todolist filter should be updated', () => {
+test('Todolist filter should be updated', () => {
     const action = changeTodolistFilter({id: todoListId1, filter: 'Completed'})
     const endState = todolistsReducer(startState, action)
 
@@ -61,7 +61,7 @@ test('todolist filter should be updated', () => {
 });
 
 
-test('todolist title should be updated', () => {
+test('Todolist title should be updated', () => {
     const param = {todolistID: todoListId2, title: 'Updated Title'}
     const action = updateTodoListTitle.fulfilled(param, '', param)
     const endState = todolistsReducer(startState, action)

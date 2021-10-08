@@ -1,6 +1,6 @@
 import React from "react";
 import {Provider} from "react-redux";
-import {GlobalStateType} from "./app/store";
+import {GlobalStateType} from "./store";
 import {combineReducers, createStore} from "redux";
 import {tasksReducer_old} from "./old_trash/tasks-reducer_old";
 import {todolistsReducer_old} from "./old_trash/todolists-reducer_old";

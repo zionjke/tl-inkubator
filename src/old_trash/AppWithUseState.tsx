@@ -6,7 +6,7 @@ import {v1} from 'uuid';
 import '../app/App.css';
 import {TodoList} from "./components/TodoListWithUseState";
 import {FilterValuesType, TaskStateType, TaskType} from './types/types';
-import {AddItemForm} from "./components/AddItemForm/AddItemForm";
+import {AddItemForm} from "./components/Index/Index";
 import {Paper} from "@material-ui/core";
 import {useReducer} from 'react';
 import {

@@ -1,6 +1,6 @@
 import {CreateTodolistActionType, RemoveTodolistActionType, SetTodolistActionType} from "./todolists-reducer_old";
 import {TaskPriorities, tasksApi, TaskStatuses, TaskType, UpdateTaskModelType} from "../api/tasks-api";
-import {AppThunk, GlobalStateType} from "../app/store";
+import {AppThunk, GlobalStateType} from "../store";
 import {setAppErrorActionCreator, setAppStatusActionCreator} from "./app-reducer_old";
 import {handleNetworkAppError, handleServerAppError} from "../utils/error-utils";
 
@@ -191,19 +191,19 @@ export const removeTask = (todoListID: string, taskID: string): AppThunk => asyn
 
 // export const updateTaskTitle = (todoListID: string, taskID: string, title: string): AppThunk => async (dispatch, getState: () => GlobalStateType) => {
 //     const tasks = getState().tasks[todoListID]
-//     const task = tasks.find(t => t.id === taskID);
+//     const Index = tasks.find(t => t.id === taskID);
 //
-//     if (!task) {
-//         console.warn('task not found in state')
+//     if (!Index) {
+//         console.warn('Index not found in state')
 //         return;
 //     }
 //
 //     const model: UpdateTaskModelType = {
-//         deadline: task.deadline,
-//         description: task.description,
-//         priority: task.priority,
-//         startDate: task.startDate,
-//         status: task.status,
+//         deadline: Index.deadline,
+//         description: Index.description,
+//         priority: Index.priority,
+//         startDate: Index.startDate,
+//         status: Index.status,
 //         title: title
 //     }
 //
@@ -220,7 +220,7 @@ export const updateTask = (todoListID: string, taskID: string, domainModel: Upda
     const task = tasks.find(t => t.id === taskID);
 
     if (!task) {
-        console.warn('task not found in state')
+        console.warn('Index not found in state')
         return;
     }
 

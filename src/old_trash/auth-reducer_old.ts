@@ -1,4 +1,4 @@
-import {AppThunk} from "../app/store"
+import {AppThunk} from "../store"
 import {authApi, LoginParamsType, UserDataType} from "../api/auth-api";
 import {setAppStatusActionCreator} from "./app-reducer_old";
 import {handleNetworkAppError, handleServerAppError} from "../utils/error-utils";

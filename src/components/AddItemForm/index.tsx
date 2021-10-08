@@ -10,7 +10,6 @@ export type AddItemFormPropsType = {
 };
 
 export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,disabled}) => {
-    console.log('AddItemForm called')
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>('')
 
@@ -52,8 +51,8 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
                        error={!!error}
                        helperText={error && 'Title Required'!}
                        type='text'/>
-            <IconButton disabled={disabled}  className={"iconButton"}>
-                <AddCircleIcon color={"primary"} onClick={onAddNewItem}/>
+            <IconButton onClick={onAddNewItem} disabled={disabled}  className={"iconButton"}>
+                <AddCircleIcon color={"primary"} />
             </IconButton>
         </div>
 

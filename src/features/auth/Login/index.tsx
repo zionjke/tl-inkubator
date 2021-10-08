@@ -3,16 +3,17 @@ import {FormikHelpers, useFormik} from 'formik';
 import * as Yup from 'yup';
 import React, {FC} from 'react';
 import {useSelector} from "react-redux";
-import {login} from "./auth-reducer";
-import {useAppDispatch} from "../../app/store";
+import {useAppDispatch} from "../../../store";
 import {Redirect} from 'react-router-dom';
-import {LoginParamsType} from "../../api/auth-api";
-import {authSelectors} from "./index";
+import {LoginParamsType} from "../../../api/auth-api";
+import {authActions, authSelectors} from "../index";
+import {useActions} from "../../../hooks/useActions";
 
 
 export const Login: FC = () => {
     const isAuth = useSelector(authSelectors.selectIsAuth)
     const dispatch = useAppDispatch()
+
 
     const validationSchema = Yup.object({
         email: Yup
@@ -37,8 +38,8 @@ export const Login: FC = () => {
         //     dispatch(auth(data))
         // },
         onSubmit: async (data, formikHelpers: FormikHelpers<LoginParamsType>) => {
-            const action = await dispatch(login(data))
-            if (login.rejected.match(action)) {
+            const action = await dispatch(authActions.login(data))
+            if (authActions.login.rejected.match(action)) {
                 if (action.payload?.fieldsErrors) {
                     const error = action.payload.fieldsErrors[0]
                     formikHelpers.setFieldError(error.field, error.error)

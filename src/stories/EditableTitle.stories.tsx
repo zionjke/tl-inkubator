@@ -5,15 +5,15 @@ import {EditableTitle, EditableTitlePropsType} from "../components/EditableTitle
 
 
 export default {
-    title: 'Todolist/EditableTitle',
+    title: 'Todolist/Index',
     component: EditableTitle,
     argTypes: {
         changeTitle: {
-            description: 'Value EditableTitle changed'
+            description: 'Value Index changed'
         },
         title: {
             defaultValue: 'TEST',
-            description: 'Start value EditableTitle'
+            description: 'Start value Index'
         }
     }
 } as Meta
@@ -23,5 +23,5 @@ const Template: Story<EditableTitlePropsType> = (args: EditableTitlePropsType) =
 export const EditableTitleExample = Template.bind({})
 EditableTitleExample.args = {
     title: 'TEST',
-    changeTitle: action('Value EditableTitle changed')
+    changeTitle: action('Value Index changed')
 }

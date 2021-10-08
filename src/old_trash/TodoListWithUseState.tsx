@@ -5,7 +5,7 @@ import React from 'react';
 import {TaskWithUseState} from "./TaskWithUseState";
 import {FilterValuesType, TaskType} from "../types/types";
 import {TodolistTitle} from "../components/TodolistTitle";
-import {AddItemForm} from "../components/AddItemForm";
+import {Index} from "../components/AddItemForm";
 
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -68,7 +68,7 @@ export const TodoListWithUseState: React.FC<Props> = (props) => {
                     <DeleteIcon/>
                 </IconButton>
             </div>
-            <AddItemForm addItem={onAddNewTask}/>
+            <Index addItem={onAddNewTask}/>
             <ul style={{listStyle: 'none', paddingLeft: 0}}>
                 {
                     props.tasks.map(task => (

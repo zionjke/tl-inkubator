@@ -1,8 +1,6 @@
-
 import * as React from 'react';
-import {Task} from "./task/Task";
-import {TaskDomainType} from "./tasks-reducer";
-import {FilterValuesType} from "../todolists/todolists-reducer";
+import { Task} from "../Task";
+import {TaskDomainType} from "../tasks-reducer";
 
 type Props = {
     filteredTasks: TaskDomainType[],
@@ -15,7 +13,6 @@ export const TasksList = (props: Props) => {
         filteredTasks,
         todolistId
     } = props
-
 
     return (
         <ul style={{listStyle: 'none', paddingLeft: 0}}>

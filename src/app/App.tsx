@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {TodoListsList} from "../features/todolists/TodoListsList";
-import ErrorSnackBar from "../components/ErrorSnackBar";
+import {ErrorSnackBar} from "../components/ErrorSnackBar";
 import {Header} from "../components/Header";
 import {Route, Switch} from 'react-router-dom';
 import {Login} from "../features/auth/Login";
@@ -10,6 +9,7 @@ import {useSelector} from "react-redux";
 import {selectIsInitialized} from './selectors';
 import {useActions} from "../hooks/useActions";
 import {appActions} from "./index";
+import {TodolistsList} from "../features/todolists/TodolistsList";
 
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
             <Header/>
             <Container>
                 <Switch>
-                    <Route exact path={'/'} component={TodoListsList}/>
+                    <Route exact path={'/'} component={TodolistsList}/>
                     <Route exact path={'/auth'} component={Login}/>
                 </Switch>
             </Container>

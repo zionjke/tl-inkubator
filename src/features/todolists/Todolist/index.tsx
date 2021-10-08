@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import {useSelector} from "react-redux";
-import {GlobalStateType} from "../../../app/store";
+import {GlobalStateType} from "../../../store";
 import {TaskDomainType} from "../../tasks/tasks-reducer";
 import {TodolistDomainType} from "../todolists-reducer";
 import {EditableTitle} from "../../../components/EditableTitle";
@@ -20,7 +20,7 @@ type Props = {
     todoList: TodolistDomainType
 };
 
-export const TodoList: React.FC<Props> = React.memo((props: Props) => {
+export const Todolist: React.FC<Props> = React.memo((props: Props) => {
 
     const {
         todoList
@@ -82,14 +82,17 @@ export const TodoList: React.FC<Props> = React.memo((props: Props) => {
                 <h3>
                     <EditableTitle changeTitle={updateTodolistTitleHandler} title={todoList.title}/>
                 </h3>
-                <IconButton disabled={todoList.entityStatus === "loading"} color='secondary' className={"iconButton"}>
-                    <DeleteIcon onClick={removeTodoListHandler}/>
+                <IconButton onClick={removeTodoListHandler}
+                            disabled={todoList.entityStatus === "loading"}
+                            color='secondary'
+                            className={"iconButton"}>
+                    <DeleteIcon />
                 </IconButton>
             </div>
             <AddItemForm addItem={createTaskHandler}
-                         disabled={todoList.entityStatus === "loading"}/>
+                   disabled={todoList.entityStatus === "loading"}/>
             <TasksList filteredTasks={filteredTasks}
-                       todolistId={todoList.id}/>
+                   todolistId={todoList.id}/>
             <div>
                 <Button onClick={setAllFilter} variant="contained" size={"small"}
                         color={todoList.filter === 'All' ? 'primary' : 'default'}>

@@ -2,7 +2,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {setAppStatus} from "../../app/app-reducer";
 import {TaskPriorities, tasksApi, TaskStatuses, UpdateTaskModelType} from "../../api/tasks-api";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils";
-import {GlobalStateType} from "../../app/store";
+import {GlobalStateType} from "../../store";
 import {changeTaskEntityStatus} from "./tasks-reducer";
 
 
@@ -86,7 +86,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask', async (param: { t
     const task = tasks.find(t => t.id === taskId);
 
     if (!task) {
-        return rejectWithValue('task not found in state')
+        return rejectWithValue('Index not found in state')
     }
 
     const apiModel: UpdateTaskModelType = {

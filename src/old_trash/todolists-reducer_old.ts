@@ -1,5 +1,5 @@
 import {TodoListsApi, TodolistType} from "../api/todolists-api";
-import {AppThunk} from "../app/store";
+import {AppThunk} from "../store";
 import { setAppStatusActionCreator} from "./app-reducer_old";
 
 import {handleNetworkAppError, handleServerAppError} from "../utils/error-utils";

@@ -1,6 +1,6 @@
 export let a = 1;
 
-// import {TaskPropsType, task} from "../components/TaskWithUseState/task";
+// import {TaskPropsType, Index} from "../components/TaskWithUseState/Index";
 //
 // import {Meta, Story} from "@storybook/react";
 // import React from "react";
@@ -9,21 +9,21 @@ export let a = 1;
 //
 // export default {
 //     title: 'Todolist/TaskWithUseState',
-//     component: task,
+//     component: Index,
 //     decorators: [ReduxStoreProviderDecorator]
 // } as Meta
 //
-// const Template: Story<TaskPropsType> = (args: TaskPropsType) => <task {...args}/>;
+// const Template: Story<TaskPropsType> = (args: TaskPropsType) => <Index {...args}/>;
 //
 // export const TaskIsDoneExample = Template.bind({});
 // TaskIsDoneExample.args = {
-//     task: {id: '1', title: 'JS', status: Ta},
+//     Index: {id: '1', title: 'JS', status: Ta},
 //     todoListID: 'todoListID1'
 // }
 //
 // export const TaskIsNotDoneExample = Template.bind({});
 // TaskIsNotDoneExample.args = {
-//     task: {id: '1', title: 'JS', isDone: false},
+//     Index: {id: '1', title: 'JS', isDone: false},
 //     todoListID: 'todoListID1'
 // }
 //

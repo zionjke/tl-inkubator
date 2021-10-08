@@ -2,12 +2,10 @@ import {TodolistType} from "../../api/todolists-api";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {createTodoList, fetchTodoLists, removeTodoList, updateTodoListTitle} from "./todolists-actions";
 
-const initialState: TodolistDomainType[] = []
-
 
 export const todolistsSlice = createSlice({
     name: 'todolists',
-    initialState: initialState,
+    initialState: [] as TodolistDomainType[],
     reducers: {
         changeTodolistFilter(state, action: PayloadAction<{ id: string, filter: FilterValuesType }>) {
             const index = state.findIndex(tl => tl.id === action.payload.id)

@@ -6,7 +6,7 @@ import {AppReducerActionsTypes} from "../old_trash/app-reducer_old";
 import {AuthActionTypes} from "../old_trash/auth-reducer_old";
 import {configureStore} from "@reduxjs/toolkit";
 import {authReducer} from "../features/auth/auth-reducer";
-import appReducer from "./app-reducer";
+import appReducer from "../app/app-reducer";
 import todolistsReducer from "../features/todolists/todolists-reducer";
 import {useDispatch} from "react-redux";
 import tasksReducer from "../features/tasks/tasks-reducer";
@@ -30,7 +30,7 @@ export type AppActionsType = TodolistsActionTypes | TasksActionsType | AppReduce
 //типизация thunk для всего App
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, GlobalStateType, unknown, AppActionsType>
 
-// export const store = createStore(rootReducer, applyMiddleware(thunk))
+// export const index = createStore(rootReducer, applyMiddleware(thunk))
 
 
 // С тулкитом

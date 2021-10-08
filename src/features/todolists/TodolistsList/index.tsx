@@ -1,17 +1,17 @@
 import React, {useCallback, useEffect} from 'react';
 import {useSelector} from "react-redux";
-import {GlobalStateType} from "../../app/store";
-import {TodolistDomainType} from "./todolists-reducer";
-import {AddItemForm} from "../../components/AddItemForm";
+import {GlobalStateType} from "../../../store";
+import {TodolistDomainType} from "../todolists-reducer";
+import {AddItemForm} from "../../../components/AddItemForm";
 import {Paper} from "@material-ui/core";
-import {TodoList} from "./todolist/TodoList";
+import {Todolist} from "../Todolist";
 import {Redirect} from 'react-router-dom';
-import {authSelectors} from "../auth";
-import {useActions} from "../../hooks/useActions";
-import {todolistsActions} from "./index";
+import {authSelectors} from "../../auth";
+import {useActions} from "../../../hooks/useActions";
+import {todolistsActions} from "../index";
 
 type TodoListsListProps = {}
-export const TodoListsList: React.FC = (props: TodoListsListProps): React.ReactElement => {
+export const TodolistsList: React.FC = (props: TodoListsListProps): React.ReactElement => {
 
     const todoLists = useSelector<GlobalStateType, TodolistDomainType[]>(state => state.todoLists)
     const isAuth = useSelector(authSelectors.selectIsAuth)
@@ -37,7 +37,7 @@ export const TodoListsList: React.FC = (props: TodoListsListProps): React.ReactE
                 {
                     todoLists.map(tl =>
                         <Paper key={tl.id} elevation={3} style={{padding: "15px"}}>
-                            <TodoList todoList={tl}/>
+                            <Todolist todoList={tl}/>
                         </Paper>
                     )
                 }

@@ -1,7 +1,5 @@
 import {Story} from "@storybook/react";
 import App from "../app/App";
-import {Provider} from "react-redux";
-import {store} from "../app/store";
 import {ReduxStoreProviderDecorator} from "../ReduxStoreProviderDecorator";
 
 
