@@ -33,10 +33,10 @@ export const TodolistsList: React.FC = (props: TodoListsListProps): React.ReactE
     return (
         <>
             <AddItemForm addItem={createNewTodoListHandler}/>
-            <div className='todolists'>
+            <div className='todolists' >
                 {
                     todoLists.map(tl =>
-                        <Paper key={tl.id} elevation={3} style={{padding: "15px"}}>
+                        <Paper key={tl.id} elevation={3} className="todolist">
                             <Todolist todoList={tl}/>
                         </Paper>
                     )

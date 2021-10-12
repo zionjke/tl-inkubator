@@ -30,17 +30,14 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
             addItem(title)
             setTitle('')
             setError(null)
-        } else if (title.length >= 100) {
-            setError('The field Title must be a string or array type with a maximum length of 100')
         } else {
             setError('Title is required')
         }
-
     }
 
 
     return (
-        <div style={{margin: '25px'}}>
+        <div className="addItemForm">
             <TextField className={error ? 'error' : ''}
                        onChange={changeTitleHandler}
                        onKeyPress={onKeyPressAddItem}

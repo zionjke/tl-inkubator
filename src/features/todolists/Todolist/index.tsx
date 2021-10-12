@@ -55,18 +55,17 @@ export const Todolist: React.FC<Props> = React.memo((props: Props) => {
 
 
     return (
-        <div className={"todolist"}>
-            <div className='todolistTitle'>
-                <h3  style={{wordWrap: "break-word"}}>
+        <>
+            <IconButton  onClick={removeTodoListHandler}
+                         disabled={todoList.entityStatus === "loading"}
+                         color='secondary'
+                         className={"deleteButton"}>
+                <DeleteIcon/>
+            </IconButton>
+                <h3 className='todolistTitle'  style={{wordWrap: "break-word"}}>
                     <EditableTitle changeTitle={updateTodolistTitleHandler} title={todoList.title}/>
                 </h3>
-                <IconButton  onClick={removeTodoListHandler}
-                            disabled={todoList.entityStatus === "loading"}
-                            color='secondary'
-                            className={"deleteButton"}>
-                    <DeleteIcon/>
-                </IconButton>
-            </div>
+
             <AddItemForm addItem={createTaskHandler}
                          disabled={todoList.entityStatus === "loading"}/>
             <TasksList todolistId={todoList.id} todolistFilter={todoList.filter}/>
@@ -87,7 +86,7 @@ export const Todolist: React.FC<Props> = React.memo((props: Props) => {
                     Completed
                 </FilterButton>
             </div>
-        </div>
+        </>
     );
 });
 

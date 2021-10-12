@@ -16,8 +16,8 @@ export const Header = React.memo((props: Props) => {
     const logOutHandler = useCallback(() =>logOut(), [])
 
     return (
-        <div>
-            <AppBar position="static">
+        <div >
+            <AppBar position="relative">
                 <Toolbar>
                     {
                         isAuth &&
